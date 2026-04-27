@@ -1083,3 +1083,17 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
 .delay-curve-focus-note p + p {
   margin-top: 4px;
 }
+
+
+.delay-curve-ec-block {
+  margin-top: 14px;
+}
+.delay-curve-ec-subtitle {
+  margin: 4px 0 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.portfolio-ec-table-wrap {
+  max-height: 260px;
+}

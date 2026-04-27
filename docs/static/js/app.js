@@ -169,7 +169,7 @@ function lineChartSvg(curve, { height = 360, showContracted = false } = {}) {
   `;
 }
 
-function portfolioCurveSvg(curve, { height = 360, statusProgress = { headers: [], rows: [] } } = {}) {
+function portfolioCurveSvg(curve, { height = 360, statusProgress = { headers: [], rows: [] }, ecDecision = { headers: [], rows: [] } } = {}) {
   const labels = curve.labels || [];
   const series = (curve.series || []).filter(s => (s.values || []).some(v => v !== null && v !== undefined));
   const width = 980;
@@ -274,10 +274,10 @@ function portfolioCurveSvg(curve, { height = 360, statusProgress = { headers: []
           </tbody>
         </table>
       </div>
-      <div class="delay-curve-focus-note">
-        <div class="detail-note-title">Focus on open exposure</div>
-        <p>Qui vengono richiamati i package che presentano il maggiore valore ancora da assegnare, calcolato come differenza tra Updated Budget e Contracted.</p>
-        <p>È quindi una vista rapida delle priorità economiche ancora aperte nel procurement.</p>
+      <div class="delay-curve-ec-block">
+        <div class="detail-note-title">EC decision</div>
+        <p class="delay-curve-ec-subtitle">Tabella letta dal file presente in data/current oppure aggiornato in locale.</p>
+        ${ecDecisionTableHtml(ecDecision, 'portfolio-ec-table-wrap')}
       </div>
     </div>`;
   return `
@@ -770,7 +770,7 @@ function renderDashboard(data) {
   renderRoots(data.rootGroups || []);
   renderToAwardByRootChart(data.rootGroups || []);
   renderDelayBars(data.delayedByRoot || []);
-  renderDelayCurve(data.portfolioCurve || {}, data.statusProgress || { headers: [], rows: [] });
+  renderDelayCurve(data.portfolioCurve || {}, data.statusProgress || { headers: [], rows: [] }, data.ecDecision || { headers: [], rows: [] });
   renderOverruns(data.topOverruns || []);
   renderEcDecision(data.ecDecision || { headers: [], rows: [] });
 }
@@ -788,24 +788,27 @@ function fmtEcCell(value, header = "") {
   return esc(value);
 }
 
-function renderEcDecision(ec) {
-  const node = $("ec-decision-table");
-  if (!node) return;
+function ecDecisionTableHtml(ec, extraClass = "") {
   const headers = ec.headers || [];
   const rows = ec.rows || [];
   if (!headers.length || !rows.length) {
-    node.innerHTML = `<div class="meta-text">Nessun dato disponibile. Inserisci o aggiorna il file EC decision in data/current.</div>`;
-    return;
+    return `<div class="meta-text">Nessun dato disponibile. Inserisci o aggiorna il file EC decision in data/current.</div>`;
   }
   const thead = headers.map(h => `<th>${esc(h)}</th>`).join("");
   const tbody = rows.map(row => `<tr>${row.map((cell, idx) => `<td>${fmtEcCell(cell, headers[idx])}</td>`).join("")}</tr>`).join("");
-  node.innerHTML = `<div class="table-wrap admin-ec-table-wrap"><table class="admin-ec-table"><thead><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table></div>`;
+  return `<div class="table-wrap admin-ec-table-wrap ${extraClass}"><table class="admin-ec-table"><thead><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table></div>`;
 }
 
-function renderDelayCurve(curve, statusProgress) {
+function renderEcDecision(ec) {
+  const node = $("ec-decision-table");
+  if (!node) return;
+  node.innerHTML = ecDecisionTableHtml(ec);
+}
+
+function renderDelayCurve(curve, statusProgress, ecDecision) {
   const target = $('delay-curve');
   if (!target) return;
-  target.innerHTML = portfolioCurveSvg(curve || {}, { statusProgress: statusProgress || { headers: [], rows: [] } });
+  target.innerHTML = portfolioCurveSvg(curve || {}, { statusProgress: statusProgress || { headers: [], rows: [] }, ecDecision: ecDecision || { headers: [], rows: [] } });
 }
 
 function packageByCode(code) {
@@ -1402,6 +1405,111 @@ function bindGlobalClicks() {
       if (type === 'orders-status') return showOrdersStatusDetail();
       if (type === 'timeline') return showTimelineDetail();
       if (type === 'critical') return showCriticalDetail();
+    }
+  });
+}
+
+async function loadConfig() {
+  const cfg = await fetchJSON('/api/admin/config');
+  state.config = cfg;
+  const form = $('config-form');
+  form.project_title.value = cfg.project_title || '';
+  form.executive_note.value = cfg.executive_note || '';
+  form.budget_total_column.value = cfg.budget.total_column || 'AB';
+  form.updated_budget_column.value = cfg.procurement.updated_budget_column || 'S';
+  form.contracted_column.value = cfg.procurement.contracted_column || 'T';
+  form.completed_statuses.value = (cfg.completed_statuses || []).join(', ');
+  form.variance_amber_pct.value = cfg.thresholds.variance_amber_pct ?? 2;
+  form.variance_red_pct.value = cfg.thresholds.variance_red_pct ?? 6;
+}
+
+async function loadHistory() {
+  const historyTarget = $('history-list');
+  if (!historyTarget) return;
+  state.history = await fetchJSON('/api/admin/history');
+  historyTarget.innerHTML = state.history.map(item => `
+    <div class="history-item">
+      <div>
+        <div class="history-head"><strong>${item.file}</strong></div>
+        <div class="meta-text">${new Date(item.modified * 1000).toLocaleString('it-IT')}</div>
+      </div>
+      <button data-restore="${item.file}">Ripristina</button>
+    </div>
+  `).join('');
+  document.querySelectorAll('[data-restore]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      await fetchJSON('/api/admin/restore', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ file: btn.dataset.restore })
+      });
+      await loadDashboard();
+      await loadHistory();
+    });
+  });
+}
+
+async function loadReports() {
+  const rows = await fetchJSON('/api/admin/reports');
+  const node = $('report-list');
+  if (!node) return;
+  node.innerHTML = rows.slice(0, 8).map(item => `
+    <div class="history-item">
+      <div>
+        <div class="history-head"><strong>${item.file}</strong></div>
+        <div class="meta-text">${new Date(item.modified * 1000).toLocaleString('it-IT')}</div>
+      </div>
+      <a class="report-link" href="/reports/${encodeURIComponent(item.file)}">Download</a>
+    </div>
+  `).join('') || '<div class="meta-text">Nessun report Excel generato.</div>';
+}
+
+function bindForms() {
+  $('upload-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const feedback = $('upload-feedback');
+    feedback.textContent = 'Upload in corso...';
+    const formData = new FormData(e.target);
+    try {
+      await fetchJSON('/api/admin/upload', { method: 'POST', body: formData });
+      feedback.textContent = 'Snapshot pubblicato con successo.';
+      await loadDashboard();
+      await loadHistory();
+      await loadReports();
+      setTab('overview');
+    } catch (err) {
+      feedback.textContent = err.message || 'Errore upload.';
+    }
+  });
+
+  $('config-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const payload = {
+      project_title: form.project_title.value,
+      executive_note: form.executive_note.value,
+      completed_statuses: form.completed_statuses.value.split(',').map(x => x.trim()).filter(Boolean),
+      budget: { total_column: form.budget_total_column.value.trim().toUpperCase() || 'AB' },
+      procurement: {
+        updated_budget_column: form.updated_budget_column.value.trim().toUpperCase() || 'S',
+        contracted_column: form.contracted_column.value.trim().toUpperCase() || 'T',
+      },
+      thresholds: {
+        variance_amber_pct: Number(form.variance_amber_pct.value || 2),
+        variance_red_pct: Number(form.variance_red_pct.value || 6),
+      }
+    };
+    const feedback = $('config-feedback');
+    try {
+      await fetchJSON('/api/admin/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      feedback.textContent = 'Parametri salvati.';
+      await Promise.all([loadConfig(), loadDashboard(), loadReports()]);
+    } catch (err) {
+      feedback.textContent = err.message || 'Errore salvataggio parametri.';
     }
   });
 }
