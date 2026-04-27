@@ -1,0 +1,44 @@
+{
+  "project_title": "Wloclawek - Waste-to-Energy Project Dashboard",
+  "executive_note": "Executive view focused on budget and procurement schedule.",
+  "currency": "PLN",
+  "completed_statuses": [
+    "closed",
+    "finalized",
+    "PCT/approval"
+  ],
+  "contract_prep_status": "contract prep.",
+  "thresholds": {
+    "variance_amber_pct": 2.0,
+    "variance_red_pct": 6.0,
+    "contract_coverage_amber_pct": 55.0,
+    "contract_coverage_red_pct": 40.0
+  },
+  "budget": {
+    "sheet_name": "Włocławek Budget",
+    "summary_row": 12,
+    "total_column": "AB",
+    "detail_start_row": 13,
+    "detail_end_row": 279,
+    "detail_exec_column": "W",
+    "detail_total_column": "AB",
+    "pl_desc_column": "C",
+    "en_desc_column": "D",
+    "contractor_column": "AC",
+    "order_no_column": "AD"
+  },
+  "procurement": {
+    "sheet_name": "Procurement Schedule",
+    "summary_row": 16,
+    "updated_budget_column": "S",
+    "contracted_column": "T",
+    "legacy_budget_column": "R",
+    "detail_start_row": 18,
+    "status_column": "Q"
+  },
+  "curve": {
+    "start_month": "2025-12",
+    "end_month": "2028-12",
+    "x_label_every": 2
+  }
+}

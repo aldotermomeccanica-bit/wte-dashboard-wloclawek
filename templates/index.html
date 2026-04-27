@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wloclawek - Waste-to-Energy Project Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark">W</div>
+          <div>
+            <div class="eyebrow">CEO / PM Dashboard</div>
+            <h1 id="project-title">Wloclawek - Waste-to-Energy Project Dashboard</h1>
+          </div>
+        </div>
+        <nav class="tabs">
+          <button class="tab active" data-tab="overview">Overview</button>
+          <button class="tab" data-tab="portfolio">Portfolio</button>
+          <button class="tab" data-tab="admin">Admin</button>
+        </nav>
+      </header>
+
+      <main>
+        <section id="overview-tab" class="tab-panel active">
+          <section class="overview-minimal">
+            <section class="hero-board card minimal-hero">
+              <div class="hero-strip top-strip-grid">
+                <div class="top-strip-card strip-overview">
+                  <div class="eyebrow dark">Overview</div>
+                  <div class="hero-title-row">
+                    <h2 class="minimal-title">Overview</h2>
+                    <div id="overall-status" class="status-chip neutral" style="display:none">NO DATA</div>
+                  </div>
+                  <p id="executive-message" class="hero-copy">Numeri chiave e curva S per capire subito ordini, budget aggiornato e stato reale.</p>
+                </div>
+                <div class="mini-stat top-strip-card compact-check-card">
+                  <span>Procurement check</span>
+                  <strong class="compact-check-title">Attività pianificate per mese</strong>
+                  <div class="compact-check-row">
+                    <label class="month-field compact-month-field">
+                      <span>Mese / anno</span>
+                      <input id="month-check-input" type="month" />
+                    </label>
+                    <button id="month-check-button" type="button" class="btn-primary compact-check-button">Check</button>
+                  </div>
+                  <div id="month-check-hint" class="meta-text month-check-hint compact-check-hint">Filtro pronto.</div>
+                </div>
+                <div class="mini-stat top-strip-card meta-card">
+                  <span>Last refresh</span>
+                  <strong id="generated-at">—</strong>
+                </div>
+              </div>
+              <div id="hero-kpis" class="hero-kpis minimal-kpis"></div>
+            </section>
+
+            <section class="overview-grid minimal-main-grid">
+              <article class="card panel chart-panel minimal-chart-panel clickable" data-detail="curve">
+                <div class="panel-head minimal-panel-head">
+                  <div>
+                    <div class="eyebrow dark">Andamento degli ordini</div>
+                    <h2>Curva S cumulata</h2>
+                    <p>Blu = procurement schedule cumulativo in PLN · verde = budget / programma cliente in PLN · rosso = stato attuale.</p>
+                  </div>
+                  <button class="ghost-link" data-detail="curve">Open detail</button>
+                </div>
+                <div id="overview-note" class="note-banner"></div>
+                <div id="curve-chart" class="chart-shell minimal-chart"></div>
+              </article>
+
+              <aside class="minimal-side-column">
+                <article class="card panel compact-panel clickable" data-detail="orders-status">
+                  <div class="panel-head compact minimal-panel-head">
+                    <div>
+                      <div class="eyebrow dark">Stato attuale</div>
+                      <h2>Ordini</h2>
+                    </div>
+                    <button class="ghost-link" data-detail="orders-status">Open detail</button>
+                  </div>
+                  <div id="curve-summary" class="curve-summary"></div>
+                  <div id="orders-status" class="orders-status-grid minimal-orders-grid"></div>
+                </article>
+
+              </aside>
+            </section>
+
+            <section class="overview-grid minimal-bottom-grid">
+              <article class="card panel compact-panel">
+                <div class="panel-head compact minimal-panel-head">
+                  <div>
+                    <div class="eyebrow dark">Focus</div>
+                    <h2>Top critical packages</h2>
+                  </div>
+                  <button class="ghost-link" data-detail="critical">View all</button>
+                </div>
+                <div id="critical-list" class="critical-list minimal-critical-list"></div>
+                <div class="overview-orders-explanation detail-note detail-note-bottom compact-overview-note">
+                  <div class="detail-note-group">
+                    <div class="detail-note-title">Mese attuale</div>
+                    <p>Mese attuale = mese di riferimento usato per leggere il punto corrente della Curva S.</p>
+                  </div>
+                  <hr />
+                  <div class="detail-note-group">
+                    <div class="detail-note-title">Proc. cumulativo</div>
+                    <p>Proc. cumulativo = valore cumulato del procurement schedule fino al mese di riferimento, costruito sulla base delle date di procurement e dei valori Updated Budget.</p>
+                  </div>
+                  <hr />
+                  <div class="detail-note-group">
+                    <div class="detail-note-title">Budget cumulativo</div>
+                    <p>Budget cumulativo = valore cumulato della curva verde del Budget fino allo stesso mese, letto dal file Budget come riferimento del piano / programma cliente.</p>
+                  </div>
+                  <hr />
+                  <div class="detail-note-group">
+                    <div class="detail-note-title">Scostamento</div>
+                    <p>Scostamento = differenza tra Proc. cumulativo e Budget cumulativo.</p>
+                    <p>Se positivo, il procurement risulta avanti rispetto alla curva di riferimento; se negativo, risulta sotto il profilo previsto.</p>
+                  </div>
+                </div>
+                <div class="detail-note detail-note-bottom overview-orders-note">
+                  <div class="detail-note-group">
+                    <div class="detail-note-title">Ordini</div>
+                    <p>Questa sezione confronta, nel mese di riferimento, il cumulato ordini del procurement schedule con il cumulato previsto dalla curva budget / programma cliente.</p>
+                    <p>Lo scostamento mostra quindi se il procurement sta anticipando o inseguendo il profilo ordini previsto.</p>
+                  </div>
+                </div>
+                <div class="detail-note detail-note-bottom overview-orders-note secondary">
+                  <div class="detail-note-group">
+                    <div class="detail-note-title">Ordini in chiusura</div>
+                    <p><strong>Ordini in chiusura = package in stato Contract prep. + PCT Approval</strong></p>
+                    <p>Mostra quindi i package che si trovano nelle fasi più avanzate del procurement process, vicine alla chiusura / finalizzazione.</p>
+                  </div>
+                  <hr />
+                  <div class="detail-note-group">
+                    <div class="detail-note-title">Pacchetti in definizione</div>
+                    <p><strong>Pacchetti in definizione = package in stato Enquiry + Negotiation</strong></p>
+                    <p>Mostra quindi i package per cui il processo tecnico/commerciale è già avviato, ma che non risultano ancora nella fase finale di chiusura.</p>
+                  </div>
+                </div>
+              </article>
+            </section>
+          </section>
+        </section>
+
+        <section id="portfolio-tab" class="tab-panel">
+          <section class="content-grid">
+            <article class="card panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="eyebrow dark">Portfolio</div>
+                  <h2>WBS exposure</h2>
+                  <p>Quali gruppi assorbono budget e rischio.</p>
+                </div>
+              </div>
+              <div id="root-grid" class="root-grid"></div>
+              <div id="to-award-root-chart" class="to-award-root-chart"></div>
+            </article>
+
+            <article class="card panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="eyebrow dark">Portfolio</div>
+                  <h2>Delayed by root group</h2>
+                  <p>Conteggio e valore dei package in ritardo.</p>
+                </div>
+              </div>
+              <div id="delay-bars" class="bar-chart"></div>
+              <div id="delay-curve" class="delay-curve-block"></div>
+            </article>
+          </section>
+
+          <section class="content-grid">
+            <article class="card panel full-width">
+              <div class="panel-head compact">
+                <div>
+                  <div class="eyebrow dark">Portfolio</div>
+                  <h2>Top overruns</h2>
+                  <p>Pacchetti con extra-costo maggiore rispetto al Baseline Budget.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>WBS</th>
+                      <th>Package</th>
+                      <th>Baseline Budget</th>
+                      <th>Updated Budget</th>
+                      <th>Variance</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overrun-table"></tbody>
+                </table>
+              </div>
+
+              <div class="detail-note detail-note-bottom portfolio-kpi-note">
+                <div class="detail-note-group">
+                  <div class="detail-note-title">Updated Budget</div>
+                  <p><strong>Updated Budget = somma dei valori Updated Budget di tutti i package appartenenti al root group</strong></p>
+                  <p>Mostra quindi il valore economico aggiornato del gruppo, sulla base del procurement schedule più recente.</p>
+                </div>
+                <hr />
+                <div class="detail-note-group">
+                  <div class="detail-note-title">Contracted</div>
+                  <p><strong>Contracted = somma dei valori già contrattualizzati di tutti i package appartenenti al root group</strong></p>
+                  <p>Mostra quindi quale parte del gruppo risulta già coperta da contratto.</p>
+                </div>
+                <hr />
+                <div class="detail-note-group">
+                  <div class="detail-note-title">Completion</div>
+                  <p><strong>Completion = avanzamento pesato dei package appartenenti al root group, calcolato in funzione dello status e del valore economico di ciascun package</strong></p>
+                  <p>Il Completion non è calcolato come semplice numero di package completati, ma come avanzamento pesato sul valore economico. Ogni status del procurement process contribuisce in modo diverso al risultato finale, in base a un coefficiente di avanzamento predefinito.</p>
+                  <p><strong>Coefficienti usati:</strong> planned = 0% · enquiry = 15% · negotiation = 35% · contract prep. = 65% · PCT approval = 85% · closed / finalized = 100%.</p>
+                  <p>Il Completion del root group è quindi la somma dei valori Updated Budget pesati con questi coefficienti, divisa per il totale Updated Budget del gruppo.</p>
+                </div>
+                <hr />
+                <div class="detail-note-group">
+                  <div class="detail-note-title">Coverage</div>
+                  <p><strong>Coverage = Contracted / Updated Budget</strong></p>
+                  <p>Mostra quindi quale quota del budget aggiornato del root group risulta già coperta da contratti assegnati.</p>
+                </div>
+              </div>
+            </article>
+          </section>
+        </section>
+
+        <section id="admin-tab" class="tab-panel">
+          <section class="content-grid">
+            <article class="card panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="eyebrow dark">Admin</div>
+                  <h2>Upload Excel</h2>
+                  <p>Carica Budget e Procurement, genera il nuovo snapshot e aggiorna la home.</p>
+                </div>
+              </div>
+              <form id="upload-form" class="admin-form">
+                <label>
+                  <span>Budget file (.xlsm / .xlsx)</span>
+                  <input type="file" name="budget" accept=".xlsm,.xlsx" />
+                </label>
+                <label>
+                  <span>Procurement file (.xlsx / .xlsm)</span>
+                  <input type="file" name="procurement" accept=".xlsx,.xlsm" />
+                </label>
+                <label>
+                  <span>S-Curve file (.xlsx)</span>
+                  <input type="file" name="scurve" accept=".xlsx,.xlsm" />
+                </label>
+                <label>
+                  <span>EC decision file (.xlsx)</span>
+                  <input type="file" name="ecdecision" accept=".xlsx,.xlsm" />
+                </label>
+                <button type="submit" class="btn-primary">Upload e aggiorna dashboard</button>
+                <p id="upload-feedback" class="feedback"></p>
+              </form>
+            </article>
+
+            <article class="card panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="eyebrow dark">Admin</div>
+                  <h2>Admin settings</h2>
+                  <p>Mapping colonne e soglie. Admin e portfolio restano invariati.</p>
+                </div>
+              </div>
+              <form id="config-form" class="admin-form two-columns">
+                <label>
+                  <span>Titolo progetto</span>
+                  <input type="text" name="project_title" />
+                </label>
+                <label>
+                  <span>Executive note</span>
+                  <input type="text" name="executive_note" />
+                </label>
+                <label>
+                  <span>Budget total column</span>
+                  <input type="text" name="budget_total_column" />
+                </label>
+                <label>
+                  <span>Updated budget column</span>
+                  <input type="text" name="updated_budget_column" />
+                </label>
+                <label>
+                  <span>Contracted column</span>
+                  <input type="text" name="contracted_column" />
+                </label>
+                <label>
+                  <span>Completed statuses</span>
+                  <input type="text" name="completed_statuses" />
+                </label>
+                <label>
+                  <span>Variance amber %</span>
+                  <input type="number" step="0.1" name="variance_amber_pct" />
+                </label>
+                <label>
+                  <span>Variance red %</span>
+                  <input type="number" step="0.1" name="variance_red_pct" />
+                </label>
+                <button type="submit" class="btn-primary">Salva parametri</button>
+                <p id="config-feedback" class="feedback"></p>
+              </form>
+            </article>
+
+            <article class="card panel admin-ec-card">
+              <div class="panel-head compact">
+                <div>
+                  <div class="eyebrow dark">Admin</div>
+                  <h2>EC decision</h2>
+                  <p>Tabella letta dal file presente in data/current oppure caricato in Admin.</p>
+                </div>
+              </div>
+              <div id="ec-decision-table" class="admin-ec-wrap"></div>
+            </article>
+          </section>
+
+        </section>
+
+        <section id="detail-tab" class="tab-panel">
+          <article class="card panel detail-panel">
+            <div class="detail-header">
+              <button id="back-button" class="btn-back">← Back</button>
+              <div>
+                <div class="eyebrow dark">Detail</div>
+                <h2 id="detail-title">Dettaglio</h2>
+                <p id="detail-subtitle">—</p>
+              </div>
+            </div>
+            <div id="detail-metrics" class="detail-metrics"></div>
+            <div id="detail-content" class="detail-content"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>

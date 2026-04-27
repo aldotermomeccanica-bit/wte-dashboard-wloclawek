@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: wte-dashboard
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.7
+      - key: WTE_DATA_DIR
+        value: /var/data/wte-dashboard
+    disk:
+      name: wte-dashboard-data
+      mountPath: /var/data
+      sizeGB: 5
