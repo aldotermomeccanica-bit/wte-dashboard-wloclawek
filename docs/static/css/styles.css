@@ -1298,3 +1298,207 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
     padding: 6px 9px;
   }
 }
+
+
+/* V75 mobile portfolio compression: keep desktop unchanged */
+@media (max-width: 600px) {
+  html, body {
+    overflow-x: hidden;
+  }
+  .shell, main, .tab-panel {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  #portfolio-tab .content-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+  #portfolio-tab .panel,
+  #portfolio-tab .card,
+  #portfolio-tab .root-grid,
+  #portfolio-tab .root-card,
+  #portfolio-tab .to-award-root-chart,
+  #portfolio-tab .to-award-chart-list,
+  #portfolio-tab .bar-chart,
+  #portfolio-tab .delay-curve-block {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  #portfolio-tab .panel {
+    padding: 10px 9px;
+  }
+  #portfolio-tab .panel-head {
+    margin-bottom: 10px;
+  }
+  #portfolio-tab .panel-head h2 {
+    font-size: 15px;
+    line-height: 1.18;
+  }
+  #portfolio-tab .panel-head p {
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+  #portfolio-tab .root-card {
+    gap: 7px;
+    padding: 10px 10px;
+    overflow: hidden;
+  }
+  #portfolio-tab .legend-row-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+    align-items: start;
+  }
+  #portfolio-tab .legend-row-head strong {
+    min-width: 0;
+    max-width: 100%;
+    font-size: 12px;
+    line-height: 1.25;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .root-card .row {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-content: start;
+    align-items: start;
+    gap: 3px 6px;
+    font-size: 10px;
+  }
+  #portfolio-tab .root-card .row span {
+    color: var(--muted);
+    white-space: nowrap;
+    line-height: 1.25;
+  }
+  #portfolio-tab .root-card .row strong {
+    justify-self: start;
+    text-align: left;
+    min-width: 0;
+    font-size: 10.8px;
+    line-height: 1.25;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .pill {
+    padding: 4px 7px;
+    font-size: 9px;
+  }
+  #portfolio-tab .to-award-root-chart {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+  #portfolio-tab .to-award-section-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  #portfolio-tab .to-award-section-head h3 {
+    font-size: 15px;
+    line-height: 1.18;
+  }
+  #portfolio-tab .to-award-legend {
+    justify-content: flex-start;
+    gap: 6px;
+  }
+  #portfolio-tab .to-award-row {
+    padding: 10px;
+    gap: 7px;
+  }
+  #portfolio-tab .to-award-row-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    align-items: start;
+  }
+  #portfolio-tab .to-award-row-head strong {
+    min-width: 0;
+    font-size: 11px;
+    line-height: 1.25;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .to-award-row-head .meta-text {
+    min-width: 0;
+    font-size: 9.5px;
+    line-height: 1.3;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .to-award-row-body {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  #portfolio-tab .to-award-bar-shell {
+    height: 10px;
+  }
+  #portfolio-tab .to-award-value {
+    text-align: left;
+    font-size: 10.8px;
+    line-height: 1.25;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .bar-row {
+    padding: 10px;
+    gap: 7px;
+  }
+  #portfolio-tab .bar-row-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    align-items: start;
+  }
+  #portfolio-tab .bar-row-head strong,
+  #portfolio-tab .bar-row-head .meta-text {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .bar-row-head strong {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+  #portfolio-tab .bar-row-head .meta-text {
+    font-size: 9.5px;
+    line-height: 1.3;
+  }
+  #portfolio-tab .delay-curve-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  #portfolio-tab .delay-curve-head h3 {
+    font-size: 15px;
+  }
+  #portfolio-tab .delay-curve-head p,
+  #portfolio-tab .delay-curve-summary-subtitle,
+  #portfolio-tab .delay-curve-ec-subtitle,
+  #portfolio-tab .detail-note-bottom p {
+    font-size: 10.5px;
+    line-height: 1.4;
+  }
+  #portfolio-tab .delay-curve-summary,
+  #portfolio-tab .delay-curve-ec-block,
+  #portfolio-tab .portfolio-kpi-note {
+    padding: 10px 9px;
+  }
+  #portfolio-tab .chart-legend,
+  #portfolio-tab .chart-legend-top {
+    justify-content: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #portfolio-tab .legend-chip,
+  #portfolio-tab .legend-badge {
+    font-size: 9.5px;
+  }
+}
