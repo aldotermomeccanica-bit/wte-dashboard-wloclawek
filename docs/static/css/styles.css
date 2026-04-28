@@ -1099,199 +1099,102 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
 }
 
 
-/* Mobile-first improvements for GitHub Pages build */
-@media (max-width: 780px) {
-  .shell {
-    padding: 10px;
+/* V73 mobile tuning focused on Portfolio */
+@media (max-width: 768px) {
+  #portfolio-tab .panel {
+    padding: 12px;
   }
-  .topbar {
-    padding: 14px 16px;
-    border-radius: 22px;
-    gap: 12px;
+  #portfolio-tab .panel-head h2 {
+    font-size: 16px;
+    line-height: 1.2;
   }
-  .brand-block {
-    align-items: flex-start;
+  #portfolio-tab .panel-head p {
+    font-size: 11px;
+    line-height: 1.4;
   }
-  .brand-mark {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-  }
-  .topbar h1 {
-    font-size: 18px;
-    line-height: 1.15;
-  }
-  .tabs {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  #portfolio-tab .root-card,
+  #portfolio-tab .bar-row,
+  #portfolio-tab .to-award-row {
+    padding: 12px;
     gap: 8px;
   }
-  .tab {
-    width: 100%;
-    text-align: center;
-    padding: 10px 12px;
-  }
-  .card,
-  .topbar {
-    border-radius: 20px;
-  }
-  .panel,
-  .hero-board,
-  .detail-panel,
-  .compact-panel,
-  .minimal-hero {
-    padding: 14px;
-  }
-  .panel-head,
-  .panel-head.compact,
-  .detail-header,
-  .critical-item .top,
-  .bar-row-head,
-  .legend-row-head,
-  .to-award-row-head,
-  .delay-curve-head,
-  .to-award-section-head {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .ghost-link {
-    padding: 0;
-  }
-  .hero-strip.top-strip-grid,
-  .minimal-main-grid,
-  .content-grid,
-  .overview-grid,
-  .top-grid,
-  .middle-grid,
-  .bottom-grid,
-  .minimal-bottom-grid,
-  .minimal-side-column,
-  .orders-layout,
-  .split-panel,
-  .root-grid,
-  .detail-grid,
-  .detail-metrics,
-  .snapshot-grid,
-  .hero-meta,
-  .curve-summary-grid,
-  .minimal-kpis,
-  .minimal-snapshot-grid,
-  .minimal-critical-list {
-    grid-template-columns: 1fr;
-  }
-  .compact-check-card {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      'label'
-      'title'
-      'field'
-      'button'
-      'hint';
-  }
-  .compact-check-button,
-  .btn-primary,
-  .btn-back {
-    width: 100%;
-  }
-  .strip-overview .hero-copy {
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    line-height: 1.35;
+  #portfolio-tab .root-card .row {
     font-size: 11px;
   }
-  .curve-stat strong,
-  .kpi-tile .value,
-  .minimal-kpis .kpi-tile .value,
-  .detail-metric .value,
-  .snapshot-card .metric {
-    font-size: 16px;
+  #portfolio-tab .root-card .row strong,
+  #portfolio-tab .root-card .row span {
+    line-height: 1.3;
   }
-  .kpi-tile.money-wide .value,
-  .kpi-tile.delta-inline .value,
-  .minimal-kpis .kpi-tile.delta-inline .value {
-    font-size: 15px;
-  }
-  .order-metrics {
+  #portfolio-tab .to-award-section-head,
+  #portfolio-tab .to-award-row-head,
+  #portfolio-tab .delay-curve-head,
+  #portfolio-tab .bar-row-head {
     flex-direction: column;
-    gap: 8px;
+    align-items: flex-start;
   }
-  .to-award-row-body {
+  #portfolio-tab .to-award-row-body {
     grid-template-columns: 1fr;
     gap: 8px;
   }
-  .to-award-value {
+  #portfolio-tab .to-award-value {
     text-align: left;
+    font-size: 11px;
   }
-  .chart-shell,
-  .detail-chart,
-  .delay-curve-block,
-  .order-pie-card,
-  .table-wrap {
+  #portfolio-tab .meta-text {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  #portfolio-tab .delay-curve-summary,
+  #portfolio-tab .portfolio-kpi-note {
+    padding: 12px;
+  }
+  #portfolio-tab .delay-curve-summary-title,
+  #portfolio-tab .detail-note-title {
+    font-size: 10px;
+  }
+  #portfolio-tab .delay-curve-summary-subtitle,
+  #portfolio-tab .detail-note-bottom p {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  #portfolio-tab .delay-curve-block,
+  #portfolio-tab .table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .chart-shell .svg-chart,
-  .detail-chart .svg-chart,
-  .delay-curve-block .svg-chart {
-    min-width: 840px;
-    width: 840px;
+  #portfolio-tab .delay-curve-block .svg-chart {
+    min-width: 680px;
+    width: 680px;
     height: auto;
-    display: block;
   }
-  .order-pie-card .svg-chart,
-  .order-pie-card .order-pie-svg {
-    min-width: 320px;
+  #portfolio-tab .delay-curve-table,
+  #portfolio-tab .table-wrap table {
+    min-width: 680px;
   }
-  th,
-  td {
+  #portfolio-tab .delay-curve-table thead th,
+  #portfolio-tab .delay-curve-table tbody td,
+  #portfolio-tab .table-wrap th,
+  #portfolio-tab .table-wrap td {
+    font-size: 11px;
     padding: 9px 10px;
-    font-size: 11px;
-  }
-  .detail-note-bottom,
-  .overview-orders-note,
-  .compact-overview-note,
-  .portfolio-kpi-note {
-    padding: 12px 13px;
-  }
-  .detail-note-bottom p,
-  .detail-note-group,
-  .meta-text,
-  .panel-head p {
-    font-size: 11px;
-    line-height: 1.45;
   }
 }
 
 @media (max-width: 480px) {
-  .shell {
-    padding: 8px;
+  #portfolio-tab .panel {
+    padding: 10px;
   }
-  .topbar {
-    padding: 12px;
+  #portfolio-tab .delay-curve-block .svg-chart {
+    min-width: 620px;
+    width: 620px;
   }
-  .topbar h1 {
-    font-size: 16px;
+  #portfolio-tab .delay-curve-table,
+  #portfolio-tab .table-wrap table {
+    min-width: 620px;
   }
-  .hero-strip.top-strip-grid,
-  .content-grid,
-  .minimal-main-grid,
-  .minimal-bottom-grid,
-  .root-grid,
-  .detail-metrics,
-  .curve-summary-grid,
-  .minimal-kpis,
-  .minimal-critical-list {
-    grid-template-columns: 1fr;
-  }
-  .chart-shell .svg-chart,
-  .detail-chart .svg-chart,
-  .delay-curve-block .svg-chart {
-    min-width: 760px;
-    width: 760px;
-  }
-  .tabs {
-    grid-template-columns: 1fr;
+  #portfolio-tab .to-award-row,
+  #portfolio-tab .bar-row,
+  #portfolio-tab .root-card {
+    border-radius: 14px;
   }
 }
