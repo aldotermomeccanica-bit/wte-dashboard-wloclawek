@@ -1818,3 +1818,11 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
   .report-actions { width: 100%; }
   .report-actions .report-generate-button { flex: 1 1 100%; width: 100%; }
 }
+
+
+/* V88: report buttons auto-refresh data before download */
+.report-generate-button.is-busy {
+  opacity: 0.72;
+  pointer-events: none;
+  cursor: wait;
+}

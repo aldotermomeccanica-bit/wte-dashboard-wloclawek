@@ -10,7 +10,7 @@ const state = {
 const $ = (id) => document.getElementById(id);
 
 async function fetchJSON(url, options) {
-  const res = await fetch(url, options);
+  const res = await fetch(url, { cache: 'no-store', ...(options || {}) });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Request failed');
   return data;
@@ -1573,8 +1573,51 @@ function bindForms() {
   });
 }
 
+
+function downloadViaHiddenFrame(url) {
+  const frame = document.createElement('iframe');
+  frame.style.display = 'none';
+  frame.src = url + (url.includes('?') ? '&' : '?') + 'ts=' + Date.now();
+  document.body.appendChild(frame);
+  setTimeout(() => frame.remove(), 30000);
+}
+
+function setReportButtonsBusy(isBusy, activeButton = null) {
+  const buttons = [$('generate-report-button'), $('generate-pdf-button')].filter(Boolean);
+  buttons.forEach(btn => {
+    btn.classList.toggle('is-busy', isBusy);
+    btn.setAttribute('aria-busy', isBusy ? 'true' : 'false');
+    if (isBusy) {
+      btn.dataset.originalText = btn.dataset.originalText || btn.textContent;
+      btn.textContent = btn === activeButton ? 'Aggiorno dati…' : (btn.dataset.originalText || btn.textContent);
+    } else if (btn.dataset.originalText) {
+      btn.textContent = btn.dataset.originalText;
+    }
+  });
+}
+
+async function refreshDashboardData() {
+  const data = await fetchJSON('./data/dashboard-data.json?ts=' + Date.now());
+  renderDashboard(data);
+  return data;
+}
+
+function bindReportButtons() {
+  const reportLinks = [
+    { id: 'generate-report-button', href: './reports/WTE_Dashboard_Report.xlsx' },
+    { id: 'generate-pdf-button', href: './reports/WTE_CEO_Premium_Report.pdf' },
+  ];
+  reportLinks.forEach(({ id, href }) => {
+    const btn = $(id);
+    if (!btn) return;
+    btn.href = href;
+    btn.setAttribute('download', '');
+    btn.title = 'File statico generato dalla versione locale. Per aggiornarlo, esegui BUILD_GITHUB_VERSION nella cartella locale e ripubblica docs/ su GitHub.';
+  });
+}
+
 async function loadDashboard() {
-  const data = await fetchJSON('./data/dashboard-data.json');
+  const data = await fetchJSON('./data/dashboard-data.json?ts=' + Date.now());
   renderDashboard(data);
 }
 
@@ -1582,5 +1625,6 @@ async function loadDashboard() {
   bindTabs();
   bindGlobalClicks();
   bindMonthCheck();
+  bindReportButtons();
   await loadDashboard();
 })();
