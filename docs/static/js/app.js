@@ -337,57 +337,91 @@ function donutSvg(items) {
 
 function orderPieSvg(items) {
   if (!items.length) return '<div class="meta-text">Nessun dato ordini disponibile.</div>';
-  const width = 400, height = 255, cx = 128, cy = 126, r = 68;
+
+  // The slices and the labels must use the same dynamic value-based logic.
+  // This avoids the previous issue where "Da ordinare" had a custom fixed pointer
+  // and could visually drift away from its slice when percentages changed.
+  const width = 430, height = 285, cx = 215, cy = 132, r = 72;
   const toneMap = { green: '#2F9D58', amber: '#D59C1A', red: '#A61515', blue: '#2F68C8', neutral: '#B0B7C3' };
-  const total = items.reduce((sum, item) => sum + Number(item.count || 0), 0) || 1;
+  const total = items.reduce((sum, item) => sum + Number(item.value || 0), 0) || 1;
+
   let angle = -Math.PI / 2;
-  const segments = items.map((item) => {
-    const share = Number(item.count || 0) / total;
-    const next = angle + share * Math.PI * 2;
-    const large = next - angle > Math.PI ? 1 : 0;
-    const x1 = cx + r * Math.cos(angle), y1 = cy + r * Math.sin(angle);
-    const x2 = cx + r * Math.cos(next), y2 = cy + r * Math.sin(next);
+  const raw = items.map((item) => {
+    const share = Number(item.value || 0) / total;
+    const startAngle = angle;
+    const endAngle = angle + share * Math.PI * 2;
+    const mid = startAngle + (endAngle - startAngle) / 2;
+    angle = endAngle;
+    return { item, startAngle, endAngle, mid, share };
+  });
+
+  // Build slice paths first.
+  const segments = raw.map(({ item, startAngle, endAngle }) => {
+    const large = endAngle - startAngle > Math.PI ? 1 : 0;
+    const x1 = cx + r * Math.cos(startAngle), y1 = cy + r * Math.sin(startAngle);
+    const x2 = cx + r * Math.cos(endAngle), y2 = cy + r * Math.sin(endAngle);
     const path = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`;
-    const mid = angle + (next - angle) / 2;
-    let edgeX = cx + (r + 4) * Math.cos(mid);
-    let edgeY = cy + (r + 4) * Math.sin(mid);
     const color = toneMap[item.tone] || '#B0B7C3';
-
-    let side = Math.cos(mid) >= 0 ? 1 : -1;
-    let elbowX = cx + (r + 14) * Math.cos(mid);
-    let elbowY = cy + (r + 14) * Math.sin(mid);
-    let lineEndX = elbowX + side * 22;
-    let textX = lineEndX + side * 7;
-    let textY = elbowY - 5;
-    let anchor = side > 0 ? 'start' : 'end';
-
-    if (item.tone === 'red') {
-      side = 1;
-      edgeX = cx + (r * 0.10);
-      edgeY = cy + (r * 0.80);
-      elbowX = edgeX + 14;
-      elbowY = edgeY + 28;
-      lineEndX = elbowX + 26;
-      textX = lineEndX + 6;
-      textY = elbowY + 10;
-      anchor = 'start';
-    }
-
-    const segment = `<path d="${path}" fill="${color}" stroke="white" stroke-width="3"><title>${item.label}: ${item.sharePct}%</title></path>`;
-    const label = `
-      <g class="pie-label-group ${item.tone === 'red' ? 'red-label' : ''}">
-        <path d="M ${edgeX} ${edgeY} L ${elbowX} ${elbowY} L ${lineEndX} ${elbowY}" fill="none" stroke="${color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="${edgeX}" cy="${edgeY}" r="2.6" fill="${color}" />
-        <text x="${textX}" y="${textY}" text-anchor="${anchor}" fill="#18314F" font-size="13" font-weight="800">${item.label}</text>
-        <text x="${textX}" y="${textY + 16}" text-anchor="${anchor}" fill="#5A6F89" font-size="12" font-weight="700">${item.sharePct}%</text>
-      </g>`;
-    angle = next;
-    return segment + label;
+    return `<path d="${path}" fill="${color}" stroke="white" stroke-width="3"><title>${item.label}: ${fmtCurrency(item.value)} · ${item.sharePct}%</title></path>`;
   }).join('');
+
+  // Dynamic label layout by side. All categories follow the same rule:
+  // side depends on the slice midpoint, then label rows are clamped/spaced inside the SVG.
+  const labelData = raw.map(({ item, mid }) => {
+    const color = toneMap[item.tone] || '#B0B7C3';
+    const side = Math.cos(mid) >= 0 ? 1 : -1;
+    const edgeX = cx + (r + 4) * Math.cos(mid);
+    const edgeY = cy + (r + 4) * Math.sin(mid);
+    return {
+      item,
+      mid,
+      side,
+      color,
+      edgeX,
+      edgeY,
+      labelY: Math.max(42, Math.min(height - 42, edgeY)),
+    };
+  });
+
+  [-1, 1].forEach((side) => {
+    const rows = labelData.filter((d) => d.side === side).sort((a, b) => a.labelY - b.labelY);
+    const minGap = 47;
+    for (let i = 1; i < rows.length; i += 1) {
+      if (rows[i].labelY - rows[i - 1].labelY < minGap) {
+        rows[i].labelY = rows[i - 1].labelY + minGap;
+      }
+    }
+    const overflow = rows.length ? rows[rows.length - 1].labelY - (height - 42) : 0;
+    if (overflow > 0) rows.forEach((row) => { row.labelY -= overflow; });
+    for (let i = rows.length - 2; i >= 0; i -= 1) {
+      if (rows[i + 1].labelY - rows[i].labelY < minGap) {
+        rows[i].labelY = rows[i + 1].labelY - minGap;
+      }
+    }
+    const underflow = rows.length ? 42 - rows[0].labelY : 0;
+    if (underflow > 0) rows.forEach((row) => { row.labelY += underflow; });
+  });
+
+  const labels = labelData.map((d) => {
+    const anchor = d.side > 0 ? 'start' : 'end';
+    const textX = d.side > 0 ? width - 110 : 110;
+    const lineEndX = d.side > 0 ? textX - 10 : textX + 10;
+    const elbowX = cx + d.side * (r + 18);
+    const labelY = d.labelY;
+    return `
+      <g class="pie-label-group">
+        <path d="M ${d.edgeX} ${d.edgeY} L ${elbowX} ${labelY} L ${lineEndX} ${labelY}" fill="none" stroke="${d.color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="${d.edgeX}" cy="${d.edgeY}" r="2.8" fill="${d.color}" />
+        <text x="${textX}" y="${labelY - 4}" text-anchor="${anchor}" fill="#18314F" font-size="13" font-weight="800">${d.item.label}</text>
+        <text x="${textX}" y="${labelY + 13}" text-anchor="${anchor}" fill="#5A6F89" font-size="12" font-weight="700">${d.item.sharePct}%</text>
+      </g>`;
+  }).join('');
+
   return `
     <svg class="svg-chart order-pie-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="Mix ordini">
       ${segments}
-      <circle cx="${cx}" cy="${cy}" r="3.4" fill="#ffffff" stroke="#d8e2ef" stroke-width="1.6" />
+      ${labels}
+      <circle cx="${cx}" cy="${cy}" r="3.6" fill="#ffffff" stroke="#d8e2ef" stroke-width="1.6" />
     </svg>
   `;
 }
