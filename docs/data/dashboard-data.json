@@ -1,7 +1,7 @@
 {
   "meta": {
     "projectTitle": "Wloclawek - Waste-to-Energy Project Dashboard",
-    "generatedAt": "2026-05-12T14:39:30",
+    "generatedAt": "2026-05-12T15:01:53",
     "currency": "PLN",
     "sourceFiles": {
       "budget": "Budget.xlsm",
@@ -18,9 +18,9 @@
       "contracted": "T"
     },
     "scurveReferenceMonth": "mag-2026",
-    "scurveUploadedAt": "2026-05-12T14:36:32",
-    "reportFile": "WTE_Dashboard_Report_20260512-143936.xlsx",
-    "reportPath": "data/reports/WTE_Dashboard_Report_20260512-143936.xlsx"
+    "scurveUploadedAt": "2026-05-12T15:00:34",
+    "reportFile": "WTE_Dashboard_Report_20260512-150158.xlsx",
+    "reportPath": "data/reports/WTE_Dashboard_Report_20260512-150158.xlsx"
   },
   "summary": {
     "overallStatus": "AT RISK",
