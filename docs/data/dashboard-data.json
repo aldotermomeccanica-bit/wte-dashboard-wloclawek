@@ -1,12 +1,12 @@
 {
   "meta": {
     "projectTitle": "Wloclawek - Waste-to-Energy Project Dashboard",
-    "generatedAt": "2026-05-12T06:59:20",
+    "generatedAt": "2026-05-12T14:39:30",
     "currency": "PLN",
     "sourceFiles": {
       "budget": "Budget.xlsm",
       "procurement": "Procurement.xlsx",
-      "scurve": "S Curve_W┼éoc┼éawek Project.xlsx",
+      "scurve": "S Curve_WÔö╝├®ocÔö╝├®awek Project.xlsx",
       "ecdecision": "1. EC decision, recommendation register.xlsx",
       "statusprogress": "Status_Eng_Proc_Cons.xlsx",
       "erregister": "ER_decision, recommendation register.xlsx",
@@ -17,8 +17,10 @@
       "updatedBudget": "S",
       "contracted": "T"
     },
-    "scurveReferenceMonth": "apr-2026",
-    "scurveUploadedAt": "2026-04-27T11:34:40"
+    "scurveReferenceMonth": "mag-2026",
+    "scurveUploadedAt": "2026-05-12T14:36:32",
+    "reportFile": "WTE_Dashboard_Report_20260512-143936.xlsx",
+    "reportPath": "data/reports/WTE_Dashboard_Report_20260512-143936.xlsx"
   },
   "summary": {
     "overallStatus": "AT RISK",
@@ -879,21 +881,21 @@
         "count": 83,
         "value": 218667759.04,
         "tone": "green",
-        "sharePct": 24.1
+        "sharePct": 42.0
       },
       {
         "label": "In negoziazione",
-        "count": 30,
-        "value": 128599285.78,
+        "count": 50,
+        "value": 114149861.7,
         "tone": "amber",
-        "sharePct": 8.7
+        "sharePct": 22.0
       },
       {
         "label": "Da ordinare",
-        "count": 231,
-        "value": 238223502.86,
+        "count": 199,
+        "value": 187206431.16,
         "tone": "red",
-        "sharePct": 67.2
+        "sharePct": 36.0
       }
     ],
     "budgetCurveMeta": {
