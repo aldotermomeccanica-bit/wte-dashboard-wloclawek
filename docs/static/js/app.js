@@ -48,17 +48,21 @@ function fmtDate(v) {
   return d.toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' });
 }
 function toneClass(tone) { return ['green', 'amber', 'red', 'blue', 'neutral'].includes(tone) ? tone : 'neutral'; }
+function normalizeStatus(status) { return String(status || '').trim().toLowerCase(); }
 function statusTone(status) {
-  if (['finalized', 'closed', 'PCT/approval'].includes(status)) return 'green';
-  if (['contract prep.', 'negotiation'].includes(status)) return 'amber';
-  if (['planned', 'enquiry'].includes(status)) return 'blue';
+  const s = normalizeStatus(status);
+  // Cromatica allineata al grafico a torta:
+  // Closed / ordinato = verde; Planned / da ordinare = rosso; tutte le altre fasi = giallo.
+  if (['finalized', 'closed', 'pct/approval'].includes(s)) return 'green';
+  if (s === 'planned') return 'red';
+  if (s) return 'amber';
   return 'neutral';
 }
 function rootPillTone(row) {
-  const status = String(row?.dominantStatus || '').toLowerCase();
-  if (status === 'planned' || status === 'enquiry') return 'red';
-  if (status === 'contract prep.' || status === 'negotiation') return 'amber';
-  if (status === 'finalized' || status === 'closed' || status === 'pct/approval') return 'green';
+  const status = normalizeStatus(row?.dominantStatus);
+  if (['finalized', 'closed', 'pct/approval'].includes(status)) return 'green';
+  if (status === 'planned') return 'red';
+  if (status) return 'amber';
   return toneClass(row?.health);
 }
 function pill(status) { return `<span class="pill ${toneClass(statusTone(status))}">${status || '—'}</span>`; }
@@ -169,7 +173,7 @@ function lineChartSvg(curve, { height = 360, showContracted = false } = {}) {
   `;
 }
 
-function portfolioCurveSvg(curve, { height = 360, statusProgress = { headers: [], rows: [] }, ecDecision = { headers: [], rows: [] } } = {}) {
+function portfolioCurveSvg(curve, { height = 360, statusProgress = { headers: [], rows: [] }, ecDecision = { headers: [], rows: [] }, erRegister = { sections: [] } } = {}) {
   const labels = curve.labels || [];
   const series = (curve.series || []).filter(s => (s.values || []).some(v => v !== null && v !== undefined));
   const width = 980;
@@ -278,6 +282,11 @@ function portfolioCurveSvg(curve, { height = 360, statusProgress = { headers: []
         <div class="detail-note-title">EC decision</div>
         <p class="delay-curve-ec-subtitle">Tabella letta dal file presente in data/current oppure aggiornato in locale.</p>
         ${ecDecisionTableHtml(ecDecision, 'portfolio-ec-table-wrap')}
+      </div>
+      <div class="delay-curve-ec-block er-register-block">
+        <div class="detail-note-title">ER decision / recommendation register</div>
+        <p class="delay-curve-ec-subtitle">Tabella letta dal file <strong>ER_decision, recommendation register.xlsx</strong> in data/current. Se aggiorni quel file, la dashboard si aggiorna al refresh.</p>
+        ${erRegisterHtml(erRegister)}
       </div>
     </div>`;
   return `
@@ -455,7 +464,7 @@ function renderSnapshot(summary, criticalPackages) {
   const cards = [
     { key: 'closed-finalized-pct', label: 'Closed + PCT', metric: `${summary.closedCount + summary.pctApprovalCount}`, meta: fmtCurrency(summary.pctApprovalValue), tone: 'green' },
     { key: 'contract-preparation', label: 'Contract preparation', metric: `${summary.contractPrepCount}`, meta: fmtCurrency(summary.contractPrepValue), tone: 'amber' },
-    { key: 'specifiche-emesse', label: 'Pacchetti in definizione', metric: `${summary.specsIssuedCount || 0}`, meta: fmtCurrency(summary.specsIssuedValue || 0), tone: 'blue' },
+    { key: 'specifiche-emesse', label: 'Pacchetti in definizione', metric: `${summary.specsIssuedCount || 0}`, meta: fmtCurrency(summary.specsIssuedValue || 0), tone: 'amber' },
     { key: 'packages-overdue', label: 'Packages overdue', metric: `${summary.overdueCount}`, meta: summary.overdueCount > 0 ? 'Need escalation' : 'Under control', tone: summary.overdueCount > 0 ? 'red' : 'green' },
   ];
   const snap = $('snapshot-grid');
@@ -539,7 +548,7 @@ function renderOrdersStatus(ordersClosing, specsIssued, orderMix = []) {
         <div class="order-card clickable compact-order-card compact-order-metric-card" data-detail="orders-status">
           <header>
             <h3>Pacchetti in definizione</h3>
-            <span class="pill blue">${specsIssued.count}</span>
+            <span class="pill amber">${specsIssued.count}</span>
           </header>
           <div class="order-card-value">${fmtCurrency(specsIssued.value)}</div>
         </div>
@@ -758,7 +767,7 @@ function renderDashboard(data) {
   $('project-title').textContent = meta.projectTitle;
   $('generated-at').textContent = meta.generatedAt ? new Date(meta.generatedAt).toLocaleString('it-IT') : '—';
   const sourceFilesNode = $('source-files');
-  if (sourceFilesNode) sourceFilesNode.textContent = [meta.sourceFiles.budget, meta.sourceFiles.procurement, meta.sourceFiles.scurve, meta.sourceFiles.ecdecision, meta.sourceFiles.statusprogress].filter(Boolean).join(' · ') || '—';
+  if (sourceFilesNode) sourceFilesNode.textContent = [meta.sourceFiles.budget, meta.sourceFiles.procurement, meta.sourceFiles.scurve, meta.sourceFiles.ecdecision, meta.sourceFiles.statusprogress, meta.sourceFiles.erregister, meta.sourceFiles.milestones].filter(Boolean).join(' · ') || '—';
   const monthInput = $('month-check-input');
   if (monthInput && !monthInput.value) monthInput.value = currentMonthInputValue();
   renderHero(summary);
@@ -769,8 +778,9 @@ function renderDashboard(data) {
   renderOrdersStatus(overview.ordersClosing || { count:0, value:0, items:[] }, overview.specsIssued || { count:0, value:0, items:[] }, overview.orderMix || []);
   renderRoots(data.rootGroups || []);
   renderToAwardByRootChart(data.rootGroups || []);
+  renderProgramMilestones(data.programMilestones || { headers: [], rows: [] });
   renderDelayBars(data.delayedByRoot || []);
-  renderDelayCurve(data.portfolioCurve || {}, data.statusProgress || { headers: [], rows: [] }, data.ecDecision || { headers: [], rows: [] });
+  renderDelayCurve(data.portfolioCurve || {}, data.statusProgress || { headers: [], rows: [] }, data.ecDecision || { headers: [], rows: [] }, data.erRegister || { sections: [] });
   renderOverruns(data.topOverruns || []);
   renderEcDecision(data.ecDecision || { headers: [], rows: [] });
 }
@@ -799,16 +809,65 @@ function ecDecisionTableHtml(ec, extraClass = "") {
   return `<div class="table-wrap admin-ec-table-wrap ${extraClass}"><table class="admin-ec-table"><thead><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table></div>`;
 }
 
+function erRegisterHtml(register) {
+  const sections = register?.sections || [];
+  if (!sections.length) {
+    return `<div class="meta-text">Nessun dato disponibile. Inserisci il file ER_decision, recommendation register.xlsx in data/current.</div>`;
+  }
+  return sections.map(section => {
+    const title = section.title || section.sourceSheet || 'ER register';
+    const headers = section.headers || [];
+    const rows = section.rows || [];
+    if (!headers.length || !rows.length) {
+      return `<div class="er-register-section"><div class="er-register-title">${esc(title)}</div><div class="meta-text">Nessun dato disponibile per questo sheet.</div></div>`;
+    }
+    const table = ecDecisionTableHtml(section, 'portfolio-er-table-wrap');
+    return `<div class="er-register-section"><div class="er-register-title">${esc(title)}</div>${table}</div>`;
+  }).join('');
+}
+
+function programMilestonesHtml(milestones) {
+  const headers = milestones?.headers || [];
+  const rows = milestones?.rows || [];
+  if (!headers.length || !rows.length) {
+    return `<div class="meta-text">Nessun dato disponibile. Inserisci o aggiorna il file Programma Wloclawek_Milestones.xlsx in data/current.</div>`;
+  }
+  const thead = headers.map(h => `<th>${esc(h)}</th>`).join("");
+  const tbody = rows.map((rowObj) => {
+    const cells = Array.isArray(rowObj) ? rowObj : (rowObj.cells || []);
+    const isGroup = !Array.isArray(rowObj) && rowObj.isGroup;
+    if (isGroup) {
+      return `<tr class="program-milestones-group"><td colspan="${headers.length}">${esc(cells[1] || '')}</td></tr>`;
+    }
+    return `<tr>${headers.map((h, idx) => `<td>${fmtEcCell(cells[idx], h)}</td>`).join("")}</tr>`;
+  }).join("");
+  return `<div class="table-wrap program-milestones-table-wrap"><table class="program-milestones-table"><thead><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table></div>`;
+}
+
+function renderProgramMilestones(milestones) {
+  const node = $("programme-milestones");
+  if (!node) return;
+  node.innerHTML = `
+    <div class="programme-milestones-head">
+      <div>
+        <div class="detail-note-title">Programma Wloclawek - Milestones</div>
+        <p>Tabella letta dal file <strong>Programma Wloclawek_Milestones.xlsx</strong> in data/current. Se aggiorni quel file, la dashboard si aggiorna al refresh.</p>
+      </div>
+    </div>
+    ${programMilestonesHtml(milestones)}
+  `;
+}
+
 function renderEcDecision(ec) {
   const node = $("ec-decision-table");
   if (!node) return;
   node.innerHTML = ecDecisionTableHtml(ec);
 }
 
-function renderDelayCurve(curve, statusProgress, ecDecision) {
+function renderDelayCurve(curve, statusProgress, ecDecision, erRegister) {
   const target = $('delay-curve');
   if (!target) return;
-  target.innerHTML = portfolioCurveSvg(curve || {}, { statusProgress: statusProgress || { headers: [], rows: [] }, ecDecision: ecDecision || { headers: [], rows: [] } });
+  target.innerHTML = portfolioCurveSvg(curve || {}, { statusProgress: statusProgress || { headers: [], rows: [] }, ecDecision: ecDecision || { headers: [], rows: [] }, erRegister: erRegister || { sections: [] } });
 }
 
 function packageByCode(code) {
@@ -1410,7 +1469,7 @@ function bindGlobalClicks() {
 }
 
 async function loadConfig() {
-  const cfg = await fetchJSON('/api/admin/config');
+  const cfg = await Promise.resolve({});
   state.config = cfg;
   const form = $('config-form');
   form.project_title.value = cfg.project_title || '';
@@ -1426,7 +1485,7 @@ async function loadConfig() {
 async function loadHistory() {
   const historyTarget = $('history-list');
   if (!historyTarget) return;
-  state.history = await fetchJSON('/api/admin/history');
+  state.history = await Promise.resolve([]);
   historyTarget.innerHTML = state.history.map(item => `
     <div class="history-item">
       <div>
@@ -1450,7 +1509,7 @@ async function loadHistory() {
 }
 
 async function loadReports() {
-  const rows = await fetchJSON('/api/admin/reports');
+  const rows = await Promise.resolve([]);
   const node = $('report-list');
   if (!node) return;
   node.innerHTML = rows.slice(0, 8).map(item => `

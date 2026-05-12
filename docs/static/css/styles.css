@@ -1645,3 +1645,176 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
     height: auto;
   }
 }
+
+
+/* V77 - ER decision / recommendation register under EC decision */
+.er-register-block {
+  margin-top: 18px;
+}
+.er-register-section {
+  margin-top: 14px;
+}
+.er-register-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #1b3150;
+  letter-spacing: .02em;
+  margin: 4px 0 8px;
+}
+.portfolio-er-table-wrap {
+  max-height: 360px;
+  overflow: auto;
+}
+.portfolio-er-table-wrap table {
+  min-width: 1180px;
+}
+.portfolio-er-table-wrap th,
+.portfolio-er-table-wrap td {
+  font-size: 11px;
+  line-height: 1.28;
+}
+
+
+/* V78 - Programma Wloclawek milestones table in Portfolio left column */
+.programme-milestones-block {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.programme-milestones-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.programme-milestones-head p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.42;
+}
+.program-milestones-table-wrap {
+  max-height: 560px;
+  overflow: auto;
+}
+.program-milestones-table {
+  min-width: 700px;
+}
+.program-milestones-table th,
+.program-milestones-table td {
+  font-size: 11px;
+  line-height: 1.28;
+  padding: 9px 10px;
+  vertical-align: top;
+}
+.program-milestones-table th:first-child,
+.program-milestones-table td:first-child {
+  width: 56px;
+  white-space: nowrap;
+  font-weight: 800;
+  color: #1b3150;
+}
+.program-milestones-table th:nth-child(3),
+.program-milestones-table th:nth-child(4),
+.program-milestones-table td:nth-child(3),
+.program-milestones-table td:nth-child(4) {
+  width: 90px;
+  white-space: nowrap;
+}
+.program-milestones-group td {
+  background: #eef5ff;
+  color: #1b3150;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+@media (max-width: 700px) {
+  #portfolio-tab .programme-milestones-block { margin-top: 12px; padding-top: 12px; }
+  #portfolio-tab .programme-milestones-head p { font-size: 11px; }
+  #portfolio-tab .program-milestones-table-wrap { max-height: 420px; }
+  #portfolio-tab .program-milestones-table { min-width: 620px; }
+}
+
+/* V80 - Overview S-curve height alignment with right order column (desktop/tablet only) */
+@media (min-width: 781px) {
+  #overview-tab .minimal-main-grid {
+    align-items: stretch;
+  }
+
+  #overview-tab .minimal-chart-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  #overview-tab .minimal-chart-panel .minimal-panel-head,
+  #overview-tab .minimal-chart-panel .note-banner {
+    flex: 0 0 auto;
+  }
+
+  #overview-tab .minimal-chart-panel .minimal-chart {
+    flex: 1 1 auto;
+    min-height: 500px;
+  }
+
+  #overview-tab .minimal-side-column {
+    height: 100%;
+  }
+}
+
+/* V82 - dynamic Excel report button */
+.report-meta-card {
+  gap: 6px;
+}
+.report-generate-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-top: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(47, 104, 200, 0.22);
+  background: linear-gradient(180deg, rgba(47, 104, 200, 0.12), rgba(47, 104, 200, 0.06));
+  color: #1f4e79;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.report-generate-button:hover {
+  border-color: rgba(47, 104, 200, 0.42);
+  background: rgba(47, 104, 200, 0.14);
+}
+@media (max-width: 760px) {
+  .report-generate-button {
+    width: 100%;
+  }
+}
+
+.report-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.report-actions .report-generate-button {
+  margin-top: 0;
+}
+.pdf-report-button {
+  border-color: rgba(192, 0, 0, 0.20);
+  background: linear-gradient(180deg, rgba(192, 0, 0, 0.10), rgba(192, 0, 0, 0.04));
+  color: #8b1a1a;
+}
+.pdf-report-button:hover {
+  border-color: rgba(192, 0, 0, 0.38);
+  background: rgba(192, 0, 0, 0.12);
+}
+@media (max-width: 760px) {
+  .report-actions { width: 100%; }
+  .report-actions .report-generate-button { flex: 1 1 100%; width: 100%; }
+}
