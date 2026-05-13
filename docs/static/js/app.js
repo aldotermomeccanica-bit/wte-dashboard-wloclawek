@@ -26,6 +26,7 @@ function fmtSignedCurrency(v) {
   return sign + new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 }).format(Math.abs(n)) + ' PLN';
 }
 function fmtPct(v) { return `${Number(v || 0).toLocaleString('it-IT', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`; }
+function fmtPct2(v) { return `${Number(v || 0).toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`; }
 function fmtCurrencyCompact(v) {
   const n = Number(v || 0);
   const abs = Math.abs(n);
@@ -426,16 +427,56 @@ function orderPieSvg(items) {
   `;
 }
 
-function metricTile({ key, label, value, hint, progress, tone = 'neutral' }) {
+function metricTile({ key, label, value, hint, progress, tone = 'neutral', customHtml = '', extraClass = '', clickable = true }) {
   const isDeltaInline = key === 'delta-baseline';
   const isMoneyWide = ['baseline-budget', 'updated-budget', 'delta-baseline', 'contracted'].includes(key);
+  const customClass = customHtml ? 'has-custom-content' : '';
+  const clickableClass = clickable ? 'clickable' : 'not-clickable';
+  const dataAttr = clickable ? `data-kpi="${key}"` : '';
   return `
-    <article class="kpi-tile ${tone} clickable ${isDeltaInline ? 'delta-inline' : ''} ${isMoneyWide ? 'money-wide' : ''}" data-kpi="${key}">
-      <div class="label">${label}</div>
-      <div class="value">${value}${isDeltaInline && hint ? ` <span class="inline-hint">(${String(hint).replace(/[()]/g, '')})</span>` : ''}</div>
-      <div class="hint">${isDeltaInline ? '' : (hint || '')}</div>
-      <div class="kpi-track"><span style="width:${Math.max(4, Math.min(100, progress || 0))}%"></span></div>
+    <article class="kpi-tile ${tone} ${clickableClass} ${isDeltaInline ? 'delta-inline' : ''} ${isMoneyWide ? 'money-wide' : ''} ${customClass} ${extraClass}" ${dataAttr}>
+      ${customHtml || `
+        <div class="label">${label}</div>
+        <div class="value">${value}${isDeltaInline && hint ? ` <span class="inline-hint">(${String(hint).replace(/[()]/g, '')})</span>` : ''}</div>
+        <div class="hint">${isDeltaInline ? '' : (hint || '')}</div>
+        <div class="kpi-track"><span style="width:${Math.max(4, Math.min(100, progress || 0))}%"></span></div>
+      `}
     </article>
+  `;
+}
+
+const baselineBudgetOverviewHtml = `
+  <div class="baseline-budget-overview">
+    <div class="baseline-budget-overview-title">BASELINE BUDGET</div>
+    <div class="baseline-budget-overview-row"><span>Costi diretti:</span><strong>501.457.853,00 PLN</strong></div>
+    <div class="baseline-budget-overview-row"><span>Costi indiretti:</span><strong>40.355.205,00 PLN</strong></div>
+    <div class="baseline-budget-overview-row"><span>Costi garanzia, difetti, imprevisti:</span><strong>22.098.535 PLN</strong></div>
+    <div class="baseline-budget-overview-row baseline-total"><span>Totale costi:</span><strong>563.911.593,00 PLN</strong></div>
+    <div class="baseline-budget-overview-row"><span>Ricavi base:</span><strong>627.086.000,00 PLN</strong></div>
+    <div class="baseline-budget-overview-row"><span>Margine:</span><strong>63.174.407,00 PLN</strong></div>
+    <div class="baseline-budget-overview-row"><span>% sui costi:</span><strong>11,20%</strong></div>
+  </div>
+`;
+
+function fmtMoney2(value) {
+  const n = Number(value || 0);
+  return `${n.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} PLN`;
+}
+
+function updatedBudgetOverviewHtml(summary) {
+  const b = summary.updatedBudgetBreakdown || {};
+  const marginPct = Number(b.totalCosts || 0) ? (Number(b.margin || 0) / Number(b.totalCosts || 0) * 100) : Number(b.marginPct || 0);
+  return `
+    <div class="baseline-budget-overview updated-budget-overview">
+      <div class="baseline-budget-overview-title">UPDATED BUDGET</div>
+      <div class="baseline-budget-overview-row"><span>Costi diretti:</span><strong>${fmtMoney2(b.directCosts)}</strong></div>
+      <div class="baseline-budget-overview-row"><span>Costi indiretti:</span><strong>${fmtMoney2(b.indirectCosts)}</strong></div>
+      <div class="baseline-budget-overview-row"><span>Costi garanzia, difetti, imprevisti:</span><strong>${fmtMoney2(b.contingency)}</strong></div>
+      <div class="baseline-budget-overview-row baseline-total"><span>Totale costi:</span><strong>${fmtMoney2(b.totalCosts)}</strong></div>
+      <div class="baseline-budget-overview-row"><span>Ricavi base:</span><strong>${fmtMoney2(b.baseRevenue)}</strong></div>
+      <div class="baseline-budget-overview-row"><span>Margine:</span><strong>${fmtMoney2(b.margin)}</strong></div>
+      <div class="baseline-budget-overview-row"><span>% sui costi:</span><strong>${fmtPct2(marginPct)}</strong></div>
+    </div>
   `;
 }
 
@@ -445,9 +486,8 @@ function renderHero(summary) {
   $('executive-message').textContent = 'Numeri chiave e curva S per capire subito ordini, budget aggiornato e stato reale.';
   const deltaTone = Number(summary.varianceAmount || 0) >= 0 ? 'amber' : 'green';
   const items = [
-    { key: 'baseline-budget', label: 'Baseline Budget', value: fmtCurrency(summary.budgetAbTotal), hint: 'Budget di riferimento (AB)', progress: 100, tone: 'neutral' },
-    { key: 'updated-budget', label: 'Updated Budget', value: fmtCurrency(summary.updatedBudgetTotal), hint: 'Budget aggiornato dal procurement schedule', progress: 100, tone: 'neutral' },
-    { key: 'delta-baseline', label: 'Delta vs Baseline', value: fmtSignedCurrency(summary.varianceAmount), hint: '', progress: Math.min(100, Math.max(6, Math.abs(summary.variancePct || 0) * 12)), tone: deltaTone },
+    { key: 'baseline-budget', label: 'Baseline Budget', value: fmtCurrency(summary.budgetAbTotal), hint: 'Budget di riferimento (AB)', progress: 100, tone: 'neutral', customHtml: baselineBudgetOverviewHtml, extraClass: 'baseline-breakdown-tile' },
+    { key: 'updated-budget-breakdown', label: 'Updated Budget', value: fmtCurrency(summary.updatedBudgetTotal), hint: '', progress: 100, tone: 'neutral', customHtml: updatedBudgetOverviewHtml(summary), extraClass: 'updated-breakdown-tile', clickable: false },
     { key: 'contracted', label: 'Contracted', value: fmtCurrency(summary.contractedTotal), hint: `${fmtPct(summary.contractCoveragePct)} copertura`, progress: summary.contractCoveragePct, tone: summary.contractCoveragePct >= 70 ? 'green' : 'amber' },
     { key: 'overdue', label: 'Overdue', value: `${summary.overdueCount}`, hint: summary.overdueCount > 0 ? 'Da seguire' : 'Sotto controllo', progress: Math.min(100, summary.overdueCount * 8 + 6), tone: summary.overdueCount > 0 ? 'red' : 'green' },
   ];
@@ -1428,7 +1468,7 @@ function showKpiDetail(key) {
       metrics: [makeMetric('Completion', fmtPct(summary.completionPct), ''), makeMetric('Closed count', `${summary.closedCount}`, ''), makeMetric('PCT Approval', `${summary.pctApprovalCount}`, ''), makeMetric('Value', fmtCurrency(summary.pctApprovalValue), '')].join(''),
       rows: packageRows.filter(r => ['finalized', 'closed', 'PCT/approval'].includes(r.status)),
     },
-    'baseline-budget': { title: 'Baseline Budget', subtitle: 'Budget di riferimento dal file Budget (colonna AB)', metrics: [makeMetric('Baseline Budget', fmtCurrency(summary.budgetAbTotal), ''), makeMetric('Updated Budget', fmtCurrency(summary.updatedBudgetTotal), ''), makeMetric('Delta vs Baseline', fmtSignedCurrency(summary.varianceAmount), ''), makeMetric('Contracted', fmtCurrency(summary.contractedTotal), '')].join(''), rows: packageRows.sort((a,b)=>b.budgetAb-a.budgetAb).slice(0,40), noteHtml: baselineBudgetExplanationHtml },
+    'baseline-budget': { title: 'Baseline Budget', subtitle: 'Budget baseline complessivo e dettaglio procurement packages.', metrics: [makeMetric('Baseline Budget', fmtCurrency(563911593), 'Totale costi'), makeMetric('Contracted', fmtCurrency(summary.contractedTotal), '')].join(''), rows: packageRows.sort((a,b)=>b.budgetAb-a.budgetAb).slice(0,40), noteHtml: baselineBudgetExplanationHtml },
     'updated-budget': { title: 'Updated Budget', subtitle: 'Budget aggiornato dal procurement schedule', metrics: [makeMetric('Updated Budget', fmtCurrency(summary.updatedBudgetTotal), ''), makeMetric('Baseline Budget', fmtCurrency(summary.budgetAbTotal), ''), makeMetric('Delta vs Baseline', fmtSignedCurrency(summary.varianceAmount), ''), makeMetric('Contracted', fmtCurrency(summary.contractedTotal), '')].join(''), rows: packageRows.sort((a,b)=>b.updatedBudget-a.updatedBudget).slice(0,40), noteHtml: updatedBudgetExplanationHtml },
     'contracted': { title: 'Contracted value', subtitle: 'Valore già contrattualizzato', metrics: [makeMetric('Contracted', fmtCurrency(summary.contractedTotal), ''), makeMetric('Coverage', fmtPct(summary.contractCoveragePct), ''), makeMetric('Open value', fmtCurrency(summary.valueToAward), ''), makeMetric('Packages', `${packageRows.filter(r => r.contractedValue > 0).length}`, '')].join(''), rows: packageRows.filter(r => r.contractedValue > 0).sort((a,b)=>b.contractedValue-a.contractedValue).slice(0,40), noteHtml: contractedExplanationHtml },
     'delta-baseline': { title: 'Delta vs Baseline', subtitle: 'Scostamento del budget aggiornato rispetto alla baseline AB', metrics: [makeMetric('Delta', fmtSignedCurrency(summary.varianceAmount), ''), makeMetric('Baseline Budget', fmtCurrency(summary.budgetAbTotal), ''), makeMetric('Updated Budget', fmtCurrency(summary.updatedBudgetTotal), ''), makeMetric('Contracted', fmtCurrency(summary.contractedTotal), '')].join(''), rows: (state.dashboard?.topOverruns || []).filter(r => String(r.code || '').includes('.')), noteHtml: deltaBaselineExplanationHtml },

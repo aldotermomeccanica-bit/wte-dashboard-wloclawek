@@ -1826,3 +1826,118 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
   pointer-events: none;
   cursor: wait;
 }
+
+
+/* V94 - Overview Baseline Budget detailed tile */
+#overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
+#overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+.kpi-tile.baseline-breakdown-tile,
+.kpi-tile.updated-breakdown-tile {
+  grid-column: span 2;
+  min-height: 214px;
+  padding: 13px 14px 12px;
+  border-top: 3px solid var(--blue);
+}
+.kpi-tile.has-custom-content .kpi-track { display: none; }
+.baseline-budget-overview {
+  display: grid;
+  gap: 5px;
+  height: 100%;
+  align-content: start;
+}
+.baseline-budget-overview-title {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.baseline-budget-overview-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 11px;
+  line-height: 1.22;
+}
+.baseline-budget-overview-row span {
+  color: #5f728b;
+  min-width: 0;
+}
+.baseline-budget-overview-row strong {
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 850;
+  text-align: right;
+  white-space: nowrap;
+}
+.baseline-budget-overview-row.baseline-total {
+  margin-top: 3px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(18, 42, 75, .32);
+}
+.baseline-budget-overview-row.baseline-total span,
+.baseline-budget-overview-row.baseline-total strong {
+  color: var(--ink);
+  font-weight: 900;
+}
+@media (max-width: 1260px) {
+  #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.baseline-breakdown-tile,
+  .kpi-tile.updated-breakdown-tile { grid-column: span 2; }
+}
+@media (max-width: 780px) {
+  #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.baseline-breakdown-tile,
+  .kpi-tile.updated-breakdown-tile {
+    grid-column: 1 / -1;
+    min-height: auto;
+  }
+  .baseline-budget-overview-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1px;
+  }
+  .baseline-budget-overview-row strong { text-align: left; }
+}
+
+
+/* V95 - Overview Updated Budget detailed non-clickable tile */
+.kpi-tile.updated-breakdown-tile { border-top-color: var(--green); cursor: default; }
+.kpi-tile.not-clickable { cursor: default; }
+.kpi-tile.not-clickable:hover { transform: none; box-shadow: 0 10px 22px rgba(25,56,100,.06); border-color: var(--line); }
+.updated-budget-overview .baseline-budget-overview-title { color: #22834f; }
+
+
+/* V96 - Overview budget tiles: four cards on one row and compact budget breakdowns */
+@media (min-width: 1261px) {
+  #overview-tab .minimal-kpis {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.baseline-breakdown-tile,
+  .kpi-tile.updated-breakdown-tile {
+    grid-column: span 4;
+    min-height: 214px;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.money-wide:not(.baseline-breakdown-tile):not(.updated-breakdown-tile),
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile) {
+    grid-column: span 2;
+  }
+}
+@media (min-width: 1261px) and (max-width: 1450px) {
+  .baseline-budget-overview-row {
+    font-size: 10.5px;
+    gap: 7px;
+  }
+  .baseline-budget-overview-row strong {
+    font-size: 10.5px;
+  }
+  .baseline-budget-overview-title {
+    font-size: 9.5px;
+  }
+}
