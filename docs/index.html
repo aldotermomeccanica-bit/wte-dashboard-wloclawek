@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./static/css/styles.css" />
+    <link rel="stylesheet" href="./static/css/styles.css?v=20260514164238" />
   </head>
   <body>
     <div class="shell">
@@ -32,12 +32,23 @@
             <section class="hero-board card minimal-hero">
               <div class="hero-strip top-strip-grid">
                 <div class="top-strip-card strip-overview">
-                  <div class="eyebrow dark">Overview</div>
-                  <div class="hero-title-row">
-                    <h2 class="minimal-title">Overview</h2>
-                    <div id="overall-status" class="status-chip neutral" style="display:none">NO DATA</div>
+                  <div class="strip-overview-content">
+                    <div class="strip-overview-text">
+                      <div class="eyebrow dark">Overview</div>
+                      <div class="hero-title-row">
+                        <h2 class="minimal-title">Overview</h2>
+                        <div id="overall-status" class="status-chip neutral" style="display:none">NO DATA</div>
+                      </div>
+                      <p id="executive-message" class="hero-copy">Numeri chiave e curva S per capire subito ordini,<br>budget aggiornato e stato reale.</p>
+                    </div>
+                    <div class="overview-versions-mini" id="versions-card" aria-label="Versioni file Budget e Procurement">
+                      <div class="eyebrow dark">File versions</div>
+                      <div class="overview-versions-lines">
+                        <div class="overview-version-line"><span>Budget</span><strong id="budget-version">—</strong></div>
+                        <div class="overview-version-line"><span>Procurement</span><strong id="procurement-version">—</strong></div>
+                      </div>
+                    </div>
                   </div>
-                  <p id="executive-message" class="hero-copy">Numeri chiave e curva S per capire subito ordini, budget aggiornato e stato reale.</p>
                 </div>
                 <div class="mini-stat top-strip-card compact-check-card">
                   <span>Procurement check</span>
@@ -250,6 +261,6 @@
       </main>
     </div>
 
-    <script src="./static/js/app.js"></script>
+    <script src="./static/js/app.js?v=20260514164238"></script>
   </body>
 </html>
