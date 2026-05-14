@@ -710,7 +710,7 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
 /* V21: single-row top strip with equal height */
 .hero-strip.top-strip-grid {
   display: grid;
-  grid-template-columns: minmax(500px, 2fr) minmax(330px, 1.2fr) minmax(220px, .8fr);
+  grid-template-columns: minmax(350px, 1.45fr) minmax(230px, .95fr) minmax(330px, 1.2fr) minmax(220px, .8fr);
   gap: 8px;
   align-items: stretch;
 }
@@ -786,7 +786,7 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
 }
 @media (max-width: 1340px) {
   .hero-strip.top-strip-grid {
-    grid-template-columns: minmax(420px,1.7fr) minmax(300px,1.1fr) minmax(210px,.75fr);
+    grid-template-columns: minmax(300px,1.25fr) minmax(220px,.9fr) minmax(300px,1.1fr) minmax(210px,.75fr);
   }
   .strip-overview .hero-copy {
     font-size: 10.5px;
@@ -1940,4 +1940,136 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
   .baseline-budget-overview-title {
     font-size: 9.5px;
   }
+}
+
+/* V110 - dynamic Budget/Procurement version card */
+.versions-card {
+  gap: 7px;
+  justify-content: center;
+}
+.versions-card .eyebrow.dark {
+  color: #6f82a0;
+}
+.versions-grid {
+  display: grid;
+  gap: 6px;
+}
+.version-line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: baseline;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed rgba(18,42,75,.16);
+}
+.version-line:last-child { padding-bottom: 0; border-bottom: 0; }
+.version-line span {
+  font-size: 10px !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase;
+  color: #70839e;
+  font-weight: 800;
+}
+.version-line strong {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.versions-updated {
+  font-size: 9px;
+  line-height: 1.2;
+  color: #7a8aa0;
+}
+@media (max-width: 1120px) {
+  .versions-card { min-height: 84px; }
+}
+@media (max-width: 760px) {
+  .version-line { grid-template-columns: 1fr; gap: 2px; }
+  .version-line strong { white-space: normal; }
+}
+
+/* V111 - keep V109 top-row geometry and place file versions inside Overview card */
+.hero-strip.top-strip-grid {
+  grid-template-columns: minmax(500px, 2fr) minmax(330px, 1.2fr) minmax(220px, .8fr);
+}
+.strip-overview {
+  padding: 10px 12px;
+}
+.strip-overview-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 240px);
+  gap: 18px;
+  align-items: center;
+  width: 100%;
+}
+.strip-overview-text { min-width: 0; }
+.strip-overview .hero-copy {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.28;
+  margin-top: 5px;
+}
+.overview-versions-mini {
+  justify-self: end;
+  min-width: 190px;
+  max-width: 240px;
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid rgba(88, 115, 150, .18);
+  border-radius: 14px;
+  background: rgba(255,255,255,.54);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72);
+}
+.overview-versions-mini .eyebrow.dark {
+  font-size: 8.5px;
+  letter-spacing: .12em;
+  color: #6f82a0;
+  margin-bottom: 5px;
+}
+.overview-versions-lines {
+  display: grid;
+  gap: 4px;
+}
+.overview-version-line {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 8px;
+  align-items: baseline;
+}
+.overview-version-line span {
+  font-size: 9px !important;
+  letter-spacing: .09em !important;
+  text-transform: uppercase;
+  color: #70839e;
+  font-weight: 800;
+}
+.overview-version-line strong {
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 1260px) {
+  .hero-strip.top-strip-grid {
+    grid-template-columns: minmax(420px,1.7fr) minmax(300px,1.1fr) minmax(210px,.75fr);
+  }
+  .strip-overview-content {
+    grid-template-columns: minmax(0, 1fr) minmax(170px, 210px);
+    gap: 12px;
+  }
+  .overview-version-line { grid-template-columns: 74px minmax(0, 1fr); }
+  .overview-version-line strong { font-size: 11px; }
+}
+@media (max-width: 1120px) {
+  .hero-strip.top-strip-grid { grid-template-columns: 1fr 1fr; }
+  .strip-overview { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .hero-strip.top-strip-grid { grid-template-columns: 1fr; }
+  .strip-overview-content { grid-template-columns: 1fr; gap: 10px; }
+  .overview-versions-mini { justify-self: stretch; max-width: none; }
 }

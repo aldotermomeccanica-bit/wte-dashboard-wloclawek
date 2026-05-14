@@ -483,10 +483,10 @@ function updatedBudgetOverviewHtml(summary) {
 function renderHero(summary) {
   const status = $('overall-status');
   if (status) status.style.display = 'none';
-  $('executive-message').textContent = 'Numeri chiave e curva S per capire subito ordini, budget aggiornato e stato reale.';
+  $('executive-message').innerHTML = 'Numeri chiave e curva S per capire subito ordini,<br>budget aggiornato e stato reale.';
   const deltaTone = Number(summary.varianceAmount || 0) >= 0 ? 'amber' : 'green';
   const items = [
-    { key: 'baseline-budget', label: 'Baseline Budget', value: fmtCurrency(summary.budgetAbTotal), hint: 'Budget di riferimento (AB)', progress: 100, tone: 'neutral', customHtml: baselineBudgetOverviewHtml, extraClass: 'baseline-breakdown-tile' },
+    { key: 'baseline-budget', label: 'Baseline Budget', value: fmtCurrency(summary.budgetAbTotal), hint: 'Budget di riferimento (AB)', progress: 100, tone: 'neutral', customHtml: baselineBudgetOverviewHtml, extraClass: 'baseline-breakdown-tile', clickable: false },
     { key: 'updated-budget-breakdown', label: 'Updated Budget', value: fmtCurrency(summary.updatedBudgetTotal), hint: '', progress: 100, tone: 'neutral', customHtml: updatedBudgetOverviewHtml(summary), extraClass: 'updated-breakdown-tile', clickable: false },
     { key: 'contracted', label: 'Contracted', value: fmtCurrency(summary.contractedTotal), hint: `${fmtPct(summary.contractCoveragePct)} copertura`, progress: summary.contractCoveragePct, tone: summary.contractCoveragePct >= 70 ? 'green' : 'amber' },
     { key: 'overdue', label: 'Overdue', value: `${summary.overdueCount}`, hint: summary.overdueCount > 0 ? 'Da seguire' : 'Sotto controllo', progress: Math.min(100, summary.overdueCount * 8 + 6), tone: summary.overdueCount > 0 ? 'red' : 'green' },
@@ -835,11 +835,22 @@ function bindMonthCheck() {
   });
 }
 
+function renderVersionsInfo(meta) {
+  const versions = meta?.versions || {};
+  const budgetNode = $('budget-version');
+  const procurementNode = $('procurement-version');
+  const updatedNode = $('versions-updated');
+  if (budgetNode) budgetNode.textContent = versions.budgetVersion || '—';
+  if (procurementNode) procurementNode.textContent = versions.procurementVersion || '—';
+  if (updatedNode) updatedNode.textContent = '';
+}
+
 function renderDashboard(data) {
   state.dashboard = data;
   const { meta, summary, overview } = data;
   $('project-title').textContent = meta.projectTitle;
   $('generated-at').textContent = meta.generatedAt ? new Date(meta.generatedAt).toLocaleString('it-IT') : '—';
+  renderVersionsInfo(meta);
   const sourceFilesNode = $('source-files');
   if (sourceFilesNode) sourceFilesNode.textContent = [meta.sourceFiles.budget, meta.sourceFiles.procurement, meta.sourceFiles.scurve, meta.sourceFiles.ecdecision, meta.sourceFiles.statusprogress, meta.sourceFiles.erregister, meta.sourceFiles.milestones].filter(Boolean).join(' · ') || '—';
   const monthInput = $('month-check-input');
@@ -1671,7 +1682,7 @@ function setReportButtonsBusy(isBusy, activeButton = null) {
 }
 
 async function refreshDashboardData() {
-  const data = await fetchJSON('./data/dashboard-data.json?ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260514164238&ts=' + Date.now());
   renderDashboard(data);
   return data;
 }
@@ -1686,12 +1697,12 @@ function bindReportButtons() {
     if (!btn) return;
     btn.href = href;
     btn.setAttribute('download', '');
-    btn.title = 'File statico generato dalla versione locale. Per aggiornarlo, esegui BUILD_GITHUB_VERSION nella cartella locale e ripubblica docs/ su GitHub.';
+    btn.title = 'File statico generato dalla versione locale. Per aggiornarlo, genera prima Excel/PDF in locale, poi esegui BUILD_GITHUB_VERSION e ripubblica docs/ su GitHub.';
   });
 }
 
 async function loadDashboard() {
-  const data = await fetchJSON('./data/dashboard-data.json?ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260514164238&ts=' + Date.now());
   renderDashboard(data);
 }
 
