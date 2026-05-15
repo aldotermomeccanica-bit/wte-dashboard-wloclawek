@@ -1,7 +1,7 @@
 {
   "meta": {
     "projectTitle": "Wloclawek - Waste-to-Energy Project Dashboard",
-    "generatedAt": "2026-05-14T16:41:20",
+    "generatedAt": "2026-05-15T13:43:29",
     "currency": "PLN",
     "sourceFiles": {
       "budget": "Budget.xlsm",
@@ -18,15 +18,15 @@
       "contracted": "T"
     },
     "scurveReferenceMonth": "mag-2026",
-    "scurveUploadedAt": "2026-05-14T16:39:30",
+    "scurveUploadedAt": "2026-05-15T13:42:24",
     "versions": {
       "found": true,
       "sourceFile": "VERSIONS_BUDGET_PROCUREMENT.txt",
       "budgetVersion": "17_2026.04",
       "procurementVersion": "4_2026.05.06"
     },
-    "reportFile": "WTE_Dashboard_Report_20260514-164130.xlsx",
-    "reportPath": "data/reports/WTE_Dashboard_Report_20260514-164130.xlsx"
+    "reportFile": "WTE_Dashboard_Report_20260515-134337.xlsx",
+    "reportPath": "data/reports/WTE_Dashboard_Report_20260515-134337.xlsx"
   },
   "summary": {
     "overallStatus": "AT RISK",
@@ -53,7 +53,7 @@
     "curveCurrentMonth": "mag-2026",
     "curveCurrentProc": 167288704.52,
     "curveCurrentBudget": 52588549.23,
-    "executiveMessage": "Main risk today: 2.5.1.1 Supply of reinforcing steel is overdue by 134 days with 2432900 PLN still exposed.",
+    "executiveMessage": "Main risk today: 2.5.1.1 Supply of reinforcing steel is overdue by 135 days with 2432900 PLN still exposed.",
     "closedCount": 83,
     "openCount": 249,
     "overdueCount": 8,
@@ -954,7 +954,7 @@
           "start": "2025-12-04",
           "end": "2025-12-31",
           "updatedBudget": 2432900.0,
-          "overdueDays": 134
+          "overdueDays": 135
         },
         {
           "code": "2.11.5.1",
@@ -964,7 +964,7 @@
           "start": "2025-12-04",
           "end": "2025-12-31",
           "updatedBudget": 771600.0,
-          "overdueDays": 134
+          "overdueDays": 135
         },
         {
           "code": "2.5.2.2.1",
@@ -974,7 +974,7 @@
           "start": "2025-12-04",
           "end": "2025-12-31",
           "updatedBudget": 219700.0,
-          "overdueDays": 134
+          "overdueDays": 135
         },
         {
           "code": "2.5.1.2",
@@ -984,7 +984,7 @@
           "start": "2025-12-04",
           "end": "2026-02-15",
           "updatedBudget": 3160000.0,
-          "overdueDays": 88
+          "overdueDays": 89
         },
         {
           "code": "2.11.5.2",
@@ -994,7 +994,7 @@
           "start": "2025-12-04",
           "end": "2026-02-15",
           "updatedBudget": 1300000.0,
-          "overdueDays": 88
+          "overdueDays": 89
         },
         {
           "code": "2.5.2.2.2",
@@ -1004,7 +1004,7 @@
           "start": "2025-12-04",
           "end": "2026-02-15",
           "updatedBudget": 140000.0,
-          "overdueDays": 88
+          "overdueDays": 89
         },
         {
           "code": "1.2.2",
@@ -1014,7 +1014,7 @@
           "start": "2026-01-19",
           "end": "2026-02-27",
           "updatedBudget": 943000.0,
-          "overdueDays": 76
+          "overdueDays": 77
         },
         {
           "code": "1.4",
@@ -1024,7 +1024,7 @@
           "start": "2026-01-30",
           "end": "2026-03-21",
           "updatedBudget": 250000.0,
-          "overdueDays": 54
+          "overdueDays": 55
         }
       ]
     }
@@ -1097,7 +1097,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -1125,7 +1125,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "varianceAmount": -278761.0,
       "variancePct": -26.54,
       "progress": 75
@@ -1153,7 +1153,7 @@
       "endExecution": "2026-07-31",
       "company": "AF KONSTRUKCJE, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "varianceAmount": -530300.0,
       "variancePct": -70.71,
       "progress": 75
@@ -1181,7 +1181,7 @@
       "endExecution": "2026-07-31",
       "company": "Buszrem S.A. / Holcim S.A.",
       "comment": null,
-      "overdueDays": 88,
+      "overdueDays": 89,
       "varianceAmount": 140000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -1209,7 +1209,7 @@
       "endExecution": "2026-07-31",
       "company": "Buszrem S.A. / Holcim S.A.",
       "comment": null,
-      "overdueDays": 88,
+      "overdueDays": 89,
       "varianceAmount": 1300000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -1237,7 +1237,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, Buszrem S.A. / Holcim S.A.",
       "comment": null,
-      "overdueDays": 88,
+      "overdueDays": 89,
       "varianceAmount": -260000.0,
       "variancePct": -7.6,
       "progress": 75
@@ -1265,7 +1265,7 @@
       "endExecution": "2027-12-31",
       "company": "ODS, Optimal Design of Structures Sp. z o.o. ",
       "comment": "AK zwiększono w stosunku do AK0 o 443k PLN korzystając z poz. 2.6.1",
-      "overdueDays": 76,
+      "overdueDays": 77,
       "varianceAmount": 443000.0,
       "variancePct": 88.6,
       "progress": 75
@@ -1293,7 +1293,7 @@
       "endExecution": "2026-12-31",
       "company": "UDT CERT",
       "comment": null,
-      "overdueDays": 54,
+      "overdueDays": 55,
       "varianceAmount": 214974.0,
       "variancePct": 613.76,
       "progress": 75
@@ -1575,7 +1575,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -1648,7 +1648,7 @@
       "completionPct": 13.1,
       "contractCoveragePct": 47.7,
       "variancePct": -50.0,
-      "overdueDays": 161,
+      "overdueDays": 162,
       "dominantStatus": "planned"
     },
     {
@@ -1661,7 +1661,7 @@
       "completionPct": 19.5,
       "contractCoveragePct": 38.9,
       "variancePct": -48.2,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "dominantStatus": "planned"
     },
     {
@@ -1687,7 +1687,7 @@
       "completionPct": 20.0,
       "contractCoveragePct": 92.7,
       "variancePct": -17.4,
-      "overdueDays": 161,
+      "overdueDays": 162,
       "dominantStatus": "planned"
     },
     {
@@ -1830,7 +1830,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -1858,7 +1858,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "varianceAmount": -278761.0,
       "variancePct": -26.54,
       "progress": 75
@@ -1886,7 +1886,7 @@
       "endExecution": "2026-07-31",
       "company": "AF KONSTRUKCJE, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "varianceAmount": -530300.0,
       "variancePct": -70.71,
       "progress": 75
@@ -1914,7 +1914,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, Buszrem S.A. / Holcim S.A.",
       "comment": null,
-      "overdueDays": 88,
+      "overdueDays": 89,
       "varianceAmount": -260000.0,
       "variancePct": -7.6,
       "progress": 75
@@ -1942,7 +1942,7 @@
       "endExecution": "2026-07-31",
       "company": "Buszrem S.A. / Holcim S.A.",
       "comment": null,
-      "overdueDays": 88,
+      "overdueDays": 89,
       "varianceAmount": 1300000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -1970,7 +1970,7 @@
       "endExecution": "2026-07-31",
       "company": "Buszrem S.A. / Holcim S.A.",
       "comment": null,
-      "overdueDays": 88,
+      "overdueDays": 89,
       "varianceAmount": 140000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -1998,7 +1998,7 @@
       "endExecution": "2027-12-31",
       "company": "ODS, Optimal Design of Structures Sp. z o.o. ",
       "comment": "AK zwiększono w stosunku do AK0 o 443k PLN korzystając z poz. 2.6.1",
-      "overdueDays": 76,
+      "overdueDays": 77,
       "varianceAmount": 443000.0,
       "variancePct": 88.6,
       "progress": 75
@@ -2026,7 +2026,7 @@
       "endExecution": "2026-12-31",
       "company": "UDT CERT",
       "comment": null,
-      "overdueDays": 54,
+      "overdueDays": 55,
       "varianceAmount": 214974.0,
       "variancePct": 613.76,
       "progress": 75
@@ -2168,7 +2168,7 @@
       "endExecution": "2027-12-31",
       "company": "ODS, Optimal Design of Structures Sp. z o.o. ",
       "comment": "AK zwiększono w stosunku do AK0 o 443k PLN korzystając z poz. 2.6.1",
-      "overdueDays": 76,
+      "overdueDays": 77,
       "varianceAmount": 443000.0,
       "variancePct": 88.6,
       "progress": 75
@@ -2476,7 +2476,7 @@
       "endExecution": "2026-12-31",
       "company": "UDT CERT",
       "comment": null,
-      "overdueDays": 54,
+      "overdueDays": 55,
       "varianceAmount": 214974.0,
       "variancePct": 613.76,
       "progress": 75
@@ -3148,7 +3148,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -3260,7 +3260,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, Buszrem S.A. / Holcim S.A.",
       "comment": null,
-      "overdueDays": 88,
+      "overdueDays": 89,
       "varianceAmount": -260000.0,
       "variancePct": -7.6,
       "progress": 75
@@ -3456,7 +3456,7 @@
       "endExecution": "2026-07-31",
       "company": "AF KONSTRUKCJE, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "varianceAmount": -530300.0,
       "variancePct": -70.71,
       "progress": 75
@@ -3484,7 +3484,7 @@
       "endExecution": "2026-07-31",
       "company": "Buszrem S.A. / Holcim S.A.",
       "comment": null,
-      "overdueDays": 88,
+      "overdueDays": 89,
       "varianceAmount": 140000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -4744,7 +4744,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 134,
+      "overdueDays": 135,
       "varianceAmount": -278761.0,
       "variancePct": -26.54,
       "progress": 75
@@ -4800,7 +4800,7 @@
       "endExecution": "2026-07-31",
       "company": "Buszrem S.A. / Holcim S.A.",
       "comment": null,
-      "overdueDays": 88,
+      "overdueDays": 89,
       "varianceAmount": 1300000.0,
       "variancePct": 0.0,
       "progress": 75
