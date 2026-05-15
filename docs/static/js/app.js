@@ -983,6 +983,29 @@ function tableFromRows(rows, columns, options = {}) {
   `;
 }
 
+function procurementDetailColumns({ includeSupplier = false } = {}) {
+  const cols = [
+    { label: 'WBS', key: 'code', render: r => `<strong>${r.code}</strong>` },
+    { label: 'Package', key: 'name' },
+    { label: 'Status', key: 'status', render: r => pill(r.status) },
+  ];
+  if (includeSupplier) {
+    cols.push({
+      label: 'Subappaltatore / Fornitore',
+      key: 'company',
+      className: 'col-supplier',
+      render: r => esc(r.company || '—'),
+    });
+  }
+  cols.push(
+    { label: 'Updated Budget', key: 'updatedBudget', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.updatedBudget) },
+    { label: 'Contracted', key: 'contractedValue', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.contractedValue) },
+    { label: 'Delta', key: 'deltaToContract', className: 'nowrap-cell col-money', render: r => fmtSignedCurrency(contractDelta(r)) },
+    { label: 'Deadline', key: 'deadlineClosing', render: r => fmtDate(r.deadlineClosing) },
+  );
+  return cols;
+}
+
 function showPackageDetail(code) {
   const pkg = packageByCode(code);
   if (!pkg) return;
@@ -1028,15 +1051,7 @@ function showRootDetail(code) {
     makeMetric('Completion', fmtPct(root.completionPct), root.dominantStatus || 'No status'),
     makeMetric('Coverage', fmtPct(root.contractCoveragePct), 'Contracted / Updated Budget'),
   ].join('');
-  const content = tableFromRows(rows, [
-    { label: 'WBS', key: 'code', render: r => `<strong>${r.code}</strong>` },
-    { label: 'Package', key: 'name' },
-    { label: 'Status', key: 'status', render: r => pill(r.status) },
-    { label: 'Updated Budget', key: 'updatedBudget', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.updatedBudget) },
-    { label: 'Contracted', key: 'contractedValue', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.contractedValue) },
-    { label: 'Delta', key: 'deltaToContract', className: 'nowrap-cell col-money', render: r => fmtSignedCurrency(contractDelta(r)) },
-    { label: 'Deadline', key: 'deadlineClosing', render: r => fmtDate(r.deadlineClosing) },
-  ]);
+  const content = tableFromRows(rows, procurementDetailColumns({ includeSupplier: true }), { tableClass: 'supplier-detail-table' });
   openDetail(`${root.code} · ${root.name}`, 'Dettaglio root group.', metrics, content);
 }
 
@@ -1518,15 +1533,8 @@ function showKpiDetail(key) {
     openDetail('Budget Changes', 'Package con variazioni economiche rispetto alla baseline.', metrics, content);
     return;
   }
-  const content = tableFromRows(conf.rows || [], [
-    { label: 'WBS', key: 'code', render: r => `<strong>${r.code}</strong>` },
-    { label: 'Package', key: 'name' },
-    { label: 'Status', key: 'status', render: r => pill(r.status) },
-    { label: 'Updated Budget', key: 'updatedBudget', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.updatedBudget) },
-    { label: 'Contracted', key: 'contractedValue', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.contractedValue) },
-    { label: 'Delta', key: 'deltaToContract', className: 'nowrap-cell col-money', render: r => fmtSignedCurrency(contractDelta(r)) },
-    { label: 'Deadline', key: 'deadlineClosing', render: r => fmtDate(r.deadlineClosing) },
-  ]) + (conf.noteHtml || '');
+  const includeSupplier = key === 'contracted';
+  const content = tableFromRows(conf.rows || [], procurementDetailColumns({ includeSupplier }), includeSupplier ? { tableClass: 'supplier-detail-table' } : {}) + (conf.noteHtml || '');
   openDetail(conf.title, conf.subtitle, conf.metrics, content);
 }
 
@@ -1682,7 +1690,7 @@ function setReportButtonsBusy(isBusy, activeButton = null) {
 }
 
 async function refreshDashboardData() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260514164238&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260515134417&ts=' + Date.now());
   renderDashboard(data);
   return data;
 }
@@ -1702,7 +1710,7 @@ function bindReportButtons() {
 }
 
 async function loadDashboard() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260514164238&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260515134417&ts=' + Date.now());
   renderDashboard(data);
 }
 

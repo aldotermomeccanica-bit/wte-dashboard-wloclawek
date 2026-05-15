@@ -2073,3 +2073,17 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
   .strip-overview-content { grid-template-columns: 1fr; gap: 10px; }
   .overview-versions-mini { justify-self: stretch; max-width: none; }
 }
+
+/* V116 - supplier/subcontractor column in Contracted value and WBS exposure detail tables */
+.table-wrap table.supplier-detail-table {
+  min-width: 1180px;
+}
+.table-wrap th.col-supplier,
+.table-wrap td.col-supplier {
+  min-width: 190px;
+  max-width: 260px;
+}
+.table-wrap td.col-supplier {
+  font-size: 12px;
+  line-height: 1.28;
+}
