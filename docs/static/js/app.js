@@ -156,7 +156,7 @@ function lineChartSvg(curve, { height = 360, showContracted = false } = {}) {
   return `
     <div class="chart-legend chart-legend-top">
       <span class="legend-chip"><i style="background:#2f68c8"></i>Procurement schedule cumulativo</span>
-      <span class="legend-chip"><i style="background:#7EA73B"></i>Budget / programma cliente cumulativo</span>
+      <span class="legend-chip"><i style="background:#7EA73B"></i>Budget Baseline cumulativo</span>
       ${showContracted ? '<span class="legend-chip"><i style="background:#9AA5B5"></i>Contracted cumulativo</span>' : ''}
       ${marker ? '<span class="legend-chip"><i style="background:#C61E1E; width:10px; height:10px; border-radius:50%"></i>Stato attuale</span>' : ''}
     </div>
@@ -414,7 +414,7 @@ function orderPieSvg(items) {
         <path d="M ${d.edgeX} ${d.edgeY} L ${elbowX} ${labelY} L ${lineEndX} ${labelY}" fill="none" stroke="${d.color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
         <circle cx="${d.edgeX}" cy="${d.edgeY}" r="2.8" fill="${d.color}" />
         <text x="${textX}" y="${labelY - 4}" text-anchor="${anchor}" fill="#18314F" font-size="13" font-weight="800">${d.item.label}</text>
-        <text x="${textX}" y="${labelY + 13}" text-anchor="${anchor}" fill="#5A6F89" font-size="12" font-weight="700">${d.item.sharePct}%</text>
+        <text x="${textX}" y="${labelY + 13}" text-anchor="${anchor}" fill="#5A6F89" font-size="11.3" font-weight="700">Val. ${d.item.sharePct}% · N. ${d.item.countPct ?? '—'}%</text>
       </g>`;
   }).join('');
 
@@ -608,7 +608,7 @@ function renderOrdersStatus(ordersClosing, specsIssued, orderMix = []) {
   target.innerHTML = `
     <div class="minimal-orders-layout">
       <div class="order-pie-card clickable" data-detail="orders-status">
-        <div class="subhead-row compact-sub"><h3>Mix ordini</h3><span class="meta-text">etichette visibili</span></div>
+        <div class="subhead-row compact-sub"><h3>Mix ordini</h3><span class="meta-text">fetta = valore · N. = pacchetti</span></div>
         ${orderPieSvg(orderMix)}
       </div>
       <div class="minimal-order-summary">
@@ -1092,7 +1092,7 @@ function showCurveDetail() {
   }));
   const metrics = [
     makeMetric('Procurement cumulativo', fmtCurrency(curve.currentMarker?.procAbs || rows.at(-1)?.procAbs || 0), curve.currentMarker?.label || 'mese corrente'),
-    makeMetric('Budget cliente cumulativo', fmtCurrency(curve.currentMarker?.budgetAbs || rows.at(-1)?.budgetAbs || 0), curve.currentMarker?.label || 'mese corrente'),
+    makeMetric('Budget Baseline cumulativo', fmtCurrency(curve.currentMarker?.budgetAbs || rows.at(-1)?.budgetAbs || 0), curve.currentMarker?.label || 'mese corrente'),
     makeMetric('Scostamento', fmtSignedCurrency((curve.currentMarker?.procAbs || rows.at(-1)?.procAbs || 0) - (curve.currentMarker?.budgetAbs || rows.at(-1)?.budgetAbs || 0)), curve.currentMarker?.label || 'mese corrente'),
     makeMetric('Months', `${rows.length}`, 'dic-2025 → dic-2028'),
   ].join('');
@@ -1101,13 +1101,13 @@ function showCurveDetail() {
     ${tableFromRows(rows, [
       { label: 'Month', key: 'label' },
       { label: 'Procurement cumulative', key: 'procAbs', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.procAbs) },
-      { label: 'Budget cliente cumulative', key: 'budgetAbs', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.budgetAbs) },
+      { label: 'Budget Baseline cumulative', key: 'budgetAbs', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.budgetAbs) },
       { label: 'Procurement %', key: 'procPct', render: r => fmtPct(r.procPct) },
-      { label: 'Budget cliente %', key: 'budgetPct', render: r => fmtPct(r.budgetPct) },
+      { label: 'Budget Baseline %', key: 'budgetPct', render: r => fmtPct(r.budgetPct) },
     ], { tableClass: 'equal-cols-table' })}
     ${curveExplanationHtml}
   `;
-  openDetail('Curva S cumulata', 'Linea blu = procurement schedule cumulativo, linea verde = budget / programma cliente, pallino rosso = stato attuale.', metrics, content);
+  openDetail('Curva S cumulata', 'Linea blu = procurement schedule cumulativo dinamico, linea verde = Budget Baseline fisso, pallino rosso = stato attuale.', metrics, content);
 }
 
 function showCostBreakdownDetail() {
@@ -1443,7 +1443,7 @@ const curveExplanationHtml = `
     </div>
     <hr />
     <div class="detail-note-group">
-      <div class="detail-note-title">Budget / programma cliente cumulativo</div>
+      <div class="detail-note-title">Budget Baseline cumulativo</div>
       <p><strong>Linea verde = valore cumulato della curva budget / programma cliente in PLN</strong></p>
       <p>È costruita leggendo dal file Budget la curva di riferimento mensile e trasformandola in un cumulato nel tempo.</p>
       <p>Mostra quindi dove dovrebbe collocarsi il valore cumulato secondo il piano / programma cliente di riferimento.</p>
@@ -1690,7 +1690,7 @@ function setReportButtonsBusy(isBusy, activeButton = null) {
 }
 
 async function refreshDashboardData() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260515144430&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260518154057&ts=' + Date.now());
   renderDashboard(data);
   return data;
 }
@@ -1710,7 +1710,7 @@ function bindReportButtons() {
 }
 
 async function loadDashboard() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260515144430&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260518154057&ts=' + Date.now());
   renderDashboard(data);
 }
 
