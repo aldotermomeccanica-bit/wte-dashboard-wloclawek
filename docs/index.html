@@ -7,9 +7,42 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./static/css/styles.css?v=20260515162805" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="./static/css/styles.css?v=20260515144430" />
+  <style>
+.github-locked .shell { filter: blur(5px); pointer-events: none; user-select: none; }
+.github-password-gate { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 24px; background: radial-gradient(circle at 30% 10%, rgba(45, 109, 246, 0.14), transparent 36%), linear-gradient(135deg, rgba(8, 20, 44, 0.96), rgba(15, 35, 72, 0.94)); font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.github-password-card { width: min(440px, 100%); padding: 34px 32px 30px; border: 1px solid rgba(255,255,255,0.18); border-radius: 28px; background: rgba(255,255,255,0.96); box-shadow: 0 30px 90px rgba(0,0,0,0.35); text-align: center; }
+.github-password-mark { width: 58px; height: 58px; margin: 0 auto 16px; border-radius: 18px; display: grid; place-items: center; background: #0f2a52; color: #fff; font-weight: 800; font-size: 28px; letter-spacing: -0.04em; }
+.github-password-eyebrow { margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.14em; font-size: 11px; font-weight: 800; color: #5b6c87; }
+.github-password-card h1 { margin: 0; font-size: 26px; line-height: 1.15; color: #10213d; }
+.github-password-copy { margin: 14px 0 24px; color: #5f6f86; line-height: 1.55; font-size: 14px; }
+.github-password-card form { display: grid; gap: 12px; text-align: left; }
+.github-password-card label { font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #43536b; }
+.github-password-card input { width: 100%; box-sizing: border-box; border: 1px solid #d3dbe8; border-radius: 14px; padding: 13px 14px; font-size: 15px; outline: none; }
+.github-password-card input:focus { border-color: #2d6df6; box-shadow: 0 0 0 4px rgba(45,109,246,0.13); }
+.github-password-card button { border: 0; border-radius: 14px; padding: 13px 16px; background: #0f2a52; color: #fff; font-size: 14px; font-weight: 800; cursor: pointer; }
+.github-password-card button:hover { background: #163967; }
+.github-password-error { min-height: 18px; margin: 0; color: #c5161d; font-size: 13px; text-align: center; font-weight: 700; }
+@media (max-width: 520px) { .github-password-card { padding: 28px 22px 24px; border-radius: 22px; } .github-password-card h1 { font-size: 22px; } }
+</style>
+</head>
+  <body class="github-locked">
+
+    <div id="github-password-gate" class="github-password-gate" role="dialog" aria-modal="true" aria-labelledby="github-password-title">
+      <div class="github-password-card">
+        <div class="github-password-mark">W</div>
+        <p class="github-password-eyebrow">Restricted dashboard</p>
+        <h1 id="github-password-title">WTE Project Dashboard</h1>
+        <p class="github-password-copy">Inserisci la password per visualizzare la dashboard pubblicata su GitHub Pages.</p>
+        <form id="github-password-form" autocomplete="off">
+          <label for="github-password-input">Password</label>
+          <input id="github-password-input" type="password" placeholder="Password" autocomplete="current-password" required />
+          <button type="submit">Accedi</button>
+          <p id="github-password-error" class="github-password-error" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+    
     <div class="shell">
       <header class="topbar">
         <div class="brand-block">
@@ -261,6 +294,37 @@
       </main>
     </div>
 
-    <script src="./static/js/app.js?v=20260515162805"></script>
-  </body>
+    <script src="./static/js/app.js?v=20260515144430"></script>
+  
+    <script>
+      (function () {
+        const expectedHash = "ec282ade1a510796152b6bf8906ef248e48d99b8266b618546553c7e45f09242";
+        const storageKey = "wteDashboardGithubAccessHash";
+        const gate = document.getElementById("github-password-gate");
+        const form = document.getElementById("github-password-form");
+        const input = document.getElementById("github-password-input");
+        const error = document.getElementById("github-password-error");
+        async function sha256(text) {
+          const data = new TextEncoder().encode(text);
+          const digest = await crypto.subtle.digest("SHA-256", data);
+          return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, "0")).join("");
+        }
+        function unlock() {
+          document.body.classList.remove("github-locked");
+          if (gate) gate.remove();
+        }
+        if (localStorage.getItem(storageKey) === expectedHash) { unlock(); return; }
+        if (input) setTimeout(() => input.focus(), 80);
+        if (form) {
+          form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const hash = await sha256(input.value || "");
+            if (hash === expectedHash) { localStorage.setItem(storageKey, expectedHash); unlock(); }
+            else { if (error) error.textContent = "Password non corretta."; input.value = ""; input.focus(); }
+          });
+        }
+      })();
+    </script>
+    
+</body>
 </html>
