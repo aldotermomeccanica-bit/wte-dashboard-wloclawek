@@ -1,7 +1,7 @@
 {
   "meta": {
     "projectTitle": "Wloclawek - Waste-to-Energy Project Dashboard",
-    "generatedAt": "2026-05-15T16:27:29",
+    "generatedAt": "2026-05-18T14:52:45",
     "currency": "PLN",
     "sourceFiles": {
       "budget": "Budget.xlsm",
@@ -18,15 +18,15 @@
       "contracted": "T"
     },
     "scurveReferenceMonth": "mag-2026",
-    "scurveUploadedAt": "2026-05-15T16:27:29",
+    "scurveUploadedAt": "2026-05-18T14:52:45",
     "versions": {
       "found": true,
       "sourceFile": "VERSIONS_BUDGET_PROCUREMENT.txt",
       "budgetVersion": "17_2026.04",
       "procurementVersion": "4_2026.05.06"
     },
-    "reportFile": "WTE_Dashboard_Report_20260515-162737.xlsx",
-    "reportPath": "data/reports/WTE_Dashboard_Report_20260515-162737.xlsx"
+    "reportFile": "WTE_Dashboard_Report_20260518-145253.xlsx",
+    "reportPath": "data/reports/WTE_Dashboard_Report_20260518-145253.xlsx"
   },
   "summary": {
     "overallStatus": "AT RISK",
@@ -52,8 +52,8 @@
     "valueToAward": 243882828.41,
     "curveCurrentMonth": "mag-2026",
     "curveCurrentProc": 106556200.88,
-    "curveCurrentBudget": 31926632.74,
-    "executiveMessage": "Main risk today: 2.5.1.1 Supply of reinforcing steel is overdue by 135 days with 2432900 PLN still exposed.",
+    "curveCurrentBudget": 52588549.23,
+    "executiveMessage": "Main risk today: 2.5.1.1 Supply of reinforcing steel is overdue by 138 days with 2432900 PLN still exposed.",
     "closedCount": 102,
     "openCount": 239,
     "overdueCount": 11,
@@ -187,40 +187,40 @@
       "budgetPct": [
         1.24,
         1.48,
-        2.46,
-        3.7,
-        4.31,
-        6.37,
-        11.34,
-        13.54,
-        16.06,
-        19.42,
-        23.66,
-        27.08,
-        31.02,
-        35.98,
-        41.56,
-        48.61,
-        54.75,
-        61.14,
-        66.49,
-        71.14,
-        74.57,
-        79.04,
-        81.16,
-        82.82,
-        87.74,
-        88.9,
-        89.55,
-        90.12,
-        90.18,
-        90.85,
-        91.04,
-        91.04,
-        91.04,
-        91.08,
-        91.08,
-        91.08,
+        3.04,
+        5.53,
+        7.79,
+        10.52,
+        13.5,
+        16.51,
+        21.41,
+        27.66,
+        33.18,
+        38.49,
+        44.26,
+        49.66,
+        55.33,
+        62.34,
+        69.1,
+        74.28,
+        79.9,
+        84.05,
+        87.51,
+        90.66,
+        93.19,
+        95.39,
+        97.76,
+        97.76,
+        98.15,
+        98.58,
+        98.73,
+        99.48,
+        99.69,
+        99.78,
+        99.87,
+        100.0,
+        100.0,
+        100.0,
         100.0
       ],
       "contractedPct": [
@@ -304,41 +304,41 @@
       "budgetAbs": [
         6199140.0,
         7408985.03,
-        12323042.8,
-        18547903.27,
-        21628364.54,
-        31926632.74,
-        56847251.23,
-        67891846.9,
-        80542907.15,
-        97383875.62,
-        118642946.52,
-        135796918.16,
-        155570113.01,
-        180432043.41,
-        208400592.91,
-        243743434.67,
-        274566471.56,
-        306582656.62,
-        333431397.59,
-        356731972.91,
-        373929963.02,
-        396376382.57,
-        406978189.42,
-        415328279.2,
-        439966055.7,
-        445783872.66,
-        449062941.9,
-        451922744.28,
-        452231371.21,
-        455566859.65,
-        456533544.73,
-        456533544.73,
-        456533544.73,
-        456707544.73,
-        456707544.73,
-        456707544.73,
-        501457853.02
+        15203571.96,
+        27627212.04,
+        38963661.21,
+        52588549.23,
+        67499067.36,
+        82527312.98,
+        107066790.1,
+        138283253.22,
+        165891446.07,
+        192432413.37,
+        221279205.78,
+        248301786.41,
+        276627533.72,
+        311667519.8,
+        345489901.21,
+        371387823.45,
+        399483672.51,
+        420220456.53,
+        437536141.46,
+        453299851.05,
+        465923471.66,
+        476900362.73,
+        488790286.4,
+        488790286.4,
+        490700828.5,
+        492867837.08,
+        493626136.87,
+        497367012.91,
+        498436053.44,
+        498890598.9,
+        499345144.35,
+        499973689.81,
+        499973689.81,
+        499973689.81,
+        499973689.81
       ],
       "contractedAbs": [
         0,
@@ -421,41 +421,41 @@
       "budgetMonthly": [
         6199140.0,
         1209845.03,
-        4914057.77,
-        6224860.47,
-        3080461.27,
-        10298268.2,
-        24920618.49,
-        11044595.67,
-        12651060.25,
-        16840968.47,
-        21259070.9,
-        17153971.64,
-        19773194.85,
-        24861930.4,
-        27968549.5,
-        35342841.76,
-        30823036.89,
-        32016185.06,
-        26848740.97,
-        23300575.32,
-        17197990.11,
-        22446419.55,
-        10601806.85,
-        8350089.78,
-        24637776.5,
-        5817816.96,
-        3279069.24,
-        2859802.38,
-        308626.93,
-        3335488.44,
-        966685.08,
+        7794586.93,
+        12423640.08,
+        11336449.17,
+        13624888.02,
+        14910518.13,
+        15028245.62,
+        24539477.12,
+        31216463.12,
+        27608192.85,
+        26540967.3,
+        28846792.41,
+        27022580.63,
+        28325747.31,
+        35039986.08,
+        33822381.41,
+        25897922.24,
+        28095849.06,
+        20736784.02,
+        17315684.93,
+        15763709.59,
+        12623620.61,
+        10976891.07,
+        11889923.67,
+        0.0,
+        1910542.1,
+        2167008.58,
+        758299.79,
+        3740876.04,
+        1069040.53,
+        454545.46,
+        454545.45,
+        628545.46,
         0.0,
         0.0,
-        174000.0,
-        0.0,
-        0.0,
-        44750308.29
+        0.0
       ],
       "contractedMonthly": [
         0,
@@ -501,20 +501,20 @@
         "month": "2026-05",
         "label": "mag-2026",
         "procPct": 20.76,
-        "budgetPct": 6.37,
+        "budgetPct": 10.52,
         "contractedPct": 0,
         "procAbs": 106556200.88,
-        "budgetAbs": 31926632.74,
+        "budgetAbs": 52588549.23,
         "contractedAbs": 0
       },
-      "budgetRowLabel": "Combined_S_Curve_Formulas!L:L Budget_Direct_Cumulative",
-      "sourceMode": "external_combined_s_curve",
+      "budgetRowLabel": "Combined_S_Curve_Formulas!L:L Budget Baseline cumulative",
+      "sourceMode": "external_combined_s_curve_budget_baseline",
       "sourceFile": "S_Curve_Dashboard_Source.xlsx",
       "sourceSheet": "Combined_S_Curve_Formulas",
       "sourceColumns": {
         "period": "A",
         "procurementCumulative": "F",
-        "budgetCumulative": "L"
+        "budgetBaselineCumulative": "L"
       }
     },
     "costBreakdown": [
@@ -717,7 +717,7 @@
           "endExecution": "2027-12-31",
           "company": "NOWOSTAL Sp. z o.o., ODS ",
           "comment": null,
-          "overdueDays": 15,
+          "overdueDays": 18,
           "varianceAmount": 13557000.0,
           "variancePct": 3060.27,
           "progress": 75
@@ -745,7 +745,7 @@
           "endExecution": "2026-12-31",
           "company": "NOWOSTAL, NOWOSTAL Sp. z o.o.",
           "comment": null,
-          "overdueDays": 15,
+          "overdueDays": 18,
           "varianceAmount": -0.48,
           "variancePct": -0.0,
           "progress": 75
@@ -904,32 +904,35 @@
         "count": 102,
         "value": 275231609.49,
         "tone": "green",
-        "sharePct": 52.9
+        "sharePct": 52.9,
+        "countPct": 29.9
       },
       {
         "label": "In negoziazione",
         "count": 51,
         "value": 106116312.26,
         "tone": "amber",
-        "sharePct": 20.4
+        "sharePct": 20.4,
+        "countPct": 15.0
       },
       {
         "label": "Da ordinare",
         "count": 188,
         "value": 138676130.15,
         "tone": "red",
-        "sharePct": 26.7
+        "sharePct": 26.7,
+        "countPct": 55.1
       }
     ],
     "budgetCurveMeta": {
       "label": "Combined_S_Curve_Formulas",
       "row": null,
-      "total": 501457853.02,
+      "total": 499973689.81,
       "sourceFile": "S_Curve_Dashboard_Source.xlsx",
       "sourceColumns": {
         "period": "A",
         "procurementCumulative": "F",
-        "budgetCumulative": "L"
+        "budgetBaselineCumulative": "L"
       }
     },
     "timeline": {
@@ -958,7 +961,7 @@
           "start": "2025-12-04",
           "end": "2025-12-31",
           "updatedBudget": 2432900.0,
-          "overdueDays": 135
+          "overdueDays": 138
         },
         {
           "code": "2.11.5.1",
@@ -968,7 +971,7 @@
           "start": "2025-12-04",
           "end": "2025-12-31",
           "updatedBudget": 771600.0,
-          "overdueDays": 135
+          "overdueDays": 138
         },
         {
           "code": "2.5.2.2.1",
@@ -978,7 +981,7 @@
           "start": "2025-12-04",
           "end": "2025-12-31",
           "updatedBudget": 219700.0,
-          "overdueDays": 135
+          "overdueDays": 138
         },
         {
           "code": "2.5.1.2",
@@ -988,7 +991,7 @@
           "start": "2025-12-04",
           "end": "2026-02-15",
           "updatedBudget": 3160000.0,
-          "overdueDays": 89
+          "overdueDays": 92
         },
         {
           "code": "2.11.5.2",
@@ -998,7 +1001,7 @@
           "start": "2025-12-04",
           "end": "2026-02-15",
           "updatedBudget": 1300000.0,
-          "overdueDays": 89
+          "overdueDays": 92
         },
         {
           "code": "2.5.2.2.2",
@@ -1008,7 +1011,7 @@
           "start": "2025-12-04",
           "end": "2026-02-15",
           "updatedBudget": 140000.0,
-          "overdueDays": 89
+          "overdueDays": 92
         },
         {
           "code": "1.4",
@@ -1018,7 +1021,7 @@
           "start": "2026-03-08",
           "end": "2026-03-21",
           "updatedBudget": 250000.0,
-          "overdueDays": 55
+          "overdueDays": 58
         },
         {
           "code": "2.6.1.1",
@@ -1028,7 +1031,7 @@
           "start": "2026-02-27",
           "end": "2026-04-30",
           "updatedBudget": 14000000.0,
-          "overdueDays": 15
+          "overdueDays": 18
         },
         {
           "code": "5.4.2",
@@ -1038,7 +1041,7 @@
           "start": "2026-02-15",
           "end": "2026-04-30",
           "updatedBudget": 6374146.52,
-          "overdueDays": 15
+          "overdueDays": 18
         },
         {
           "code": "2.6.5",
@@ -1048,7 +1051,7 @@
           "start": "2026-04-30",
           "end": "2026-05-27",
           "updatedBudget": 425469.43,
-          "overdueDays": 15
+          "overdueDays": 18
         }
       ]
     }
@@ -1121,7 +1124,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -1149,7 +1152,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "varianceAmount": -278761.0,
       "variancePct": -26.54,
       "progress": 75
@@ -1177,7 +1180,7 @@
       "endExecution": "2026-07-31",
       "company": "AF KONSTRUKCJE, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "varianceAmount": -530300.0,
       "variancePct": -70.71,
       "progress": 75
@@ -1205,7 +1208,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 89,
+      "overdueDays": 92,
       "varianceAmount": 140000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -1233,7 +1236,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 89,
+      "overdueDays": 92,
       "varianceAmount": 1300000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -1261,7 +1264,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, Holcim S.A.",
       "comment": null,
-      "overdueDays": 89,
+      "overdueDays": 92,
       "varianceAmount": -260000.0,
       "variancePct": -7.6,
       "progress": 75
@@ -1289,7 +1292,7 @@
       "endExecution": "2026-12-31",
       "company": "UDT CERT",
       "comment": null,
-      "overdueDays": 55,
+      "overdueDays": 58,
       "varianceAmount": 214974.0,
       "variancePct": 613.76,
       "progress": 75
@@ -1459,7 +1462,7 @@
       "endExecution": "2027-12-31",
       "company": "NOWOSTAL Sp. z o.o., ODS ",
       "comment": null,
-      "overdueDays": 15,
+      "overdueDays": 18,
       "varianceAmount": 13557000.0,
       "variancePct": 3060.27,
       "progress": 75
@@ -1627,7 +1630,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -1672,7 +1675,7 @@
       "completionPct": 17.7,
       "contractCoveragePct": 51.3,
       "variancePct": -49.8,
-      "overdueDays": 162,
+      "overdueDays": 165,
       "dominantStatus": "planned"
     },
     {
@@ -1685,7 +1688,7 @@
       "completionPct": 24.4,
       "contractCoveragePct": 50.7,
       "variancePct": -48.2,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "dominantStatus": "planned"
     },
     {
@@ -1698,7 +1701,7 @@
       "completionPct": 35.7,
       "contractCoveragePct": 61.3,
       "variancePct": -50.0,
-      "overdueDays": 23,
+      "overdueDays": 26,
       "dominantStatus": "planned"
     },
     {
@@ -1711,7 +1714,7 @@
       "completionPct": 35.0,
       "contractCoveragePct": 92.7,
       "variancePct": -17.4,
-      "overdueDays": 162,
+      "overdueDays": 165,
       "dominantStatus": "planned"
     },
     {
@@ -1750,7 +1753,7 @@
       "completionPct": 6.2,
       "contractCoveragePct": 4.1,
       "variancePct": -47.7,
-      "overdueDays": 23,
+      "overdueDays": 26,
       "dominantStatus": "planned"
     },
     {
@@ -1854,7 +1857,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -1882,7 +1885,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "varianceAmount": -278761.0,
       "variancePct": -26.54,
       "progress": 75
@@ -1910,7 +1913,7 @@
       "endExecution": "2026-07-31",
       "company": "AF KONSTRUKCJE, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "varianceAmount": -530300.0,
       "variancePct": -70.71,
       "progress": 75
@@ -1938,7 +1941,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, Holcim S.A.",
       "comment": null,
-      "overdueDays": 89,
+      "overdueDays": 92,
       "varianceAmount": -260000.0,
       "variancePct": -7.6,
       "progress": 75
@@ -1966,7 +1969,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 89,
+      "overdueDays": 92,
       "varianceAmount": 1300000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -1994,7 +1997,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 89,
+      "overdueDays": 92,
       "varianceAmount": 140000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -2022,7 +2025,7 @@
       "endExecution": "2026-12-31",
       "company": "UDT CERT",
       "comment": null,
-      "overdueDays": 55,
+      "overdueDays": 58,
       "varianceAmount": 214974.0,
       "variancePct": 613.76,
       "progress": 75
@@ -2050,7 +2053,7 @@
       "endExecution": "2027-12-31",
       "company": "NOWOSTAL Sp. z o.o., ODS ",
       "comment": null,
-      "overdueDays": 15,
+      "overdueDays": 18,
       "varianceAmount": 13557000.0,
       "variancePct": 3060.27,
       "progress": 75
@@ -2078,7 +2081,7 @@
       "endExecution": "2026-12-31",
       "company": "NOWOSTAL, NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 15,
+      "overdueDays": 18,
       "varianceAmount": -0.48,
       "variancePct": -0.0,
       "progress": 75
@@ -2106,7 +2109,7 @@
       "endExecution": "2026-12-31",
       "company": "NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 15,
+      "overdueDays": 18,
       "varianceAmount": 425469.43,
       "variancePct": 0.0,
       "progress": 75
@@ -2556,7 +2559,7 @@
       "endExecution": "2026-12-31",
       "company": "UDT CERT",
       "comment": null,
-      "overdueDays": 55,
+      "overdueDays": 58,
       "varianceAmount": 214974.0,
       "variancePct": 613.76,
       "progress": 75
@@ -3312,7 +3315,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -3424,7 +3427,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, Holcim S.A.",
       "comment": null,
-      "overdueDays": 89,
+      "overdueDays": 92,
       "varianceAmount": -260000.0,
       "variancePct": -7.6,
       "progress": 75
@@ -3620,7 +3623,7 @@
       "endExecution": "2026-07-31",
       "company": "AF KONSTRUKCJE, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "varianceAmount": -530300.0,
       "variancePct": -70.71,
       "progress": 75
@@ -3648,7 +3651,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 89,
+      "overdueDays": 92,
       "varianceAmount": 140000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -3928,7 +3931,7 @@
       "endExecution": "2027-12-31",
       "company": "NOWOSTAL Sp. z o.o., ODS ",
       "comment": null,
-      "overdueDays": 15,
+      "overdueDays": 18,
       "varianceAmount": 13557000.0,
       "variancePct": 3060.27,
       "progress": 75
@@ -4152,7 +4155,7 @@
       "endExecution": "2026-12-31",
       "company": "NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 15,
+      "overdueDays": 18,
       "varianceAmount": 425469.43,
       "variancePct": 0.0,
       "progress": 75
@@ -4908,7 +4911,7 @@
       "endExecution": "2026-07-31",
       "company": "BUSZREM / HOLCIM, THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 135,
+      "overdueDays": 138,
       "varianceAmount": -278761.0,
       "variancePct": -26.54,
       "progress": 75
@@ -4964,7 +4967,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 89,
+      "overdueDays": 92,
       "varianceAmount": 1300000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -7092,7 +7095,7 @@
       "endExecution": "2026-12-31",
       "company": "NOWOSTAL, NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 15,
+      "overdueDays": 18,
       "varianceAmount": -0.48,
       "variancePct": -0.0,
       "progress": 75
@@ -11628,7 +11631,7 @@
       "endExecution": "2026-05-31",
       "company": "P.W. Markopol",
       "comment": null,
-      "overdueDays": 4,
+      "overdueDays": 7,
       "varianceAmount": 0.0,
       "variancePct": 0.0,
       "progress": 75
