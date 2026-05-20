@@ -608,8 +608,9 @@ function renderOrdersStatus(ordersClosing, specsIssued, orderMix = []) {
   target.innerHTML = `
     <div class="minimal-orders-layout">
       <div class="order-pie-card clickable" data-detail="orders-status">
-        <div class="subhead-row compact-sub"><h3>Mix ordini</h3><span class="meta-text">fetta = valore · N. = pacchetti</span></div>
+        <div class="subhead-row compact-sub"><h3>Mix ordini diretti</h3><span class="meta-text">solo ordini diretti · fetta = valore · N. = pacchetti</span></div>
         ${orderPieSvg(orderMix)}
+        <div class="pie-scope-note">Nota: il grafico considera solo gli ordini diretti (root group 1–7). Sono esclusi indiretti, servizi e rischi/opportunità.</div>
       </div>
       <div class="minimal-order-summary">
         <div class="order-card clickable compact-order-card compact-order-metric-card" data-detail="orders-status">
@@ -1690,7 +1691,7 @@ function setReportButtonsBusy(isBusy, activeButton = null) {
 }
 
 async function refreshDashboardData() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260518154057&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260520110514&ts=' + Date.now());
   renderDashboard(data);
   return data;
 }
@@ -1710,7 +1711,7 @@ function bindReportButtons() {
 }
 
 async function loadDashboard() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260518154057&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260520110514&ts=' + Date.now());
   renderDashboard(data);
 }
 

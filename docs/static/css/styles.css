@@ -2087,3 +2087,16 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
   font-size: 12px;
   line-height: 1.28;
 }
+
+/* V121 - direct orders note under the order mix chart */
+.pie-scope-note{
+  margin: -8px 14px 8px;
+  padding: 7px 9px;
+  border-radius: 10px;
+  background: #f3f7fc;
+  border: 1px solid #dce8f5;
+  color: #49647f;
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 650;
+}
