@@ -5,6 +5,7 @@ const state = {
   lastNonDetail: 'overview',
   currentView: { type: 'tab', tab: 'overview' },
   viewStack: [],
+  sCurveMode: localStorage.getItem('wteSCurveMode') || 'A',
 };
 
 const $ = (id) => document.getElementById(id);
@@ -150,12 +151,12 @@ function lineChartSvg(curve, { height = 360, showContracted = false } = {}) {
   const marker = curve.currentMarker;
   const markerSvg = marker ? `
     <circle cx="${x(marker.index)}" cy="${y(marker.procAbs)}" r="5.4" fill="#C61E1E" stroke="white" stroke-width="1.5">
-      <title>${marker.label}: ${fmtCurrency(marker.procAbs)} procurement cumulativo</title>
+      <title>${marker.label}: ${fmtCurrency(marker.procAbs)} ${esc(curve.markerMeaning || 'procurement cumulativo')}</title>
     </circle>` : '';
 
   return `
     <div class="chart-legend chart-legend-top">
-      <span class="legend-chip"><i style="background:#2f68c8"></i>Procurement schedule cumulativo</span>
+      <span class="legend-chip"><i style="background:#2f68c8"></i>${esc(curve.procLegend || 'Procurement schedule cumulativo')}</span>
       <span class="legend-chip"><i style="background:#7EA73B"></i>Budget Baseline cumulativo</span>
       ${showContracted ? '<span class="legend-chip"><i style="background:#9AA5B5"></i>Contracted cumulativo</span>' : ''}
       ${marker ? '<span class="legend-chip"><i style="background:#C61E1E; width:10px; height:10px; border-radius:50%"></i>Stato attuale</span>' : ''}
@@ -480,6 +481,46 @@ function updatedBudgetOverviewHtml(summary) {
   `;
 }
 
+function costDetailOverviewHtml(summary) {
+  const detail = summary.costDetail || state.dashboard?.overview?.costDetail || {};
+  const rows = detail.rows || [];
+  const orderedPct = Number(detail.orderedPct || 0);
+  const toOrderPct = Number(detail.toOrderPct || 0);
+  const money = (v) => fmtCurrency(Number(v || 0)).replace(' PLN', '');
+  if (!rows.length) {
+    return `
+      <div class="cost-detail-overview">
+        <div class="cost-detail-head"><span>Dettaglio Costi (PLN)</span><em>Dati non disponibili</em></div>
+      </div>
+    `;
+  }
+  return `
+    <div class="cost-detail-overview">
+      <div class="cost-detail-head">
+        <span>Dettaglio Costi (PLN)</span>
+        <em>ordini diretti · root 1-7</em>
+      </div>
+      <div class="cost-detail-grid cost-detail-grid-head">
+        <span></span><strong>Ordinato</strong><strong>Da Ordinare*</strong>
+      </div>
+      <div class="cost-detail-rows">
+        ${rows.map(r => `
+          <div class="cost-detail-grid">
+            <span>${esc(r.label)}</span>
+            <strong>${money(r.ordered)}</strong>
+            <strong>${money(r.toOrder)}</strong>
+          </div>
+        `).join('')}
+      </div>
+      <div class="cost-detail-grid cost-detail-total">
+        <span>Totale</span>
+        <strong>${money(detail.ordered)} (${fmtPct(orderedPct)})</strong>
+        <strong>${money(detail.toOrder)} (${fmtPct(toOrderPct)})</strong>
+      </div>
+    </div>
+  `;
+}
+
 function renderHero(summary) {
   const status = $('overall-status');
   if (status) status.style.display = 'none';
@@ -488,6 +529,7 @@ function renderHero(summary) {
   const items = [
     { key: 'baseline-budget', label: 'Baseline Budget', value: fmtCurrency(summary.budgetAbTotal), hint: 'Budget di riferimento (AB)', progress: 100, tone: 'neutral', customHtml: baselineBudgetOverviewHtml, extraClass: 'baseline-breakdown-tile', clickable: false },
     { key: 'updated-budget-breakdown', label: 'Updated Budget', value: fmtCurrency(summary.updatedBudgetTotal), hint: '', progress: 100, tone: 'neutral', customHtml: updatedBudgetOverviewHtml(summary), extraClass: 'updated-breakdown-tile', clickable: false },
+    { key: 'cost-detail', label: 'Dettaglio Costi', value: '', hint: '', progress: 100, tone: 'neutral', customHtml: costDetailOverviewHtml(summary), extraClass: 'cost-detail-tile', clickable: false },
     { key: 'contracted', label: 'Contracted', value: fmtCurrency(summary.contractedTotal), hint: `${fmtPct(summary.contractCoveragePct)} copertura`, progress: summary.contractCoveragePct, tone: summary.contractCoveragePct >= 70 ? 'green' : 'amber' },
     { key: 'overdue', label: 'Overdue', value: `${summary.overdueCount}`, hint: summary.overdueCount > 0 ? 'Da seguire' : 'Sotto controllo', progress: Math.min(100, summary.overdueCount * 8 + 6), tone: summary.overdueCount > 0 ? 'red' : 'green' },
   ];
@@ -498,33 +540,77 @@ function renderHero(summary) {
 function renderOverviewNote(summary) {
   const target = $('overview-note');
   if (!target) return;
-  const month = summary.curveCurrentMonth || 'mese corrente';
-  target.innerHTML = `Trattandosi di un Programma Lavori sfidante, il confronto mostra l'anticipo ordini rispetto al programma cliente. Stato attuale: <strong>${esc(month)}</strong>.`;
+  const overview = state.dashboard?.overview || {};
+  const curve = activeSCurve(overview);
+  const marker = curve?.currentMarker || {};
+  const modeTitle = curve?.shortLabel || (curve?.mode === 'B' ? 'Opzione B' : 'Opzione A');
+  const month = marker.label || summary.curveCurrentMonth || 'mese corrente';
+  const meaning = curve?.markerMeaning || 'Stato attuale = valore cumulativo della curva blu al mese corrente.';
+  target.innerHTML = `<strong>${esc(modeTitle)}</strong> · ${esc(meaning)} <span class="note-soft">Mese: <strong>${esc(month)}</strong>.</span>`;
+}
+
+function activeSCurve(overview) {
+  const options = overview?.sCurveOptions || {};
+  return options[state.sCurveMode] || overview?.sCurve || {};
+}
+
+function bindSCurveModeToggle() {
+  const wrap = $('scurve-mode-toggle');
+  if (!wrap || wrap.dataset.bound === '1') return;
+  wrap.dataset.bound = '1';
+  wrap.addEventListener('click', (event) => {
+    const btn = event.target.closest('[data-scurve-mode]');
+    if (!btn) return;
+    event.preventDefault();
+    event.stopPropagation();
+    state.sCurveMode = btn.dataset.scurveMode || 'A';
+    localStorage.setItem('wteSCurveMode', state.sCurveMode);
+    const overview = state.dashboard?.overview || {};
+    const curve = activeSCurve(overview);
+    renderCurve(curve);
+    renderCurveSummary(curve);
+    renderOverviewNote(state.dashboard?.summary || {});
+    updateSCurveModeToggle();
+  });
+}
+
+function updateSCurveModeToggle() {
+  document.querySelectorAll('[data-scurve-mode]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.scurveMode === state.sCurveMode);
+  });
 }
 
 function renderCurve(curve) {
   const target = $('curve-chart');
-  if (target) target.innerHTML = lineChartSvg(curve, { showContracted: false });
+  if (!target) return;
+  const description = curve.description || 'Curva S cumulativa in PLN.';
+  const modeTitle = curve.title || 'Curva S cumulata';
+  target.innerHTML = `<div class="scurve-mode-description"><strong>${esc(modeTitle)}</strong><span>${esc(description)}</span></div>${lineChartSvg(curve, { showContracted: false })}`;
+  updateSCurveModeToggle();
 }
 
-function renderCurveSummary(summary) {
+function renderCurveSummary(curve) {
   const target = $('curve-summary');
   if (!target) return;
-  const delta = Number(summary.curveCurrentProc || 0) - Number(summary.curveCurrentBudget || 0);
+  const marker = curve?.currentMarker || {};
+  const proc = Number(marker.procAbs || 0);
+  const budget = Number(marker.budgetAbs || 0);
+  const delta = proc - budget;
   const deltaTone = delta >= 0 ? 'green' : 'red';
+  const markerLabel = marker.label || '—';
   target.innerHTML = `
     <div class="curve-summary-grid">
       <div class="curve-stat clickable" data-detail="curve">
         <span class="label">Mese attuale</span>
-        <strong>${esc(summary.curveCurrentMonth || '—')}</strong>
+        <strong>${esc(markerLabel)}</strong>
       </div>
       <div class="curve-stat clickable" data-detail="curve">
         <span class="label">Proc. cumulativo</span>
-        <strong>${fmtCurrencyCompact(summary.curveCurrentProc)}</strong>
+        <strong>${fmtCurrencyCompact(proc)}</strong>
       </div>
       <div class="curve-stat clickable" data-detail="curve">
         <span class="label">Budget cumulativo</span>
-        <strong>${fmtCurrencyCompact(summary.curveCurrentBudget)}</strong>
+        <strong>${fmtCurrencyCompact(budget)}</strong>
       </div>
       <div class="curve-stat ${deltaTone} clickable" data-detail="curve">
         <span class="label">Scostamento</span>
@@ -858,8 +944,10 @@ function renderDashboard(data) {
   if (monthInput && !monthInput.value) monthInput.value = currentMonthInputValue();
   renderHero(summary);
   renderOverviewNote(summary);
-  renderCurve(overview.sCurve || {});
-  renderCurveSummary(summary);
+  bindSCurveModeToggle();
+  const activeCurve = activeSCurve(overview);
+  renderCurve(activeCurve);
+  renderCurveSummary(activeCurve);
   renderSnapshot(summary, data.criticalPackages || []);
   renderOrdersStatus(overview.ordersClosing || { count:0, value:0, items:[] }, overview.specsIssued || { count:0, value:0, items:[] }, overview.orderMix || []);
   renderRoots(data.rootGroups || []);
@@ -1083,7 +1171,7 @@ function showDelayedRootDetail(code) {
 }
 
 function showCurveDetail() {
-  const curve = state.dashboard?.overview?.sCurve || {};
+  const curve = activeSCurve(state.dashboard?.overview || {});
   const rows = (curve.labels || []).map((label, i) => ({
     label,
     procPct: curve.procPct?.[i] || 0,
@@ -1108,7 +1196,7 @@ function showCurveDetail() {
     ], { tableClass: 'equal-cols-table' })}
     ${curveExplanationHtml}
   `;
-  openDetail('Curva S cumulata', 'Linea blu = procurement schedule cumulativo dinamico, linea verde = Budget Baseline fisso, pallino rosso = stato attuale.', metrics, content);
+  openDetail('Curva S cumulata', `${curve.title || 'Curva S'} - ${curve.description || ''}`, metrics, content);
 }
 
 function showCostBreakdownDetail() {
@@ -1691,7 +1779,7 @@ function setReportButtonsBusy(isBusy, activeButton = null) {
 }
 
 async function refreshDashboardData() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260520110514&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260522125549&ts=' + Date.now());
   renderDashboard(data);
   return data;
 }
@@ -1699,7 +1787,8 @@ async function refreshDashboardData() {
 function bindReportButtons() {
   const reportLinks = [
     { id: 'generate-report-button', href: './reports/WTE_Dashboard_Report.xlsx' },
-    { id: 'generate-pdf-button', href: './reports/WTE_CEO_Premium_Report.pdf' },
+    { id: 'generate-pdf-button', href: './reports/WTE_CEO_Premium_Report_Option_A.pdf' },
+    { id: 'generate-pdf-b-button', href: './reports/WTE_CEO_Premium_Report_Option_B.pdf' },
   ];
   reportLinks.forEach(({ id, href }) => {
     const btn = $(id);
@@ -1711,7 +1800,7 @@ function bindReportButtons() {
 }
 
 async function loadDashboard() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260520110514&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260522125549&ts=' + Date.now());
   renderDashboard(data);
 }
 

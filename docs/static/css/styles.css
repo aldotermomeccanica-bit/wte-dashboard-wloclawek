@@ -1831,8 +1831,10 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
 /* V94 - Overview Baseline Budget detailed tile */
 #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
 #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+#overview-tab .minimal-kpis .kpi-tile.cost-detail-tile,
 .kpi-tile.baseline-breakdown-tile,
-.kpi-tile.updated-breakdown-tile {
+.kpi-tile.updated-breakdown-tile,
+.kpi-tile.cost-detail-tile {
   grid-column: span 2;
   min-height: 214px;
   padding: 13px 14px 12px;
@@ -1885,14 +1887,18 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
 @media (max-width: 1260px) {
   #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
   #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.cost-detail-tile,
   .kpi-tile.baseline-breakdown-tile,
-  .kpi-tile.updated-breakdown-tile { grid-column: span 2; }
+  .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.cost-detail-tile { grid-column: span 2; }
 }
 @media (max-width: 780px) {
   #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
   #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.cost-detail-tile,
   .kpi-tile.baseline-breakdown-tile,
-  .kpi-tile.updated-breakdown-tile {
+  .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.cost-detail-tile {
     grid-column: 1 / -1;
     min-height: auto;
   }
@@ -1914,18 +1920,20 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
 /* V96 - Overview budget tiles: four cards on one row and compact budget breakdowns */
 @media (min-width: 1261px) {
   #overview-tab .minimal-kpis {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(16, minmax(0, 1fr));
     align-items: stretch;
   }
   #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
   #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.cost-detail-tile,
   .kpi-tile.baseline-breakdown-tile,
-  .kpi-tile.updated-breakdown-tile {
+  .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.cost-detail-tile {
     grid-column: span 4;
     min-height: 214px;
   }
-  #overview-tab .minimal-kpis .kpi-tile.money-wide:not(.baseline-breakdown-tile):not(.updated-breakdown-tile),
-  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile) {
+  #overview-tab .minimal-kpis .kpi-tile.money-wide:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile),
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) {
     grid-column: span 2;
   }
 }
@@ -2099,4 +2107,158 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
   font-size: 11px;
   line-height: 1.25;
   font-weight: 650;
+}
+
+/* V123 - S-Curve A/B mode toggle */
+.scurve-head-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.scurve-mode-toggle{display:inline-flex;gap:4px;padding:4px;background:#eef4fb;border:1px solid #d7e4f3;border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.scurve-mode-toggle button{border:0;background:transparent;color:#49627d;font-weight:800;font-size:11px;line-height:1;padding:8px 10px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.scurve-mode-toggle button.active{background:#1b3150;color:#fff;box-shadow:0 4px 10px rgba(27,49,80,.16)}
+.scurve-mode-description{display:flex;gap:8px;align-items:baseline;margin:2px 0 8px 0;padding:8px 10px;border-radius:12px;background:#f7faff;border:1px solid #e4edf8;color:#425a75;font-size:12px;line-height:1.35}
+.scurve-mode-description strong{color:#1b3150;font-size:12px;white-space:nowrap}
+@media (max-width: 900px){.scurve-head-actions{justify-content:flex-start}.scurve-mode-description{display:block}.scurve-mode-description strong{display:block;margin-bottom:4px}}
+
+
+/* V127 - dynamic Cost Detail tile on the overview KPI row */
+.kpi-tile.cost-detail-tile {
+  border-top-color: var(--orange, #f59f45);
+  cursor: default;
+}
+.cost-detail-overview {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  height: 100%;
+  gap: 5px;
+}
+.cost-detail-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 1px;
+}
+.cost-detail-head span {
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.cost-detail-head em {
+  color: var(--muted);
+  font-size: 9px;
+  font-style: normal;
+  white-space: nowrap;
+}
+.cost-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(96px, 1.15fr) minmax(70px, .95fr) minmax(78px, 1fr);
+  align-items: baseline;
+  gap: 7px;
+  min-width: 0;
+}
+.cost-detail-grid span {
+  color: #596b7f;
+  font-size: 9.5px;
+  font-weight: 800;
+  line-height: 1.12;
+  min-width: 0;
+}
+.cost-detail-grid strong {
+  color: var(--ink);
+  font-size: 9.7px;
+  font-weight: 850;
+  text-align: right;
+  white-space: nowrap;
+}
+.cost-detail-grid-head strong {
+  color: var(--muted);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.cost-detail-rows {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+}
+.cost-detail-total {
+  margin-top: 2px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(18, 42, 75, .32);
+}
+.cost-detail-total span,
+.cost-detail-total strong {
+  color: var(--ink);
+  font-weight: 950;
+}
+@media (min-width: 1261px) and (max-width: 1450px) {
+  .cost-detail-grid { gap: 5px; grid-template-columns: minmax(88px, 1.1fr) minmax(63px, .9fr) minmax(72px, 1fr); }
+  .cost-detail-grid span { font-size: 8.8px; }
+  .cost-detail-grid strong { font-size: 8.8px; }
+  .cost-detail-head em { display: none; }
+}
+@media (max-width: 780px) {
+  .cost-detail-grid { grid-template-columns: minmax(0, 1fr); gap: 1px; }
+  .cost-detail-grid strong { text-align: left; }
+  .cost-detail-grid-head { display: none; }
+}
+
+
+/* V127.1 - Overview KPI row layout fix: prevent Cost Detail totals from overlapping */
+@media (min-width: 1261px) {
+  #overview-tab .minimal-kpis {
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.baseline-breakdown-tile,
+  .kpi-tile.updated-breakdown-tile {
+    grid-column: span 6;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.cost-detail-tile,
+  .kpi-tile.cost-detail-tile {
+    grid-column: span 8;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.money-wide:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile),
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) {
+    grid-column: span 2;
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.money-wide:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) .value,
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) .value {
+    font-size: 13px;
+    line-height: 1.12;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) .label {
+    font-size: 8.5px;
+    letter-spacing: .08em;
+  }
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) .hint {
+    font-size: 9.5px;
+    min-height: 18px;
+  }
+  .cost-detail-grid {
+    grid-template-columns: minmax(118px, 1.35fr) minmax(84px, .9fr) minmax(92px, .95fr);
+    gap: 9px;
+  }
+  .cost-detail-grid span { font-size: 9px; }
+  .cost-detail-grid strong { font-size: 9px; }
+  .cost-detail-total strong,
+  .cost-detail-total span { font-size: 9.4px; }
+}
+
+@media (min-width: 1261px) and (max-width: 1450px) {
+  .cost-detail-grid {
+    grid-template-columns: minmax(104px, 1.25fr) minmax(76px, .9fr) minmax(84px, .95fr);
+    gap: 6px;
+  }
+  .cost-detail-grid span,
+  .cost-detail-grid strong { font-size: 8.45px; }
+  .cost-detail-total strong,
+  .cost-detail-total span { font-size: 8.75px; }
 }
