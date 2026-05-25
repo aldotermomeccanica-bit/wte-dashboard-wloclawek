@@ -1779,7 +1779,7 @@ function setReportButtonsBusy(isBusy, activeButton = null) {
 }
 
 async function refreshDashboardData() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260522125549&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260525152337&ts=' + Date.now());
   renderDashboard(data);
   return data;
 }
@@ -1800,7 +1800,7 @@ function bindReportButtons() {
 }
 
 async function loadDashboard() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260522125549&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260525152337&ts=' + Date.now());
   renderDashboard(data);
 }
 
