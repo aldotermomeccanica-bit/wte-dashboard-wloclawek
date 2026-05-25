@@ -922,6 +922,32 @@ function bindMonthCheck() {
   });
 }
 
+
+function renderSubcontractorsQr() {
+  const fileName = 'LIST OF SUBCONTRACTORS_TERMS.xlsx';
+  const encodedName = fileName.split('/').map(encodeURIComponent).join('/');
+
+  // Use a page-relative path and convert it to an absolute URL for the QR code.
+  // This keeps the same logic valid both locally and on GitHub Pages:
+  // - local root: http://host:port/data/current/...
+  // - GitHub Pages: https://user.github.io/repository/data/current/...
+  const href = `./data/current/${encodedName}`;
+  const absoluteUrl = new URL(href, window.location.href).href;
+
+  const link = $('subcontractors-download-link');
+  const img = $('subcontractors-qr-img');
+  if (link) {
+    link.href = href;
+    link.setAttribute('download', fileName);
+    link.title = `Scarica ${fileName}`;
+  }
+  if (img) {
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=78x78&margin=1&data=${encodeURIComponent(absoluteUrl)}`;
+    img.dataset.targetUrl = absoluteUrl;
+    img.alt = `QR download ${fileName}`;
+  }
+}
+
 function renderVersionsInfo(meta) {
   const versions = meta?.versions || {};
   const budgetNode = $('budget-version');
@@ -940,6 +966,7 @@ function renderDashboard(data) {
   renderVersionsInfo(meta);
   const sourceFilesNode = $('source-files');
   if (sourceFilesNode) sourceFilesNode.textContent = [meta.sourceFiles.budget, meta.sourceFiles.procurement, meta.sourceFiles.scurve, meta.sourceFiles.ecdecision, meta.sourceFiles.statusprogress, meta.sourceFiles.erregister, meta.sourceFiles.milestones].filter(Boolean).join(' · ') || '—';
+  renderSubcontractorsQr();
   const monthInput = $('month-check-input');
   if (monthInput && !monthInput.value) monthInput.value = currentMonthInputValue();
   renderHero(summary);
@@ -1779,7 +1806,7 @@ function setReportButtonsBusy(isBusy, activeButton = null) {
 }
 
 async function refreshDashboardData() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260525160344&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260525141814&ts=' + Date.now());
   renderDashboard(data);
   return data;
 }
@@ -1800,7 +1827,7 @@ function bindReportButtons() {
 }
 
 async function loadDashboard() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260525160344&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260525141814&ts=' + Date.now());
   renderDashboard(data);
 }
 
