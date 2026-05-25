@@ -1,7 +1,7 @@
 {
   "meta": {
     "projectTitle": "Wloclawek - Waste-to-Energy Project Dashboard",
-    "generatedAt": "2026-05-22T12:53:12",
+    "generatedAt": "2026-05-25T13:59:53",
     "currency": "PLN",
     "sourceFiles": {
       "budget": "Budget.xlsm",
@@ -18,7 +18,7 @@
       "contracted": "T"
     },
     "scurveReferenceMonth": "mag-2026",
-    "scurveUploadedAt": "2026-05-22T12:53:12",
+    "scurveUploadedAt": "2026-05-25T13:52:06",
     "versions": {
       "found": true,
       "sourceFile": "VERSIONS_BUDGET_PROCUREMENT.txt",
@@ -56,71 +56,71 @@
         {
           "code": "1",
           "label": "DESIGN",
-          "budget": 45590000,
-          "ordered": 24397974,
-          "toOrder": 21192026,
-          "total": 45590000
+          "budget": 45590000.0,
+          "ordered": 24397974.0,
+          "toOrder": 21192026.0,
+          "total": 45590000.0
         },
         {
           "code": "2",
           "label": "CIVIL WORKS",
-          "budget": 108109767,
-          "ordered": 33404101,
-          "toOrder": 74705666,
-          "total": 108109767
+          "budget": 108109767.0,
+          "ordered": 33404101.0,
+          "toOrder": 74705666.0,
+          "total": 108109767.0
         },
         {
           "code": "3",
           "label": "ELECTRICAL WORKS",
-          "budget": 58345340,
-          "ordered": 36070000,
-          "toOrder": 22275340,
-          "total": 58345340
+          "budget": 58345340.0,
+          "ordered": 36070000.0,
+          "toOrder": 22275340.0,
+          "total": 58345340.0
         },
         {
           "code": "4",
           "label": "SANITARY WORKS AND F.F.",
-          "budget": 21293319,
-          "ordered": 0,
-          "toOrder": 21293319,
-          "total": 21293319
+          "budget": 21293319.0,
+          "ordered": 0.0,
+          "toOrder": 21293319.0,
+          "total": 21293319.0
         },
         {
           "code": "5",
           "label": "MECHANICAL AND TECHNOLOGICAL",
-          "budget": 258666646,
-          "ordered": 131227829,
-          "toOrder": 127438817,
-          "total": 258666646
+          "budget": 258666646.0,
+          "ordered": 131227829.0,
+          "toOrder": 127438817.0,
+          "total": 258666646.0
         },
         {
           "code": "6",
           "label": "COMMISSIONING",
-          "budget": 8500000,
-          "ordered": 100000,
-          "toOrder": 8400000,
-          "total": 8500000
+          "budget": 8500000.0,
+          "ordered": 100000.0,
+          "toOrder": 8400000.0,
+          "total": 8500000.0
         },
         {
           "code": "7",
           "label": "ALIGNEMENT AND BACKUP",
-          "budget": 952781,
-          "ordered": 726163,
-          "toOrder": 226618,
-          "total": 952781
+          "budget": 952781.0,
+          "ordered": 726163.0,
+          "toOrder": 226618.0,
+          "total": 952781.0
         }
       ],
-      "budget": 501457853,
-      "ordered": 225926067,
-      "toOrder": 275531786,
-      "total": 501457853,
+      "budget": 501457853.0,
+      "ordered": 225926067.0,
+      "toOrder": 275531786.0,
+      "total": 501457853.0,
       "orderedPct": 45.1,
       "toOrderPct": 54.9,
       "note": "Da ordinare = Agg. Budget PORR - Ordinato; perimetro: costi diretti root group 1-7."
     },
-    "executiveMessage": "Main risk today: 2.5.1.1 Supply of reinforcing steel is overdue by 142 days with 2432900 PLN still exposed.",
+    "executiveMessage": "Main risk today: 2.5.1.1 Supply of reinforcing steel is overdue by 145 days with 2432900 PLN still exposed.",
     "closedCount": 102,
-    "openCount": 239,
+    "openCount": 238,
     "overdueCount": 11,
     "contractPrepCount": 11,
     "pctApprovalCount": 3,
@@ -665,7 +665,7 @@
       },
       {
         "name": "Uncategorized",
-        "count": 23,
+        "count": 22,
         "updatedBudget": 0.0,
         "contractedValue": 0.0,
         "sharePct": 0.0
@@ -782,7 +782,7 @@
           "endExecution": "2027-12-31",
           "company": "NOWOSTAL Sp. z o.o.",
           "comment": null,
-          "overdueDays": 22,
+          "overdueDays": 25,
           "varianceAmount": 13557000.0,
           "variancePct": 3060.27,
           "progress": 75
@@ -810,7 +810,7 @@
           "endExecution": "2026-12-31",
           "company": "NOWOSTAL Sp. z o.o.",
           "comment": null,
-          "overdueDays": 22,
+          "overdueDays": 25,
           "varianceAmount": -0.48,
           "variancePct": -0.0,
           "progress": 75
@@ -926,7 +926,7 @@
           "deadlineProc": "2026-03-31",
           "startExecution": "2026-05-01",
           "endExecution": "2027-12-31",
-          "company": "konstr. stalowe",
+          "company": "konstr. stalowe ",
           "comment": "AK zmniejszono w stosunku do AK0 o 443k PLN zwiększając poz. 1.2.2 (projektowanie przez ODS)",
           "overdueDays": 0,
           "varianceAmount": -1311784.3,
@@ -1013,64 +1013,64 @@
         {
           "code": "1",
           "label": "DESIGN",
-          "budget": 45590000,
-          "ordered": 24397974,
-          "toOrder": 21192026,
-          "total": 45590000
+          "budget": 45590000.0,
+          "ordered": 24397974.0,
+          "toOrder": 21192026.0,
+          "total": 45590000.0
         },
         {
           "code": "2",
           "label": "CIVIL WORKS",
-          "budget": 108109767,
-          "ordered": 33404101,
-          "toOrder": 74705666,
-          "total": 108109767
+          "budget": 108109767.0,
+          "ordered": 33404101.0,
+          "toOrder": 74705666.0,
+          "total": 108109767.0
         },
         {
           "code": "3",
           "label": "ELECTRICAL WORKS",
-          "budget": 58345340,
-          "ordered": 36070000,
-          "toOrder": 22275340,
-          "total": 58345340
+          "budget": 58345340.0,
+          "ordered": 36070000.0,
+          "toOrder": 22275340.0,
+          "total": 58345340.0
         },
         {
           "code": "4",
           "label": "SANITARY WORKS AND F.F.",
-          "budget": 21293319,
-          "ordered": 0,
-          "toOrder": 21293319,
-          "total": 21293319
+          "budget": 21293319.0,
+          "ordered": 0.0,
+          "toOrder": 21293319.0,
+          "total": 21293319.0
         },
         {
           "code": "5",
           "label": "MECHANICAL AND TECHNOLOGICAL",
-          "budget": 258666646,
-          "ordered": 131227829,
-          "toOrder": 127438817,
-          "total": 258666646
+          "budget": 258666646.0,
+          "ordered": 131227829.0,
+          "toOrder": 127438817.0,
+          "total": 258666646.0
         },
         {
           "code": "6",
           "label": "COMMISSIONING",
-          "budget": 8500000,
-          "ordered": 100000,
-          "toOrder": 8400000,
-          "total": 8500000
+          "budget": 8500000.0,
+          "ordered": 100000.0,
+          "toOrder": 8400000.0,
+          "total": 8500000.0
         },
         {
           "code": "7",
           "label": "ALIGNEMENT AND BACKUP",
-          "budget": 952781,
-          "ordered": 726163,
-          "toOrder": 226618,
-          "total": 952781
+          "budget": 952781.0,
+          "ordered": 726163.0,
+          "toOrder": 226618.0,
+          "total": 952781.0
         }
       ],
-      "budget": 501457853,
-      "ordered": 225926067,
-      "toOrder": 275531786,
-      "total": 501457853,
+      "budget": 501457853.0,
+      "ordered": 225926067.0,
+      "toOrder": 275531786.0,
+      "total": 501457853.0,
       "orderedPct": 45.1,
       "toOrderPct": 54.9,
       "note": "Da ordinare = Agg. Budget PORR - Ordinato; perimetro: costi diretti root group 1-7."
@@ -2033,7 +2033,7 @@
           "start": "2025-12-04",
           "end": "2025-12-31",
           "updatedBudget": 2432900.0,
-          "overdueDays": 142
+          "overdueDays": 145
         },
         {
           "code": "2.11.5.1",
@@ -2043,7 +2043,7 @@
           "start": "2025-12-04",
           "end": "2025-12-31",
           "updatedBudget": 771600.0,
-          "overdueDays": 142
+          "overdueDays": 145
         },
         {
           "code": "2.5.2.2.1",
@@ -2053,7 +2053,7 @@
           "start": "2025-12-04",
           "end": "2025-12-31",
           "updatedBudget": 219700.0,
-          "overdueDays": 142
+          "overdueDays": 145
         },
         {
           "code": "2.5.1.2",
@@ -2063,7 +2063,7 @@
           "start": "2025-12-04",
           "end": "2026-02-15",
           "updatedBudget": 3160000.0,
-          "overdueDays": 96
+          "overdueDays": 99
         },
         {
           "code": "2.11.5.2",
@@ -2073,7 +2073,7 @@
           "start": "2025-12-04",
           "end": "2026-02-15",
           "updatedBudget": 1300000.0,
-          "overdueDays": 96
+          "overdueDays": 99
         },
         {
           "code": "2.5.2.2.2",
@@ -2083,7 +2083,7 @@
           "start": "2025-12-04",
           "end": "2026-02-15",
           "updatedBudget": 140000.0,
-          "overdueDays": 96
+          "overdueDays": 99
         },
         {
           "code": "1.4",
@@ -2093,7 +2093,7 @@
           "start": "2026-03-08",
           "end": "2026-03-21",
           "updatedBudget": 250000.0,
-          "overdueDays": 62
+          "overdueDays": 65
         },
         {
           "code": "2.6.1.1",
@@ -2103,7 +2103,7 @@
           "start": "2026-02-27",
           "end": "2026-04-30",
           "updatedBudget": 14000000.0,
-          "overdueDays": 22
+          "overdueDays": 25
         },
         {
           "code": "5.4.2",
@@ -2113,7 +2113,7 @@
           "start": "2026-02-15",
           "end": "2026-04-30",
           "updatedBudget": 6374146.52,
-          "overdueDays": 22
+          "overdueDays": 25
         },
         {
           "code": "2.6.5",
@@ -2123,7 +2123,7 @@
           "start": "2026-04-30",
           "end": "2026-05-27",
           "updatedBudget": 425469.43,
-          "overdueDays": 22
+          "overdueDays": 25
         }
       ]
     }
@@ -2196,7 +2196,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -2224,7 +2224,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "varianceAmount": -278761.0,
       "variancePct": -26.54,
       "progress": 75
@@ -2252,7 +2252,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "varianceAmount": -530300.0,
       "variancePct": -70.71,
       "progress": 75
@@ -2280,7 +2280,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 96,
+      "overdueDays": 99,
       "varianceAmount": 140000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -2308,7 +2308,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 96,
+      "overdueDays": 99,
       "varianceAmount": 1300000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -2336,7 +2336,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 96,
+      "overdueDays": 99,
       "varianceAmount": -260000.0,
       "variancePct": -7.6,
       "progress": 75
@@ -2364,7 +2364,7 @@
       "endExecution": "2026-12-31",
       "company": "UDT CERT",
       "comment": null,
-      "overdueDays": 62,
+      "overdueDays": 65,
       "varianceAmount": 214974.0,
       "variancePct": 613.76,
       "progress": 75
@@ -2534,7 +2534,7 @@
       "endExecution": "2027-12-31",
       "company": "NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 22,
+      "overdueDays": 25,
       "varianceAmount": 13557000.0,
       "variancePct": 3060.27,
       "progress": 75
@@ -2702,7 +2702,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -2747,7 +2747,7 @@
       "completionPct": 17.7,
       "contractCoveragePct": 51.3,
       "variancePct": -49.8,
-      "overdueDays": 169,
+      "overdueDays": 172,
       "dominantStatus": "planned"
     },
     {
@@ -2760,7 +2760,7 @@
       "completionPct": 24.4,
       "contractCoveragePct": 50.7,
       "variancePct": -48.2,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "dominantStatus": "planned"
     },
     {
@@ -2773,7 +2773,7 @@
       "completionPct": 35.7,
       "contractCoveragePct": 61.3,
       "variancePct": -50.0,
-      "overdueDays": 30,
+      "overdueDays": 33,
       "dominantStatus": "planned"
     },
     {
@@ -2786,7 +2786,7 @@
       "completionPct": 35.0,
       "contractCoveragePct": 92.7,
       "variancePct": -17.4,
-      "overdueDays": 169,
+      "overdueDays": 172,
       "dominantStatus": "planned"
     },
     {
@@ -2825,7 +2825,7 @@
       "completionPct": 6.2,
       "contractCoveragePct": 4.1,
       "variancePct": -47.7,
-      "overdueDays": 30,
+      "overdueDays": 33,
       "dominantStatus": "planned"
     },
     {
@@ -2929,7 +2929,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -2957,7 +2957,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "varianceAmount": -278761.0,
       "variancePct": -26.54,
       "progress": 75
@@ -2985,7 +2985,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "varianceAmount": -530300.0,
       "variancePct": -70.71,
       "progress": 75
@@ -3013,7 +3013,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 96,
+      "overdueDays": 99,
       "varianceAmount": -260000.0,
       "variancePct": -7.6,
       "progress": 75
@@ -3041,7 +3041,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 96,
+      "overdueDays": 99,
       "varianceAmount": 1300000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -3069,7 +3069,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 96,
+      "overdueDays": 99,
       "varianceAmount": 140000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -3097,7 +3097,7 @@
       "endExecution": "2026-12-31",
       "company": "UDT CERT",
       "comment": null,
-      "overdueDays": 62,
+      "overdueDays": 65,
       "varianceAmount": 214974.0,
       "variancePct": 613.76,
       "progress": 75
@@ -3125,7 +3125,7 @@
       "endExecution": "2027-12-31",
       "company": "NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 22,
+      "overdueDays": 25,
       "varianceAmount": 13557000.0,
       "variancePct": 3060.27,
       "progress": 75
@@ -3153,7 +3153,7 @@
       "endExecution": "2026-12-31",
       "company": "NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 22,
+      "overdueDays": 25,
       "varianceAmount": -0.48,
       "variancePct": -0.0,
       "progress": 75
@@ -3181,7 +3181,7 @@
       "endExecution": "2026-12-31",
       "company": "NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 22,
+      "overdueDays": 25,
       "varianceAmount": 425469.43,
       "variancePct": 0.0,
       "progress": 75
@@ -3321,7 +3321,7 @@
       "deadlineProc": "2026-04-17",
       "startExecution": "2026-02-15",
       "endExecution": "2027-12-31",
-      "company": "Optimal Design of Structures Sp. z o.o.",
+      "company": "Optimal Design of Structures Sp. z o.o. ",
       "comment": "AK zwiększono w stosunku do AK0 o 443k PLN korzystając z poz. 2.6.1",
       "overdueDays": 0,
       "varianceAmount": 443000.0,
@@ -3433,7 +3433,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "MENOS",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -390000.0,
@@ -3489,7 +3489,7 @@
       "deadlineProc": "2026-06-01",
       "startExecution": "2026-05-15",
       "endExecution": "2026-09-30",
-      "company": "Optimal Design of Structures Sp. z o.o.",
+      "company": "Optimal Design of Structures Sp. z o.o. ",
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": 0.0,
@@ -3631,7 +3631,7 @@
       "endExecution": "2026-12-31",
       "company": "UDT CERT",
       "comment": null,
-      "overdueDays": 62,
+      "overdueDays": 65,
       "varianceAmount": 214974.0,
       "variancePct": 613.76,
       "progress": 75
@@ -3657,7 +3657,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "UDT CERT",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -214974.0,
@@ -3973,34 +3973,6 @@
       "progress": 100
     },
     {
-      "code": "2.1.3",
-      "rootCode": "2",
-      "depth": 3,
-      "name": "Beret 19 pcs",
-      "buyer": null,
-      "siteResp": null,
-      "tmeResp": null,
-      "category": null,
-      "status": null,
-      "statusTone": "neutral",
-      "budgetAb": 0.0,
-      "updatedBudget": 0.0,
-      "legacyBudget": 0.0,
-      "contractedValue": 0.0,
-      "result": 0.0,
-      "deadlineClosing": null,
-      "startProc": null,
-      "deadlineProc": null,
-      "startExecution": null,
-      "endExecution": null,
-      "company": "Stump-Franki Sp. z o.o.",
-      "comment": null,
-      "overdueDays": 0,
-      "varianceAmount": 0.0,
-      "variancePct": 0.0,
-      "progress": 0
-    },
-    {
       "code": "2.1.4",
       "rootCode": "2",
       "depth": 3,
@@ -4021,7 +3993,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "Usługi Sprzętowo - Transportowe Sławomir Boruczkowski",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -83200.0,
@@ -4105,7 +4077,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "MAR-KOP Marcin Mierzwa",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -2196542.0,
@@ -4387,7 +4359,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "varianceAmount": 2399219.3,
       "variancePct": 7123.42,
       "progress": 75
@@ -4413,7 +4385,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -1821319.0,
@@ -4441,7 +4413,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "BARG",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -132060.0,
@@ -4469,7 +4441,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "AF KONSTRUKCJE",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -5500000.0,
@@ -4499,7 +4471,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 96,
+      "overdueDays": 99,
       "varianceAmount": -260000.0,
       "variancePct": -7.6,
       "progress": 75
@@ -4637,7 +4609,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "BETARD",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -18708794.0,
@@ -4695,7 +4667,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "varianceAmount": -530300.0,
       "variancePct": -70.71,
       "progress": 75
@@ -4723,7 +4695,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 96,
+      "overdueDays": 99,
       "varianceAmount": 140000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -4833,7 +4805,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -1602761.0,
@@ -4861,7 +4833,7 @@
       "deadlineProc": "2026-08-30",
       "startExecution": "2026-07-01",
       "endExecution": "2026-08-31",
-      "company": "BUSZREM / HOLCIM",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": 688809.41,
@@ -4945,7 +4917,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "BUSZREM / HOLCIM",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -54136.0,
@@ -4973,7 +4945,7 @@
       "deadlineProc": "2026-03-31",
       "startExecution": "2026-05-01",
       "endExecution": "2027-12-31",
-      "company": "konstr. stalowe",
+      "company": "konstr. stalowe ",
       "comment": "AK zmniejszono w stosunku do AK0 o 443k PLN zwiększając poz. 1.2.2 (projektowanie przez ODS)",
       "overdueDays": 0,
       "varianceAmount": -1311784.3,
@@ -5003,7 +4975,7 @@
       "endExecution": "2027-12-31",
       "company": "NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 22,
+      "overdueDays": 25,
       "varianceAmount": 13557000.0,
       "variancePct": 3060.27,
       "progress": 75
@@ -5029,7 +5001,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "BETARD",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -1275206.0,
@@ -5057,7 +5029,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "NOWOSTAL",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -14000000.0,
@@ -5197,7 +5169,7 @@
       "deadlineProc": "2026-08-03",
       "startExecution": "2026-05-01",
       "endExecution": "2026-12-31",
-      "company": "konstr. stalowe",
+      "company": "konstr. stalowe ",
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": 470146.23,
@@ -5227,7 +5199,7 @@
       "endExecution": "2026-12-31",
       "company": "NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 22,
+      "overdueDays": 25,
       "varianceAmount": 425469.43,
       "variancePct": 0.0,
       "progress": 75
@@ -5983,7 +5955,7 @@
       "endExecution": "2026-07-31",
       "company": "THYSSENKRUPP MATERIALS POLAND S.A.",
       "comment": null,
-      "overdueDays": 142,
+      "overdueDays": 145,
       "varianceAmount": -278761.0,
       "variancePct": -26.54,
       "progress": 75
@@ -6009,7 +5981,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "AF KONSTRUKCJE",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -1750000.0,
@@ -6039,7 +6011,7 @@
       "endExecution": "2026-07-31",
       "company": "Holcim S.A.",
       "comment": null,
-      "overdueDays": 96,
+      "overdueDays": 99,
       "varianceAmount": 1300000.0,
       "variancePct": 0.0,
       "progress": 75
@@ -6989,7 +6961,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "ELEKTROSERV - ZAP",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -2579200.0,
@@ -8167,7 +8139,7 @@
       "endExecution": "2026-12-31",
       "company": "NOWOSTAL Sp. z o.o.",
       "comment": null,
-      "overdueDays": 22,
+      "overdueDays": 25,
       "varianceAmount": -0.48,
       "variancePct": -0.0,
       "progress": 75
@@ -9089,7 +9061,7 @@
       "deadlineProc": null,
       "startExecution": null,
       "endExecution": null,
-      "company": "AVANTEA STEEL SOLUTIONS",
+      "company": null,
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": -1503682.05,
@@ -9537,7 +9509,7 @@
       "deadlineProc": "2026-03-31",
       "startExecution": null,
       "endExecution": null,
-      "company": "konstr. stalowe",
+      "company": "konstr. stalowe ",
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": 0.0,
@@ -10153,7 +10125,7 @@
       "deadlineProc": "2026-04-30",
       "startExecution": "2026-04-30",
       "endExecution": "2026-04-30",
-      "company": "Michelin",
+      "company": "Michelin ",
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": 5711.0,
@@ -10601,7 +10573,7 @@
       "deadlineProc": "2026-01-28",
       "startExecution": "2026-02-01",
       "endExecution": "2026-02-28",
-      "company": "STALER MARKET",
+      "company": "STALER MARKET ",
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": 7278.0,
@@ -11021,7 +10993,7 @@
       "deadlineProc": "2026-02-10",
       "startExecution": "2026-02-10",
       "endExecution": "2028-06-30",
-      "company": "COFFEE PARTNER",
+      "company": "COFFEE PARTNER ",
       "comment": null,
       "overdueDays": 0,
       "varianceAmount": 50000.0,
@@ -12703,7 +12675,7 @@
       "endExecution": "2026-05-31",
       "company": "P.W. Markopol",
       "comment": null,
-      "overdueDays": 11,
+      "overdueDays": 14,
       "varianceAmount": 0.0,
       "variancePct": 0.0,
       "progress": 75
@@ -13511,14 +13483,13 @@
     "sourceSheet": "Eng_Proc_Cons"
   },
   "erRegister": {
-    "title": "ER decision / recommendation register",
+    "title": "ECR",
     "sections": [
       {
-        "title": "ER decision",
+        "title": "ECR",
         "headers": [
-          "Decision number",
+          "Recomendation number",
           "Technical scope - short",
-          "Technical scope - details",
           "Subcontractor / Subvendor",
           "SAP vendor number",
           "Amount",
@@ -13529,715 +13500,194 @@
         ],
         "rows": [
           [
-            "ECD no. 1",
-            "MON plates",
-            " Purchase of MON plates  1000 x 469,00",
-            "BUDIZOL",
-            2703715,
-            469000,
-            "5.1.1 -  indirect cost                  5.3.1 -  indirect cost",
-            "2025-12-05",
-            "contract",
-            4502902128
-          ],
-          [
-            "ECD no. 2",
-            "Container rental",
-            "Rental of office containers, two-month period",
-            "CONTAINEX",
-            1015276,
-            4080,
-            "3.1.1 - indirect cost",
-            "2025-12-08",
+            "ECR no. 1",
+            "Design ",
+            "FOROOM",
+            2711785,
+            12100000,
+            "1.2 - direct cost",
             "2025-12-15",
-            4502914369
-          ],
-          [
-            "ECD no. 3",
-            "Rental of a crane",
-            "Rental of a crane for shoveling",
-            "BUDIZOL",
-            2703715,
-            962,
-            "2.2.1 - indirect cost",
-            "2025-12-08",
-            "2025-12-15",
-            4502914407
-          ],
-          [
-            "ECD no. 4",
-            "Security",
-            "Security",
-            "SOLID SECURITY",
-            1173360,
-            563696.81,
-            "4.6.1 - indirect cost",
-            "2025-12-08",
-            "contract",
-            4502939860
-          ],
-          [
-            "ECD no. 5",
-            "WATER INSTALLATION",
-            "WATER INSTALLATION",
-            "KRZYŚ",
-            1177960,
-            151500,
-            "3.18 - indirect cost                  2.5.1 - indirect cost",
-            "2025-12-29",
-            "contract ",
-            4502939080
-          ],
-          [
-            "ECD no. 6",
-            "SURVEYOR",
-            "SURVEYOR",
-            "GEOBET",
-            2711518,
-            505550,
-            "4.8 - indirect cost                          2.5.2 - indirect cost",
-            "2025-12-29",
-            "contract",
-            4502939075
-          ],
-          [
-            "ECD no. 7",
-            "Power supply installation",
             null,
-            "EL-MAR",
-            2723781,
-            737000,
-            "5.2 - indirect cost",
-            "2025-12-29",
-            "contract",
-            4502939085
+            4502938068
           ],
           [
-            "ECD no. 8",
-            "organization of the opening meeting",
-            null,
-            "KaBo",
+            "ECR no. 2",
+            "Reinforcing steel",
+            "THYSSENKRUPP",
+            1065384,
+            3424080,
+            "2.5.1.1 - direct cost                                                                                                                      2.5.2.3 - direct cost",
+            "2025-12-30",
+            "contract",
+            4502938804
+          ],
+          [
+            "ECR no. 3",
+            "Earthworks",
+            "MARKOP",
+            2717747,
+            3143491.4,
+            "2.2 - direct cost                                 7.1 - direct cost                                      5.2.0.1 - indirect cost",
+            "2026-01-09",
+            "contract",
+            4502939064
+          ],
+          [
+            "ECR no. 4",
+            "additional permits",
+            "KaBo Borkowski Sp. k.",
             2723802,
-            6277.78,
-            "3.9.1 - indirect cost",
+            17400000,
+            "1.11 - direct cost                                        8.1.1 - direct cost",
             "2026-01-12",
-            "2026-01-13",
-            4502940616
+            "contract",
+            4502946461
           ],
           [
-            "ECD no. 9",
-            "FURNITURE RENTAL",
-            "FURNITURE RENTAL",
-            "MEBLORENT",
-            1172175,
-            99632,
-            "3.16 - indirect cost                   3.17 - indirect cost",
-            "2026-01-12",
-            "2026-01-15",
-            4502943059
-          ],
-          [
-            "ECD no. 10",
-            "Hourly assistant construction workers",
-            null,
-            "Adam Kujawka",
-            2723644,
-            361500,
-            "6.6.1 - indirect cost",
-            "2026-01-13",
-            null,
-            4502948806
-          ],
-          [
-            "ECD no.11",
-            "Hourly assistant construction workers",
-            null,
-            "Grzegorz Kujawka",
-            1161233,
-            361500,
-            "6.6.2 - indirect cost",
-            "2026-01-13",
-            null,
-            4502948820
-          ],
-          [
-            "ECD no. 12",
-            "municipal waste",
-            null,
-            "SANIKO",
-            1173364,
-            50000,
-            "3.2.1 - indirect cost",
+            "ECR no. 5",
+            "Scaffoldings",
+            "AS Rusztowania",
+            2718999,
+            3295075,
+            "5.14.1.1 - direct cost",
             "2026-01-15",
             "2026-01-15",
-            4502943626
+            4502943561
           ],
           [
-            "ECD no. 13",
-            "Building and detailed design of the GPO/GPZ station",
-            null,
-            "MENOS",
-            2723655,
-            390000,
-            "1.2.5.1 - direct cost",
-            "2026-01-15",
-            "2026-01-15",
-            4502943755
-          ],
-          [
-            "ECD no. 14",
-            "kruszywo",
-            null,
-            "MAT BUD",
-            1170959,
-            232320,
-            "3.19 - indirect cost                      4.10 - indirect cost                           5.3 - indirect cost                            5.2.0 - indirect cost                            2.5 - indirect cost",
-            "2026-01-19",
-            "2026-01-07",
-            4502934293
-          ],
-          [
-            "ECD no. 15",
-            "transport",
-            "WYNAJEM BIURA",
-            "SILOGISTIC",
-            1177984,
-            2500,
-            "2.2 - indirect cost",
-            "2026-01-19",
-            "2026-01-19",
-            4502946426
-          ],
-          [
-            "ECD no. 9 rev 1",
-            "FURNITURE RENTAL",
-            "FURNITURE RENTAL",
-            "MEBLORENT",
-            1172175,
-            95272,
-            "3.16 - indirect cost                   3.17 - indirect cost",
-            "2026-01-12",
-            "2026-01-15",
-            4502943059
-          ],
-          [
-            "ECD no. 16",
-            "FENCE",
-            null,
-            "PORR/PES",
-            null,
-            97440,
-            "5.5 - indirect cost",
-            "2026-01-20",
+            "ECR no. 6",
+            "diaphragm walls and barrettes",
+            "STUMP FRANKI",
+            "F1030",
+            4300000,
+            "2.1 - direct cost",
+            "2026-02-13",
             "contract",
-            null
+            4502970689
           ],
           [
-            "ECD no. 17",
-            "MOBILE TOILETS",
-            "DRUKARKA",
-            "WC SERWIS",
-            1165297,
-            26466,
-            "4.7 - indirect cost",
-            "2026-01-21",
-            "2026-01-22",
-            4502950161
-          ],
-          [
-            "ECD no. 18",
-            "Open order - purchase of small items",
-            null,
-            "MAT BUT",
-            1170959,
-            50000,
-            "2.3.1 - indirect cost",
-            "2026-01-22",
-            "2026-01-22",
-            4502950515
-          ],
-          [
-            "ECD no. 19",
-            "Open order - purchase of small items",
-            null,
-            "AM TOOLS - hurtownia",
-            1173121,
-            50000,
-            "2.3.2 - indirect cost",
-            "2026-01-22",
-            "2026-01-22",
-            4502950551
-          ],
-          [
-            "ECD no. 20",
-            "CONTAINERS ",
-            "FENCE",
-            "PORR/PES",
-            null,
-            821840,
-            "3.1 - indirect cost",
-            "2026-01-26",
-            null,
-            null
-          ],
-          [
-            "ECD no. 21",
-            "woda",
-            null,
-            "MPWIK",
-            1173249,
-            66880,
-            "4.3 - indirect cost ",
-            "2026-01-26",
-            "contract",
-            4502972410
-          ],
-          [
-            "ECD no. 22",
-            "kamera",
-            null,
-            "SETCON",
-            2723982,
-            16616.25,
-            "6.2 - indirect cost",
-            "2026-01-26",
-            "2026-01-30",
-            4502957582
-          ],
-          [
-            "ECD no. 23",
-            "wynajem sali konferencyjnej ",
-            null,
-            "HOTEL ALEKSANDER",
-            2721717,
-            1340,
-            "3.9.2 - indirect cost",
-            "2026-01-28",
-            "2026-01-28",
-            4502955423
-          ],
-          [
-            "ECD no. 24",
-            "WYNAJEM BIURA",
-            null,
-            "STALER MARKET ",
-            1173773,
-            7278,
-            "3.1 - indirect cost",
-            "2026-01-28",
-            "contract",
-            4502952746
-          ],
-          [
-            "ECD no. 25",
-            "piezometr",
-            null,
-            "GEOTEST",
-            2717751,
-            13280,
-            "6.3 - indirect cost",
-            "2026-01-28",
-            "contract",
-            4502956394
-          ],
-          [
-            "ECD no. 26",
-            "prąd ",
-            null,
-            "MPEC",
-            2724539,
-            50000,
-            "3.3 - indirect cost",
-            "2026-01-29",
-            "contract",
-            4503016221
-          ],
-          [
-            "ECD no. 5 rev 1",
-            "WATER INSTALLATION",
-            null,
-            "KRZYŚ",
-            1177960,
-            21000,
-            "2.5 - indirect cost ",
-            "2026-01-29",
-            "contract",
-            4502939080
-          ],
-          [
-            "ECD no. 27",
-            "Integrated permit consultant ",
-            null,
-            "ZAKŁAD SOZOTECHNIKI",
-            2724068,
-            113000,
-            "1.2.7 - direct cost",
-            "2026-02-02",
-            "contract",
-            4502966963
-          ],
-          [
-            "ECD no. 14 rev 1",
-            "kruszywo",
-            null,
-            "MAT BUT",
-            1170959,
-            230307,
-            "3.19 - indirect cost                      4.10 - indirect cost                           5.3 - indirect cost                            5.2.0 - indirect cost                            2.5 - indirect cost",
-            "2026-02-04",
-            "contract",
-            4502934293
-          ],
-          [
-            "ECD no. 7 rev 1",
-            "Power supply installation",
-            null,
-            "EL-MAR",
-            2723781,
-            135000,
-            "5.2 - indirect cost",
-            "2026-02-04",
-            "contract ",
-            4502939085
-          ],
-          [
-            "ECD no. 28",
-            "coffee machine rental",
-            null,
-            "COFFEE PARTNER ",
-            1178896,
-            50000,
-            "3.9 - indirect cost",
-            "2026-02-10",
-            "contract ",
-            4502960536
-          ],
-          [
-            "ECD no. 29",
-            "drinking water machine rental",
-            null,
-            "AQUAMO",
-            1163845,
-            8500,
-            "4.2 - indirect cost",
-            "2026-02-04",
-            "contract ",
-            4502960520
-          ],
-          [
-            "ECD no. 15 rev 1",
-            "transport ",
-            null,
-            "SILOGISTIC",
-            1177984,
-            2500,
-            "2.2 - indirect cost",
-            "2026-02-04",
-            "2026-01-19",
-            4502946426
-          ],
-          [
-            "ECD no. 30",
-            "time lapse camera installation",
-            null,
-            "ARBO-DRWAL",
-            2724141,
-            1463.41,
-            "6.2 - indirect cost",
-            "2026-02-10",
-            "2026-02-12",
-            4502971778
-          ],
-          [
-            "ECD no. 31",
-            "laboratory services ",
-            null,
-            "BARG",
-            1164058,
-            181560,
-            "2.5.1 - direct cost\n4.9 - indirect cost",
-            "2026-02-10",
-            "contract",
-            4502968920
-          ],
-          [
-            "ECD no. 32",
-            "Open order - office supplies",
-            null,
-            "ABIS",
-            1166292,
-            90000,
-            "3.7 - indirect cost",
-            "2026-02-10",
-            "-",
-            "-"
-          ],
-          [
-            "ECD no. 33",
-            "tv",
-            null,
-            "AV KREATOR",
-            2714226,
-            11980,
-            "3.12 - indirect cost",
-            "2026-02-11",
-            "2026-02-12",
-            4502971588
-          ],
-          [
-            "ECD no. 34",
-            "tymczasowa organizacja ruchu",
-            null,
-            "PROJBUD",
-            2724138,
-            950,
-            "8.1 - direct cost ",
-            "2026-02-11",
-            "2026-02-12",
-            4502971480
-          ],
-          [
-            "ECD no. 35",
-            "cleaning services",
-            null,
-            "CERBER",
-            2724173,
-            178200,
-            "3.8 - indirect cost",
-            "2026-02-16",
-            "contract ",
-            4502976093
-          ],
-          [
-            "ECD no. 36",
-            "office kitchen furniture ",
-            null,
-            "MIRRO",
-            2724168,
-            13414.64,
-            "3.17 - indirect cost",
-            "2026-02-17",
-            "2026-02-17",
-            4502975895
-          ],
-          [
-            "ECD no. 37",
-            "internet",
-            null,
-            "THORNET",
-            1173693,
-            27350,
-            "3.14 - indirect cost                     3.12 - indirect cost",
-            "2026-02-20",
-            "2026-02-23",
-            4502980811
-          ],
-          [
-            "ECD no. 38",
-            "construction waste ",
-            null,
-            "PREZERO",
-            2719396,
-            290720,
-            "4.5 - indirect cost ",
-            "2026-02-20",
-            "contract ",
-            4502980901
-          ],
-          [
-            "ECD no. 15 rev 2",
-            "transport",
-            null,
-            "SILOGISTIC",
-            1177984,
-            2400,
-            "2.2 - indirect cost",
-            "2026-02-23",
-            null,
-            4502946426
-          ],
-          [
-            "ECD no. 39",
-            "open order - sanitary industry assortment",
-            null,
-            "INSTALNOVA",
-            1179835,
-            30000,
-            "4.2 - indirect cost",
-            "2026-02-24",
-            "2026-02-24",
-            4502983881
-          ],
-          [
-            "ECD no. 40",
-            "open order - sanitary industry assortment",
-            null,
-            "ATMOMAT",
-            2724093,
-            30000,
-            "3.8 - indirect cost",
-            "2026-02-24",
-            "2026-02-24",
-            4502983951
-          ],
-          [
-            "ECD no. 30 rev 1",
-            "time lapse camera installation",
-            null,
-            "ARBO-DRWAL",
-            2724141,
-            336.59,
-            "6.2 - indirect cost",
-            "2026-02-26",
-            "2026-02-12",
-            4502971778
-          ],
-          [
-            "ECD no. 41",
-            "design office  - technological equipment",
-            null,
-            "ODS",
-            2724336,
-            943000,
-            "1.2.2 - direct cost\n2.6.1 - direct cost",
-            "2026-03-02",
-            "contract ",
-            4502993588
-          ],
-          [
-            "ECD no. 42",
-            "road signs",
-            null,
-            "DROG-ZNAK",
-            1172865,
-            2000,
-            "6.3 - indirect cost",
-            "2026-03-03",
-            "2026-03-03",
-            4502992375
-          ],
-          [
-            "ECD no. 15 rev 3",
-            "transport ",
-            null,
-            "SILOGISTIC",
-            1179834,
-            1400,
-            "2.2 - indirect cost",
-            "2026-03-05",
-            "2026-01-19",
-            4502946426
-          ],
-          [
-            "ECD no. 43",
-            "personal OHS equipment ",
-            null,
-            "PROSAVE",
-            1162319,
-            30000,
-            "6.5 - indirect cost ",
-            "2026-03-09",
-            null,
-            null
-          ],
-          [
-            "ECD no. 44",
-            "generator rental",
-            null,
-            "MOBIL SERWIS",
-            1176915,
-            23904,
-            "2.2 - indirect cost",
-            "2026-03-12",
-            "2026-03-12",
-            4503007260
-          ],
-          [
-            "ECD no. 45",
-            "concrete rubble ",
-            null,
-            "Usługi Sprzętowo - Transportowe Sławomir Boruczkowski",
-            2724506,
-            83200,
-            "2.1 - direct cost ",
-            "2026-03-16",
-            "2026-03-16",
-            4503011598
-          ],
-          [
-            "ECD no. 46",
-            "crushed aggregate",
-            null,
-            "KSM Parsęcko",
-            1178892,
-            134400,
-            "2.14.2 - direct cost",
-            "2026-03-16",
-            "contract ",
-            4503012737
-          ],
-          [
-            "ECD no. 15 rev 4",
-            "transport",
-            null,
-            "SILOGISTIC",
-            1177984,
-            500,
-            "2.2 - indirect cost",
-            "2026-03-19",
-            null,
-            4502946426
-          ],
-          [
-            "ECD no. 14 rev 2",
-            "kruszywo",
-            null,
-            "MAT BUD",
-            1170959,
-            25305.58,
-            "5.5 - indirect cost",
-            "2026-03-23",
-            null,
-            4502934293
-          ],
-          [
-            "ECD no. 47",
-            "HAZOP, ATEX, SIL analyses",
-            null,
-            "UDT CERT",
-            1038145,
-            214974,
-            "1.4 - direct cost ",
-            "2026-03-23",
-            "contract",
-            4503027816
-          ],
-          [
-            "ECD no 48",
-            "TAS stairs ",
-            null,
-            "TLC Rental",
-            1166722,
-            "17 530,00 PLN",
-            "5.5 - indirect cost ",
+            "ECR no. 7",
+            "AKPiA",
+            "ELEKTROSERW",
+            2714750,
+            37750000,
+            "1.2.4 - direct cost\n3.1.1 - direct cost\n3.2.1 - direct cost\n3.4.1 - direct cost\n6.4.1 - direct cost",
             "2026-04-07",
-            "2026-04-09",
-            4503050386
+            "contract",
+            4502977090
           ],
           [
-            "ECD no 49",
-            "pompa drenażowa - wynajem",
+            "ECR no. 8",
+            "tower cranes",
+            "ŻURAWIE WIELKOPOLSKA ",
+            2709639,
+            1170200,
+            "2.5 - indirect cost\n2.3 -  indirect cost",
+            "2026-02-20",
+            "contract",
+            4502983014
+          ],
+          [
+            "ECR no. 9",
+            "concrete mixes",
+            "BUSZREM",
+            2711840,
+            4490109,
+            "2.5.1.2 - direct cost\n2.5.2.4 - direct cost\n2.11.5 - direct cost",
+            "2026-02-20",
+            "contract",
+            4502986603
+          ],
+          [
+            "ECR no. 10",
+            "prefabricated elements",
+            "BETARD",
+            1165926,
+            19984000,
+            "2.5.2.1 - direct cost\n2.6.1 - direct cost",
+            "2026-03-04",
+            "contract ",
+            4502996937
+          ],
+          [
+            "ECR no. 11",
+            "reinforced concrete works",
+            "AF KONSTRUKCJE",
+            1164276,
+            8453470.15,
+            "2.4.1 - direct cost\n2.5.1 - direct cost\n2.5.2.2 - direct cost\n2.11.5 - direct cost",
+            "2026-03-05",
+            "contract ",
+            4502997466
+          ],
+          [
+            "ECR no. 12",
+            "concrete mixes",
+            "HOLCIM",
+            1175121,
+            4554136,
+            "2.5.1.2 - direct cost\n2.5.2.4 - direct cost\n2.11.5 - direct cost",
+            "2026-03-31",
+            "contract ",
+            4503025053
+          ],
+          [
+            "ECR no. 9 rev 1",
+            "concrete mixes",
+            "BUSZREM",
+            2711840,
+            0,
             null,
-            "PPHU Klaudia",
-            1167377,
-            4600,
-            "2.2 - indirect cost",
-            "2026-04-10",
+            "2026-03-31",
+            "anulowane",
+            null
+          ],
+          [
+            "ECR no. 13",
+            "steam boiler",
+            "SEFAKO",
+            2713841,
+            45990000,
+            "5.4.1 - direct cost",
+            "2026-04-01",
+            null,
+            4503036513
+          ],
+          [
+            "ECR no. 14",
+            "waste bunker cranes",
+            "ZBUD",
+            1162281,
+            9150000,
+            "5.2.1 - direct cost\n5.10.2 - direct cost",
+            "2026-04-07",
+            "contract ",
+            4503036767
+          ],
+          [
+            "ECR no. 3 rev 1",
+            "Earthworks",
+            "MARKOP",
+            2717747,
+            "525 340,00 PLN",
+            "2.2 - direct cost\n7.1 - direct cost\n2.14.2.1 - direct cost\n5.2.0.1 - indirect cost",
+            "2026-04-07",
+            null,
+            null
+          ],
+          [
+            null,
+            "stack ",
+            "AVANTEA STEEL SOLUTIONS",
+            null,
+            "340 500,00 EUR\n1 448 400,00 PLN",
+            null,
+            null,
             null,
             null
           ]
         ],
-        "sourceSheet": "EC decision"
+        "sourceSheet": "EC recommendation"
       }
     ],
     "sourceFile": "ER_decision, recommendation register.xlsx"

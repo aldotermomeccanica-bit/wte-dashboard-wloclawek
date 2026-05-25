@@ -286,8 +286,8 @@ function portfolioCurveSvg(curve, { height = 360, statusProgress = { headers: []
         ${ecDecisionTableHtml(ecDecision, 'portfolio-ec-table-wrap')}
       </div>
       <div class="delay-curve-ec-block er-register-block">
-        <div class="detail-note-title">ER decision / recommendation register</div>
-        <p class="delay-curve-ec-subtitle">Tabella letta dal file <strong>ER_decision, recommendation register.xlsx</strong> in data/current. Se aggiorni quel file, la dashboard si aggiorna al refresh.</p>
+        <div class="detail-note-title">ECR</div>
+        <p class="delay-curve-ec-subtitle">Tabella ECR letta dal file <strong>ER_decision, recommendation register.xlsx</strong> in data/current. Se aggiorni quel file, la dashboard si aggiorna al refresh.</p>
         ${erRegisterHtml(erRegister)}
       </div>
     </div>`;
@@ -1779,7 +1779,7 @@ function setReportButtonsBusy(isBusy, activeButton = null) {
 }
 
 async function refreshDashboardData() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260525152337&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260525160344&ts=' + Date.now());
   renderDashboard(data);
   return data;
 }
@@ -1800,7 +1800,7 @@ function bindReportButtons() {
 }
 
 async function loadDashboard() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260525152337&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260525160344&ts=' + Date.now());
   renderDashboard(data);
 }
 
