@@ -56,59 +56,67 @@
         {
           "code": "1",
           "label": "DESIGN",
-          "ordered": 42166000.0,
-          "toOrder": 3867000.0,
-          "total": 46033000.0
+          "budget": 45590000,
+          "ordered": 24397974,
+          "toOrder": 21192026,
+          "total": 45590000
         },
         {
           "code": "2",
           "label": "CIVIL WORKS",
-          "ordered": 39133035.94,
-          "toOrder": 72833732.1,
-          "total": 111966768.04
+          "budget": 108109767,
+          "ordered": 33404101,
+          "toOrder": 74705666,
+          "total": 108109767
         },
         {
           "code": "3",
           "label": "ELECTRICAL WORKS",
-          "ordered": 36086200.0,
-          "toOrder": 22259140.0,
-          "total": 58345340.0
+          "budget": 58345340,
+          "ordered": 36070000,
+          "toOrder": 22275340,
+          "total": 58345340
         },
         {
           "code": "4",
           "label": "SANITARY WORKS AND F.F.",
+          "budget": 21293319,
           "ordered": 0,
-          "toOrder": 21293319.0,
-          "total": 21293319.0
+          "toOrder": 21293319,
+          "total": 21293319
         },
         {
           "code": "5",
           "label": "MECHANICAL AND TECHNOLOGICAL",
-          "ordered": 149006313.78,
-          "toOrder": 110460331.52,
-          "total": 259466645.3
+          "budget": 258666646,
+          "ordered": 131227829,
+          "toOrder": 127438817,
+          "total": 258666646
         },
         {
           "code": "6",
           "label": "COMMISSIONING",
-          "ordered": 100000.0,
-          "toOrder": 8400000.0,
-          "total": 8500000.0
+          "budget": 8500000,
+          "ordered": 100000,
+          "toOrder": 8400000,
+          "total": 8500000
         },
         {
           "code": "7",
           "label": "ALIGNEMENT AND BACKUP",
-          "ordered": 0,
-          "toOrder": -261648.36,
-          "total": -261648.36
+          "budget": 952781,
+          "ordered": 726163,
+          "toOrder": 226618,
+          "total": 952781
         }
       ],
-      "ordered": 266491549.72,
-      "toOrder": 238851874.26,
-      "total": 505343423.98,
-      "orderedPct": 52.7,
-      "toOrderPct": 47.3,
-      "note": "Da ordinare include planned, enquiry, negotiation e contract prep.; esclusi root group 8 e 9."
+      "budget": 501457853,
+      "ordered": 225926067,
+      "toOrder": 275531786,
+      "total": 501457853,
+      "orderedPct": 45.1,
+      "toOrderPct": 54.9,
+      "note": "Da ordinare = Agg. Budget PORR - Ordinato; perimetro: costi diretti root group 1-7."
     },
     "executiveMessage": "Main risk today: 2.5.1.1 Supply of reinforcing steel is overdue by 142 days with 2432900 PLN still exposed.",
     "closedCount": 102,
@@ -1005,59 +1013,67 @@
         {
           "code": "1",
           "label": "DESIGN",
-          "ordered": 42166000.0,
-          "toOrder": 3867000.0,
-          "total": 46033000.0
+          "budget": 45590000,
+          "ordered": 24397974,
+          "toOrder": 21192026,
+          "total": 45590000
         },
         {
           "code": "2",
           "label": "CIVIL WORKS",
-          "ordered": 39133035.94,
-          "toOrder": 72833732.1,
-          "total": 111966768.04
+          "budget": 108109767,
+          "ordered": 33404101,
+          "toOrder": 74705666,
+          "total": 108109767
         },
         {
           "code": "3",
           "label": "ELECTRICAL WORKS",
-          "ordered": 36086200.0,
-          "toOrder": 22259140.0,
-          "total": 58345340.0
+          "budget": 58345340,
+          "ordered": 36070000,
+          "toOrder": 22275340,
+          "total": 58345340
         },
         {
           "code": "4",
           "label": "SANITARY WORKS AND F.F.",
+          "budget": 21293319,
           "ordered": 0,
-          "toOrder": 21293319.0,
-          "total": 21293319.0
+          "toOrder": 21293319,
+          "total": 21293319
         },
         {
           "code": "5",
           "label": "MECHANICAL AND TECHNOLOGICAL",
-          "ordered": 149006313.78,
-          "toOrder": 110460331.52,
-          "total": 259466645.3
+          "budget": 258666646,
+          "ordered": 131227829,
+          "toOrder": 127438817,
+          "total": 258666646
         },
         {
           "code": "6",
           "label": "COMMISSIONING",
-          "ordered": 100000.0,
-          "toOrder": 8400000.0,
-          "total": 8500000.0
+          "budget": 8500000,
+          "ordered": 100000,
+          "toOrder": 8400000,
+          "total": 8500000
         },
         {
           "code": "7",
           "label": "ALIGNEMENT AND BACKUP",
-          "ordered": 0,
-          "toOrder": -261648.36,
-          "total": -261648.36
+          "budget": 952781,
+          "ordered": 726163,
+          "toOrder": 226618,
+          "total": 952781
         }
       ],
-      "ordered": 266491549.72,
-      "toOrder": 238851874.26,
-      "total": 505343423.98,
-      "orderedPct": 52.7,
-      "toOrderPct": 47.3,
-      "note": "Da ordinare include planned, enquiry, negotiation e contract prep.; esclusi root group 8 e 9."
+      "budget": 501457853,
+      "ordered": 225926067,
+      "toOrder": 275531786,
+      "total": 501457853,
+      "orderedPct": 45.1,
+      "toOrderPct": 54.9,
+      "note": "Da ordinare = Agg. Budget PORR - Ordinato; perimetro: costi diretti root group 1-7."
     },
     "sCurveOptions": {
       "A": {

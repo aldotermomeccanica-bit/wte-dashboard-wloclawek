@@ -1,7 +1,7 @@
 {
   "meta": {
     "projectTitle": "Wloclawek - Waste-to-Energy Project Dashboard",
-    "generatedAt": "2026-05-22T12:53:12",
+    "generatedAt": "2026-05-22T10:00:34",
     "currency": "PLN",
     "sourceFiles": {
       "budget": "Budget.xlsm",
@@ -18,13 +18,7 @@
       "contracted": "T"
     },
     "scurveReferenceMonth": "mag-2026",
-    "scurveUploadedAt": "2026-05-22T12:53:12",
-    "versions": {
-      "found": true,
-      "sourceFile": "VERSIONS_BUDGET_PROCUREMENT.txt",
-      "budgetVersion": "17_2026.04",
-      "procurementVersion": "4_2026.05.06"
-    }
+    "scurveUploadedAt": "2026-05-22T10:00:34"
   },
   "summary": {
     "overallStatus": "AT RISK",
@@ -56,67 +50,59 @@
         {
           "code": "1",
           "label": "DESIGN",
-          "budget": 45590000,
-          "ordered": 24397974,
-          "toOrder": 21192026,
-          "total": 45590000
+          "ordered": 42166000.0,
+          "toOrder": 3867000.0,
+          "total": 46033000.0
         },
         {
           "code": "2",
           "label": "CIVIL WORKS",
-          "budget": 108109767,
-          "ordered": 33404101,
-          "toOrder": 74705666,
-          "total": 108109767
+          "ordered": 39133035.94,
+          "toOrder": 72833732.1,
+          "total": 111966768.04
         },
         {
           "code": "3",
           "label": "ELECTRICAL WORKS",
-          "budget": 58345340,
-          "ordered": 36070000,
-          "toOrder": 22275340,
-          "total": 58345340
+          "ordered": 36086200.0,
+          "toOrder": 22259140.0,
+          "total": 58345340.0
         },
         {
           "code": "4",
           "label": "SANITARY WORKS AND F.F.",
-          "budget": 21293319,
           "ordered": 0,
-          "toOrder": 21293319,
-          "total": 21293319
+          "toOrder": 21293319.0,
+          "total": 21293319.0
         },
         {
           "code": "5",
           "label": "MECHANICAL AND TECHNOLOGICAL",
-          "budget": 258666646,
-          "ordered": 131227829,
-          "toOrder": 127438817,
-          "total": 258666646
+          "ordered": 149006313.78,
+          "toOrder": 110460331.52,
+          "total": 259466645.3
         },
         {
           "code": "6",
           "label": "COMMISSIONING",
-          "budget": 8500000,
-          "ordered": 100000,
-          "toOrder": 8400000,
-          "total": 8500000
+          "ordered": 100000.0,
+          "toOrder": 8400000.0,
+          "total": 8500000.0
         },
         {
           "code": "7",
           "label": "ALIGNEMENT AND BACKUP",
-          "budget": 952781,
-          "ordered": 726163,
-          "toOrder": 226618,
-          "total": 952781
+          "ordered": 0,
+          "toOrder": -261648.36,
+          "total": -261648.36
         }
       ],
-      "budget": 501457853,
-      "ordered": 225926067,
-      "toOrder": 275531786,
-      "total": 501457853,
-      "orderedPct": 45.1,
-      "toOrderPct": 54.9,
-      "note": "Da ordinare = Agg. Budget PORR - Ordinato; perimetro: costi diretti root group 1-7."
+      "ordered": 266491549.72,
+      "toOrder": 238851874.26,
+      "total": 505343423.98,
+      "orderedPct": 52.7,
+      "toOrderPct": 47.3,
+      "note": "Da ordinare include planned, enquiry, negotiation e contract prep.; esclusi root group 8 e 9."
     },
     "executiveMessage": "Main risk today: 2.5.1.1 Supply of reinforcing steel is overdue by 142 days with 2432900 PLN still exposed.",
     "closedCount": 102,
@@ -1013,67 +999,59 @@
         {
           "code": "1",
           "label": "DESIGN",
-          "budget": 45590000,
-          "ordered": 24397974,
-          "toOrder": 21192026,
-          "total": 45590000
+          "ordered": 42166000.0,
+          "toOrder": 3867000.0,
+          "total": 46033000.0
         },
         {
           "code": "2",
           "label": "CIVIL WORKS",
-          "budget": 108109767,
-          "ordered": 33404101,
-          "toOrder": 74705666,
-          "total": 108109767
+          "ordered": 39133035.94,
+          "toOrder": 72833732.1,
+          "total": 111966768.04
         },
         {
           "code": "3",
           "label": "ELECTRICAL WORKS",
-          "budget": 58345340,
-          "ordered": 36070000,
-          "toOrder": 22275340,
-          "total": 58345340
+          "ordered": 36086200.0,
+          "toOrder": 22259140.0,
+          "total": 58345340.0
         },
         {
           "code": "4",
           "label": "SANITARY WORKS AND F.F.",
-          "budget": 21293319,
           "ordered": 0,
-          "toOrder": 21293319,
-          "total": 21293319
+          "toOrder": 21293319.0,
+          "total": 21293319.0
         },
         {
           "code": "5",
           "label": "MECHANICAL AND TECHNOLOGICAL",
-          "budget": 258666646,
-          "ordered": 131227829,
-          "toOrder": 127438817,
-          "total": 258666646
+          "ordered": 149006313.78,
+          "toOrder": 110460331.52,
+          "total": 259466645.3
         },
         {
           "code": "6",
           "label": "COMMISSIONING",
-          "budget": 8500000,
-          "ordered": 100000,
-          "toOrder": 8400000,
-          "total": 8500000
+          "ordered": 100000.0,
+          "toOrder": 8400000.0,
+          "total": 8500000.0
         },
         {
           "code": "7",
           "label": "ALIGNEMENT AND BACKUP",
-          "budget": 952781,
-          "ordered": 726163,
-          "toOrder": 226618,
-          "total": 952781
+          "ordered": 0,
+          "toOrder": -261648.36,
+          "total": -261648.36
         }
       ],
-      "budget": 501457853,
-      "ordered": 225926067,
-      "toOrder": 275531786,
-      "total": 501457853,
-      "orderedPct": 45.1,
-      "toOrderPct": 54.9,
-      "note": "Da ordinare = Agg. Budget PORR - Ordinato; perimetro: costi diretti root group 1-7."
+      "ordered": 266491549.72,
+      "toOrder": 238851874.26,
+      "total": 505343423.98,
+      "orderedPct": 52.7,
+      "toOrderPct": 47.3,
+      "note": "Da ordinare include planned, enquiry, negotiation e contract prep.; esclusi root group 8 e 9."
     },
     "sCurveOptions": {
       "A": {
@@ -12745,133 +12723,10 @@
     "New WBS child rows are accepted automatically as long as the item code follows the numeric hierarchy."
   ],
   "portfolioCurve": {
-    "title": "Project S-Curve",
-    "labels": [
-      "dic-2025",
-      "gen-2026",
-      "feb-2026",
-      "mar-2026",
-      "apr-2026",
-      "mag-2026",
-      "giu-2026",
-      "lug-2026",
-      "ago-2026",
-      "set-2026",
-      "ott-2026",
-      "nov-2026",
-      "dic-2026",
-      "gen-2027",
-      "feb-2027",
-      "mar-2027",
-      "apr-2027",
-      "mag-2027",
-      "giu-2027",
-      "lug-2027",
-      "ago-2027",
-      "set-2027",
-      "ott-2027",
-      "nov-2027",
-      "dic-2027",
-      "gen-2028",
-      "feb-2028",
-      "mar-2028",
-      "apr-2028",
-      "mag-2028",
-      "giu-2028",
-      "lug-2028",
-      "ago-2028",
-      "set-2028",
-      "ott-2028",
-      "nov-2028"
-    ],
-    "series": [
-      {
-        "name": "Planned",
-        "values": [
-          1.0,
-          2.0,
-          4.0,
-          7.0,
-          10.0,
-          13.0,
-          17.0,
-          20.0,
-          23.0,
-          27.0,
-          32.0,
-          37.0,
-          41.0,
-          46.0,
-          50.0,
-          54.0,
-          59.0,
-          63.0,
-          67.0,
-          71.0,
-          75.0,
-          78.0,
-          83.0,
-          87.0,
-          92.0,
-          95.0,
-          97.0,
-          99.0,
-          99.0,
-          99.0,
-          99.0,
-          99.0,
-          99.0,
-          99.0,
-          99.0,
-          100.0
-        ],
-        "color": "#2f68c8"
-      },
-      {
-        "name": "Executed",
-        "values": [
-          1.0,
-          2.0,
-          4.0,
-          7.0,
-          12.0,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        ],
-        "color": "#7EA73B"
-      }
-    ],
-    "sourceSheet": "10288_ITPO PROJEKT-SCuvrve",
-    "sourceFile": "S Curve_Project.xlsx"
+    "title": null,
+    "labels": [],
+    "series": [],
+    "sourceSheet": "10288_ITPO PROJEKT-SCuvrve"
   },
   "ecDecision": {
     "title": "EC decision",
