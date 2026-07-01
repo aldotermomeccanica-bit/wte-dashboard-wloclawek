@@ -710,7 +710,7 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
 /* V21: single-row top strip with equal height */
 .hero-strip.top-strip-grid {
   display: grid;
-  grid-template-columns: minmax(500px, 2fr) minmax(330px, 1.2fr) minmax(220px, .8fr);
+  grid-template-columns: minmax(350px, 1.45fr) minmax(230px, .95fr) minmax(330px, 1.2fr) minmax(220px, .8fr);
   gap: 8px;
   align-items: stretch;
 }
@@ -786,7 +786,7 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
 }
 @media (max-width: 1340px) {
   .hero-strip.top-strip-grid {
-    grid-template-columns: minmax(420px,1.7fr) minmax(300px,1.1fr) minmax(210px,.75fr);
+    grid-template-columns: minmax(300px,1.25fr) minmax(220px,.9fr) minmax(300px,1.1fr) minmax(210px,.75fr);
   }
   .strip-overview .hero-copy {
     font-size: 10.5px;
@@ -1082,4 +1082,1183 @@ th { background: #f6faff; color: var(--muted); text-transform: uppercase; letter
 }
 .delay-curve-focus-note p + p {
   margin-top: 4px;
+}
+
+
+.delay-curve-ec-block {
+  margin-top: 14px;
+}
+.delay-curve-ec-subtitle {
+  margin: 4px 0 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.portfolio-ec-table-wrap {
+  max-height: 260px;
+}
+
+
+/* V73 mobile tuning focused on Portfolio */
+@media (max-width: 768px) {
+  #portfolio-tab .panel {
+    padding: 12px;
+  }
+  #portfolio-tab .panel-head h2 {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+  #portfolio-tab .panel-head p {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  #portfolio-tab .root-card,
+  #portfolio-tab .bar-row,
+  #portfolio-tab .to-award-row {
+    padding: 12px;
+    gap: 8px;
+  }
+  #portfolio-tab .root-card .row {
+    font-size: 11px;
+  }
+  #portfolio-tab .root-card .row strong,
+  #portfolio-tab .root-card .row span {
+    line-height: 1.3;
+  }
+  #portfolio-tab .to-award-section-head,
+  #portfolio-tab .to-award-row-head,
+  #portfolio-tab .delay-curve-head,
+  #portfolio-tab .bar-row-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #portfolio-tab .to-award-row-body {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  #portfolio-tab .to-award-value {
+    text-align: left;
+    font-size: 11px;
+  }
+  #portfolio-tab .meta-text {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  #portfolio-tab .delay-curve-summary,
+  #portfolio-tab .portfolio-kpi-note {
+    padding: 12px;
+  }
+  #portfolio-tab .delay-curve-summary-title,
+  #portfolio-tab .detail-note-title {
+    font-size: 10px;
+  }
+  #portfolio-tab .delay-curve-summary-subtitle,
+  #portfolio-tab .detail-note-bottom p {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  #portfolio-tab .delay-curve-block,
+  #portfolio-tab .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  #portfolio-tab .delay-curve-block .svg-chart {
+    min-width: 680px;
+    width: 680px;
+    height: auto;
+  }
+  #portfolio-tab .delay-curve-table,
+  #portfolio-tab .table-wrap table {
+    min-width: 680px;
+  }
+  #portfolio-tab .delay-curve-table thead th,
+  #portfolio-tab .delay-curve-table tbody td,
+  #portfolio-tab .table-wrap th,
+  #portfolio-tab .table-wrap td {
+    font-size: 11px;
+    padding: 9px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  #portfolio-tab .panel {
+    padding: 10px;
+  }
+  #portfolio-tab .delay-curve-block .svg-chart {
+    min-width: 620px;
+    width: 620px;
+  }
+  #portfolio-tab .delay-curve-table,
+  #portfolio-tab .table-wrap table {
+    min-width: 620px;
+  }
+  #portfolio-tab .to-award-row,
+  #portfolio-tab .bar-row,
+  #portfolio-tab .root-card {
+    border-radius: 14px;
+  }
+}
+
+
+/* V74 mobile refinement: overview KPI readability + portfolio alignment */
+@media (max-width: 600px) {
+  .shell { padding: 12px; }
+  .minimal-kpis { grid-template-columns: 1fr 1fr !important; gap: 8px; }
+  .minimal-kpis .kpi-tile {
+    min-height: 86px;
+    padding: 10px 10px 8px;
+    overflow: hidden;
+  }
+  .minimal-kpis .kpi-tile .label {
+    font-size: 8.5px;
+    line-height: 1.2;
+    letter-spacing: .08em;
+  }
+  .minimal-kpis .kpi-tile .value,
+  .minimal-kpis .kpi-tile.money-wide .value,
+  .minimal-kpis .kpi-tile.delta-inline .value {
+    font-size: 11px !important;
+    line-height: 1.18;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    letter-spacing: -.01em;
+  }
+  .minimal-kpis .kpi-tile .hint,
+  .minimal-kpis .kpi-tile.delta-inline .inline-hint {
+    font-size: 9.5px;
+    line-height: 1.28;
+    min-height: 0;
+  }
+  .compact-panel { padding: 14px; }
+  .minimal-panel-head { gap: 8px; }
+  .minimal-panel-head h2 { font-size: 16px; line-height: 1.15; }
+  .minimal-panel-head p { font-size: 11px; line-height: 1.4; }
+  .ghost-link { font-size: 11px; }
+  .note-banner { font-size: 11px; padding: 10px 12px; line-height: 1.45; }
+  .chart-legend { gap: 10px; }
+  .legend-chip { font-size: 10px; gap: 6px; }
+
+  #portfolio-tab .panel { padding: 10px; }
+  #portfolio-tab .root-grid { grid-template-columns: 1fr !important; }
+  #portfolio-tab .root-card,
+  #portfolio-tab .bar-row,
+  #portfolio-tab .to-award-row { padding: 10px 11px; gap: 7px; }
+  #portfolio-tab .root-card .row {
+    display: grid;
+    grid-template-columns: minmax(96px, auto) minmax(0, 1fr);
+    justify-content: start;
+    align-items: start;
+    gap: 4px 10px;
+    font-size: 10.5px;
+  }
+  #portfolio-tab .root-card .row strong {
+    justify-self: start;
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.3;
+  }
+  #portfolio-tab .bar-row-head,
+  #portfolio-tab .to-award-row-head,
+  #portfolio-tab .delay-curve-head { 
+    align-items: flex-start; 
+    gap: 6px;
+  }
+  #portfolio-tab .bar-row-head .meta-text,
+  #portfolio-tab .to-award-row-head .meta-text {
+    align-self: flex-start;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .to-award-row-body {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  #portfolio-tab .to-award-value {
+    text-align: left;
+    font-size: 11px;
+    line-height: 1.25;
+  }
+  #portfolio-tab .delay-curve-summary,
+  #portfolio-tab .delay-curve-ec-block,
+  #portfolio-tab .portfolio-kpi-note {
+    padding: 10px;
+  }
+  #portfolio-tab .delay-curve-summary-subtitle,
+  #portfolio-tab .delay-curve-ec-subtitle,
+  #portfolio-tab .detail-note-bottom p {
+    font-size: 10.8px;
+    line-height: 1.45;
+  }
+  #portfolio-tab .legend-badge {
+    font-size: 10px;
+    padding: 6px 9px;
+  }
+}
+
+
+/* V75 mobile portfolio compression: keep desktop unchanged */
+@media (max-width: 600px) {
+  html, body {
+    overflow-x: hidden;
+  }
+  .shell, main, .tab-panel {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  #portfolio-tab .content-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+  #portfolio-tab .panel,
+  #portfolio-tab .card,
+  #portfolio-tab .root-grid,
+  #portfolio-tab .root-card,
+  #portfolio-tab .to-award-root-chart,
+  #portfolio-tab .to-award-chart-list,
+  #portfolio-tab .bar-chart,
+  #portfolio-tab .delay-curve-block {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  #portfolio-tab .panel {
+    padding: 10px 9px;
+  }
+  #portfolio-tab .panel-head {
+    margin-bottom: 10px;
+  }
+  #portfolio-tab .panel-head h2 {
+    font-size: 15px;
+    line-height: 1.18;
+  }
+  #portfolio-tab .panel-head p {
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+  #portfolio-tab .root-card {
+    gap: 7px;
+    padding: 10px 10px;
+    overflow: hidden;
+  }
+  #portfolio-tab .legend-row-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+    align-items: start;
+  }
+  #portfolio-tab .legend-row-head strong {
+    min-width: 0;
+    max-width: 100%;
+    font-size: 12px;
+    line-height: 1.25;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .root-card .row {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-content: start;
+    align-items: start;
+    gap: 3px 6px;
+    font-size: 10px;
+  }
+  #portfolio-tab .root-card .row span {
+    color: var(--muted);
+    white-space: nowrap;
+    line-height: 1.25;
+  }
+  #portfolio-tab .root-card .row strong {
+    justify-self: start;
+    text-align: left;
+    min-width: 0;
+    font-size: 10.8px;
+    line-height: 1.25;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .pill {
+    padding: 4px 7px;
+    font-size: 9px;
+  }
+  #portfolio-tab .to-award-root-chart {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+  #portfolio-tab .to-award-section-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  #portfolio-tab .to-award-section-head h3 {
+    font-size: 15px;
+    line-height: 1.18;
+  }
+  #portfolio-tab .to-award-legend {
+    justify-content: flex-start;
+    gap: 6px;
+  }
+  #portfolio-tab .to-award-row {
+    padding: 10px;
+    gap: 7px;
+  }
+  #portfolio-tab .to-award-row-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    align-items: start;
+  }
+  #portfolio-tab .to-award-row-head strong {
+    min-width: 0;
+    font-size: 11px;
+    line-height: 1.25;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .to-award-row-head .meta-text {
+    min-width: 0;
+    font-size: 9.5px;
+    line-height: 1.3;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .to-award-row-body {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  #portfolio-tab .to-award-bar-shell {
+    height: 10px;
+  }
+  #portfolio-tab .to-award-value {
+    text-align: left;
+    font-size: 10.8px;
+    line-height: 1.25;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .bar-row {
+    padding: 10px;
+    gap: 7px;
+  }
+  #portfolio-tab .bar-row-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    align-items: start;
+  }
+  #portfolio-tab .bar-row-head strong,
+  #portfolio-tab .bar-row-head .meta-text {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #portfolio-tab .bar-row-head strong {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+  #portfolio-tab .bar-row-head .meta-text {
+    font-size: 9.5px;
+    line-height: 1.3;
+  }
+  #portfolio-tab .delay-curve-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  #portfolio-tab .delay-curve-head h3 {
+    font-size: 15px;
+  }
+  #portfolio-tab .delay-curve-head p,
+  #portfolio-tab .delay-curve-summary-subtitle,
+  #portfolio-tab .delay-curve-ec-subtitle,
+  #portfolio-tab .detail-note-bottom p {
+    font-size: 10.5px;
+    line-height: 1.4;
+  }
+  #portfolio-tab .delay-curve-summary,
+  #portfolio-tab .delay-curve-ec-block,
+  #portfolio-tab .portfolio-kpi-note {
+    padding: 10px 9px;
+  }
+  #portfolio-tab .chart-legend,
+  #portfolio-tab .chart-legend-top {
+    justify-content: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #portfolio-tab .legend-chip,
+  #portfolio-tab .legend-badge {
+    font-size: 9.5px;
+  }
+}
+
+
+/* V76 mobile refinement: Overview compressed like Portfolio, desktop unchanged */
+@media (max-width: 600px) {
+  #overview-tab, #overview-tab .overview-minimal, #overview-tab .hero-board, #overview-tab .overview-grid,
+  #overview-tab .minimal-side-column, #overview-tab .panel, #overview-tab .card {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  #overview-tab .overview-minimal {
+    gap: 12px;
+  }
+  #overview-tab .hero-board,
+  #overview-tab .panel {
+    padding: 10px 9px;
+  }
+  #overview-tab .hero-strip.top-strip-grid,
+  #overview-tab .minimal-main-grid,
+  #overview-tab .minimal-bottom-grid,
+  #overview-tab .minimal-side-column {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+  #overview-tab .top-strip-card,
+  #overview-tab .mini-stat,
+  #overview-tab .compact-check-card,
+  #overview-tab .meta-card {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 10px;
+    min-height: auto;
+    overflow: hidden;
+  }
+  #overview-tab .brand-block,
+  #overview-tab .hero-title-row,
+  #overview-tab .minimal-panel-head,
+  #overview-tab .panel-head {
+    min-width: 0;
+  }
+  #overview-tab .strip-overview .minimal-title,
+  #overview-tab .minimal-panel-head h2 {
+    font-size: 15px;
+    line-height: 1.15;
+  }
+  #overview-tab .strip-overview .hero-copy,
+  #overview-tab .minimal-panel-head p,
+  #overview-tab .note-banner,
+  #overview-tab .detail-note-bottom p {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    font-size: 10.8px;
+    line-height: 1.42;
+  }
+  #overview-tab .hero-copy {
+    margin-top: 4px;
+  }
+  #overview-tab .compact-check-card {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+  }
+  #overview-tab .compact-check-title {
+    font-size: 11px !important;
+    line-height: 1.2;
+  }
+  #overview-tab .compact-month-field input,
+  #overview-tab .compact-check-button {
+    height: 32px !important;
+  }
+  #overview-tab .minimal-kpis {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px;
+  }
+  #overview-tab .minimal-kpis .kpi-tile {
+    min-width: 0;
+    padding: 10px 9px 8px;
+    min-height: 82px;
+  }
+  #overview-tab .minimal-kpis .kpi-tile .label {
+    font-size: 8px;
+    line-height: 1.15;
+  }
+  #overview-tab .minimal-kpis .kpi-tile .value,
+  #overview-tab .minimal-kpis .kpi-tile.money-wide .value,
+  #overview-tab .minimal-kpis .kpi-tile.delta-inline .value {
+    font-size: 10.5px !important;
+    line-height: 1.16;
+    letter-spacing: -.015em;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #overview-tab .minimal-kpis .kpi-tile .hint,
+  #overview-tab .minimal-kpis .kpi-tile.delta-inline .inline-hint {
+    font-size: 9px;
+    line-height: 1.25;
+  }
+  #overview-tab .curve-summary-grid,
+  #overview-tab .minimal-orders-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+  }
+  #overview-tab .curve-stat,
+  #overview-tab .order-card,
+  #overview-tab .order-line,
+  #overview-tab .critical-item {
+    padding: 10px 10px;
+    min-width: 0;
+  }
+  #overview-tab .curve-stat strong,
+  #overview-tab .order-metrics .big,
+  #overview-tab .critical-item strong {
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  #overview-tab .curve-stat .label,
+  #overview-tab .order-metrics .small,
+  #overview-tab .critical-item p,
+  #overview-tab .meta-text,
+  #overview-tab .ghost-link {
+    font-size: 10px;
+    line-height: 1.3;
+  }
+  #overview-tab .chart-shell,
+  #overview-tab .minimal-chart,
+  #overview-tab .detail-chart,
+  #overview-tab .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  #overview-tab .minimal-chart .svg-chart,
+  #overview-tab .chart-shell .svg-chart {
+    min-width: 560px;
+    width: 560px;
+    height: auto;
+  }
+}
+
+
+/* V77 - ER decision / recommendation register under EC decision */
+.er-register-block {
+  margin-top: 18px;
+}
+.er-register-section {
+  margin-top: 14px;
+}
+.er-register-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #1b3150;
+  letter-spacing: .02em;
+  margin: 4px 0 8px;
+}
+.portfolio-er-table-wrap {
+  max-height: 360px;
+  overflow: auto;
+}
+.portfolio-er-table-wrap table {
+  min-width: 1180px;
+}
+.portfolio-er-table-wrap th,
+.portfolio-er-table-wrap td {
+  font-size: 11px;
+  line-height: 1.28;
+}
+
+
+/* V78 - Programma Wloclawek milestones table in Portfolio left column */
+.programme-milestones-block {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.programme-milestones-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.programme-milestones-head p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.42;
+}
+.program-milestones-table-wrap {
+  max-height: 560px;
+  overflow: auto;
+}
+.program-milestones-table {
+  min-width: 700px;
+}
+.program-milestones-table th,
+.program-milestones-table td {
+  font-size: 11px;
+  line-height: 1.28;
+  padding: 9px 10px;
+  vertical-align: top;
+}
+.program-milestones-table th:first-child,
+.program-milestones-table td:first-child {
+  width: 56px;
+  white-space: nowrap;
+  font-weight: 800;
+  color: #1b3150;
+}
+.program-milestones-table th:nth-child(3),
+.program-milestones-table th:nth-child(4),
+.program-milestones-table td:nth-child(3),
+.program-milestones-table td:nth-child(4) {
+  width: 90px;
+  white-space: nowrap;
+}
+.program-milestones-group td {
+  background: #eef5ff;
+  color: #1b3150;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+@media (max-width: 700px) {
+  #portfolio-tab .programme-milestones-block { margin-top: 12px; padding-top: 12px; }
+  #portfolio-tab .programme-milestones-head p { font-size: 11px; }
+  #portfolio-tab .program-milestones-table-wrap { max-height: 420px; }
+  #portfolio-tab .program-milestones-table { min-width: 620px; }
+}
+
+/* V80 - Overview S-curve height alignment with right order column (desktop/tablet only) */
+@media (min-width: 781px) {
+  #overview-tab .minimal-main-grid {
+    align-items: stretch;
+  }
+
+  #overview-tab .minimal-chart-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  #overview-tab .minimal-chart-panel .minimal-panel-head,
+  #overview-tab .minimal-chart-panel .note-banner {
+    flex: 0 0 auto;
+  }
+
+  #overview-tab .minimal-chart-panel .minimal-chart {
+    flex: 1 1 auto;
+    min-height: 500px;
+  }
+
+  #overview-tab .minimal-side-column {
+    height: 100%;
+  }
+}
+
+/* V82 - dynamic Excel report button */
+.report-meta-card {
+  gap: 6px;
+}
+.report-generate-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-top: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(47, 104, 200, 0.22);
+  background: linear-gradient(180deg, rgba(47, 104, 200, 0.12), rgba(47, 104, 200, 0.06));
+  color: #1f4e79;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.report-generate-button:hover {
+  border-color: rgba(47, 104, 200, 0.42);
+  background: rgba(47, 104, 200, 0.14);
+}
+@media (max-width: 760px) {
+  .report-generate-button {
+    width: 100%;
+  }
+}
+
+.report-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.report-actions .report-generate-button {
+  margin-top: 0;
+}
+.pdf-report-button {
+  border-color: rgba(192, 0, 0, 0.20);
+  background: linear-gradient(180deg, rgba(192, 0, 0, 0.10), rgba(192, 0, 0, 0.04));
+  color: #8b1a1a;
+}
+.pdf-report-button:hover {
+  border-color: rgba(192, 0, 0, 0.38);
+  background: rgba(192, 0, 0, 0.12);
+}
+@media (max-width: 760px) {
+  .report-actions { width: 100%; }
+  .report-actions .report-generate-button { flex: 1 1 100%; width: 100%; }
+}
+
+
+/* V88: report buttons auto-refresh data before download */
+.report-generate-button.is-busy {
+  opacity: 0.72;
+  pointer-events: none;
+  cursor: wait;
+}
+
+
+/* V94 - Overview Baseline Budget detailed tile */
+#overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
+#overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+#overview-tab .minimal-kpis .kpi-tile.cost-detail-tile,
+.kpi-tile.baseline-breakdown-tile,
+.kpi-tile.updated-breakdown-tile,
+.kpi-tile.cost-detail-tile {
+  grid-column: span 2;
+  min-height: 214px;
+  padding: 13px 14px 12px;
+  border-top: 3px solid var(--blue);
+}
+.kpi-tile.has-custom-content .kpi-track { display: none; }
+.baseline-budget-overview {
+  display: grid;
+  gap: 5px;
+  height: 100%;
+  align-content: start;
+}
+.baseline-budget-overview-title {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.baseline-budget-overview-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 11px;
+  line-height: 1.22;
+}
+.baseline-budget-overview-row span {
+  color: #5f728b;
+  min-width: 0;
+}
+.baseline-budget-overview-row strong {
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 850;
+  text-align: right;
+  white-space: nowrap;
+}
+.baseline-budget-overview-row.baseline-total {
+  margin-top: 3px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(18, 42, 75, .32);
+}
+.baseline-budget-overview-row.baseline-total span,
+.baseline-budget-overview-row.baseline-total strong {
+  color: var(--ink);
+  font-weight: 900;
+}
+@media (max-width: 1260px) {
+  #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.cost-detail-tile,
+  .kpi-tile.baseline-breakdown-tile,
+  .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.cost-detail-tile { grid-column: span 2; }
+}
+@media (max-width: 780px) {
+  #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.cost-detail-tile,
+  .kpi-tile.baseline-breakdown-tile,
+  .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.cost-detail-tile {
+    grid-column: 1 / -1;
+    min-height: auto;
+  }
+  .baseline-budget-overview-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1px;
+  }
+  .baseline-budget-overview-row strong { text-align: left; }
+}
+
+
+/* V95 - Overview Updated Budget detailed non-clickable tile */
+.kpi-tile.updated-breakdown-tile { border-top-color: var(--green); cursor: default; }
+.kpi-tile.not-clickable { cursor: default; }
+.kpi-tile.not-clickable:hover { transform: none; box-shadow: 0 10px 22px rgba(25,56,100,.06); border-color: var(--line); }
+.updated-budget-overview .baseline-budget-overview-title { color: #22834f; }
+
+
+/* V96 - Overview budget tiles: four cards on one row and compact budget breakdowns */
+@media (min-width: 1261px) {
+  #overview-tab .minimal-kpis {
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.cost-detail-tile,
+  .kpi-tile.baseline-breakdown-tile,
+  .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.cost-detail-tile {
+    grid-column: span 4;
+    min-height: 214px;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.money-wide:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile),
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) {
+    grid-column: span 2;
+  }
+}
+@media (min-width: 1261px) and (max-width: 1450px) {
+  .baseline-budget-overview-row {
+    font-size: 10.5px;
+    gap: 7px;
+  }
+  .baseline-budget-overview-row strong {
+    font-size: 10.5px;
+  }
+  .baseline-budget-overview-title {
+    font-size: 9.5px;
+  }
+}
+
+/* V110 - dynamic Budget/Procurement version card */
+.versions-card {
+  gap: 7px;
+  justify-content: center;
+}
+.versions-card .eyebrow.dark {
+  color: #6f82a0;
+}
+.versions-grid {
+  display: grid;
+  gap: 6px;
+}
+.version-line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: baseline;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed rgba(18,42,75,.16);
+}
+.version-line:last-child { padding-bottom: 0; border-bottom: 0; }
+.version-line span {
+  font-size: 10px !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase;
+  color: #70839e;
+  font-weight: 800;
+}
+.version-line strong {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.versions-updated {
+  font-size: 9px;
+  line-height: 1.2;
+  color: #7a8aa0;
+}
+@media (max-width: 1120px) {
+  .versions-card { min-height: 84px; }
+}
+@media (max-width: 760px) {
+  .version-line { grid-template-columns: 1fr; gap: 2px; }
+  .version-line strong { white-space: normal; }
+}
+
+/* V111 - keep V109 top-row geometry and place file versions inside Overview card */
+.hero-strip.top-strip-grid {
+  grid-template-columns: minmax(500px, 2fr) minmax(330px, 1.2fr) minmax(220px, .8fr);
+}
+.strip-overview {
+  padding: 10px 12px;
+}
+.strip-overview-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 240px);
+  gap: 18px;
+  align-items: center;
+  width: 100%;
+}
+.strip-overview-text { min-width: 0; }
+.strip-overview .hero-copy {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.28;
+  margin-top: 5px;
+}
+.overview-versions-mini {
+  justify-self: end;
+  min-width: 190px;
+  max-width: 240px;
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid rgba(88, 115, 150, .18);
+  border-radius: 14px;
+  background: rgba(255,255,255,.54);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72);
+}
+.overview-versions-mini .eyebrow.dark {
+  font-size: 8.5px;
+  letter-spacing: .12em;
+  color: #6f82a0;
+  margin-bottom: 5px;
+}
+.overview-versions-lines {
+  display: grid;
+  gap: 4px;
+}
+.overview-version-line {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 8px;
+  align-items: baseline;
+}
+.overview-version-line span {
+  font-size: 9px !important;
+  letter-spacing: .09em !important;
+  text-transform: uppercase;
+  color: #70839e;
+  font-weight: 800;
+}
+.overview-version-line strong {
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 1260px) {
+  .hero-strip.top-strip-grid {
+    grid-template-columns: minmax(420px,1.7fr) minmax(300px,1.1fr) minmax(210px,.75fr);
+  }
+  .strip-overview-content {
+    grid-template-columns: minmax(0, 1fr) minmax(170px, 210px);
+    gap: 12px;
+  }
+  .overview-version-line { grid-template-columns: 74px minmax(0, 1fr); }
+  .overview-version-line strong { font-size: 11px; }
+}
+@media (max-width: 1120px) {
+  .hero-strip.top-strip-grid { grid-template-columns: 1fr 1fr; }
+  .strip-overview { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .hero-strip.top-strip-grid { grid-template-columns: 1fr; }
+  .strip-overview-content { grid-template-columns: 1fr; gap: 10px; }
+  .overview-versions-mini { justify-self: stretch; max-width: none; }
+}
+
+/* V116 - supplier/subcontractor column in Contracted value and WBS exposure detail tables */
+.table-wrap table.supplier-detail-table {
+  min-width: 1180px;
+}
+.table-wrap th.col-supplier,
+.table-wrap td.col-supplier {
+  min-width: 190px;
+  max-width: 260px;
+}
+.table-wrap td.col-supplier {
+  font-size: 12px;
+  line-height: 1.28;
+}
+
+/* V121 - direct orders note under the order mix chart */
+.pie-scope-note{
+  margin: -8px 14px 8px;
+  padding: 7px 9px;
+  border-radius: 10px;
+  background: #f3f7fc;
+  border: 1px solid #dce8f5;
+  color: #49647f;
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 650;
+}
+
+/* V123 - S-Curve A/B mode toggle */
+.scurve-head-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.scurve-mode-toggle{display:inline-flex;gap:4px;padding:4px;background:#eef4fb;border:1px solid #d7e4f3;border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.scurve-mode-toggle button{border:0;background:transparent;color:#49627d;font-weight:800;font-size:11px;line-height:1;padding:8px 10px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.scurve-mode-toggle button.active{background:#1b3150;color:#fff;box-shadow:0 4px 10px rgba(27,49,80,.16)}
+.scurve-mode-description{display:flex;gap:8px;align-items:baseline;margin:2px 0 8px 0;padding:8px 10px;border-radius:12px;background:#f7faff;border:1px solid #e4edf8;color:#425a75;font-size:12px;line-height:1.35}
+.scurve-mode-description strong{color:#1b3150;font-size:12px;white-space:nowrap}
+@media (max-width: 900px){.scurve-head-actions{justify-content:flex-start}.scurve-mode-description{display:block}.scurve-mode-description strong{display:block;margin-bottom:4px}}
+
+
+/* V127 - dynamic Cost Detail tile on the overview KPI row */
+.kpi-tile.cost-detail-tile {
+  border-top-color: var(--orange, #f59f45);
+  cursor: default;
+}
+.cost-detail-overview {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  height: 100%;
+  gap: 5px;
+}
+.cost-detail-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 1px;
+}
+.cost-detail-head span {
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.cost-detail-head em {
+  color: var(--muted);
+  font-size: 9px;
+  font-style: normal;
+  white-space: nowrap;
+}
+.cost-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(96px, 1.15fr) minmax(70px, .95fr) minmax(78px, 1fr);
+  align-items: baseline;
+  gap: 7px;
+  min-width: 0;
+}
+.cost-detail-grid span {
+  color: #596b7f;
+  font-size: 9.5px;
+  font-weight: 800;
+  line-height: 1.12;
+  min-width: 0;
+}
+.cost-detail-grid strong {
+  color: var(--ink);
+  font-size: 9.7px;
+  font-weight: 850;
+  text-align: right;
+  white-space: nowrap;
+}
+.cost-detail-grid-head strong {
+  color: var(--muted);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.cost-detail-rows {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+}
+.cost-detail-total {
+  margin-top: 2px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(18, 42, 75, .32);
+}
+.cost-detail-total span,
+.cost-detail-total strong {
+  color: var(--ink);
+  font-weight: 950;
+}
+@media (min-width: 1261px) and (max-width: 1450px) {
+  .cost-detail-grid { gap: 5px; grid-template-columns: minmax(88px, 1.1fr) minmax(63px, .9fr) minmax(72px, 1fr); }
+  .cost-detail-grid span { font-size: 8.8px; }
+  .cost-detail-grid strong { font-size: 8.8px; }
+  .cost-detail-head em { display: none; }
+}
+@media (max-width: 780px) {
+  .cost-detail-grid { grid-template-columns: minmax(0, 1fr); gap: 1px; }
+  .cost-detail-grid strong { text-align: left; }
+  .cost-detail-grid-head { display: none; }
+}
+
+
+/* V127.1 - Overview KPI row layout fix: prevent Cost Detail totals from overlapping */
+@media (min-width: 1261px) {
+  #overview-tab .minimal-kpis {
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.baseline-breakdown-tile,
+  #overview-tab .minimal-kpis .kpi-tile.updated-breakdown-tile,
+  .kpi-tile.baseline-breakdown-tile,
+  .kpi-tile.updated-breakdown-tile {
+    grid-column: span 6;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.cost-detail-tile,
+  .kpi-tile.cost-detail-tile {
+    grid-column: span 8;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.money-wide:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile),
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) {
+    grid-column: span 2;
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+  #overview-tab .minimal-kpis .kpi-tile.money-wide:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) .value,
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) .value {
+    font-size: 13px;
+    line-height: 1.12;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) .label {
+    font-size: 8.5px;
+    letter-spacing: .08em;
+  }
+  #overview-tab .minimal-kpis .kpi-tile:not(.baseline-breakdown-tile):not(.updated-breakdown-tile):not(.cost-detail-tile) .hint {
+    font-size: 9.5px;
+    min-height: 18px;
+  }
+  .cost-detail-grid {
+    grid-template-columns: minmax(118px, 1.35fr) minmax(84px, .9fr) minmax(92px, .95fr);
+    gap: 9px;
+  }
+  .cost-detail-grid span { font-size: 9px; }
+  .cost-detail-grid strong { font-size: 9px; }
+  .cost-detail-total strong,
+  .cost-detail-total span { font-size: 9.4px; }
+}
+
+@media (min-width: 1261px) and (max-width: 1450px) {
+  .cost-detail-grid {
+    grid-template-columns: minmax(104px, 1.25fr) minmax(76px, .9fr) minmax(84px, .95fr);
+    gap: 6px;
+  }
+  .cost-detail-grid span,
+  .cost-detail-grid strong { font-size: 8.45px; }
+  .cost-detail-total strong,
+  .cost-detail-total span { font-size: 8.75px; }
 }

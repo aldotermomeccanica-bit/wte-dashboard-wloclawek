@@ -1,7 +1,7 @@
 {
   "meta": {
     "projectTitle": "Wloclawek - Waste-to-Energy Project Dashboard",
-    "generatedAt": "2026-07-01T12:52:44",
+    "generatedAt": "2026-07-01T12:07:32",
     "currency": "PLN",
     "sourceFiles": {
       "budget": "Budget.xlsm",
@@ -16,18 +16,18 @@
     "columnMapping": {
       "budgetTotal": "AB",
       "updatedBudget": "S",
-      "contracted": "Analisi Budget Wloclawek_orders.xlsx / TABLE DASHBOARD / ORDINATO"
+      "contracted": "T"
     },
     "scurveReferenceMonth": "lug-2026",
-    "scurveUploadedAt": "2026-07-01T12:52:44",
+    "scurveUploadedAt": "2026-07-01T12:07:32",
     "versions": {
       "found": true,
       "sourceFile": "VERSIONS_BUDGET_PROCUREMENT.txt",
       "budgetVersion": "17_2026.04",
       "procurementVersion": "4_2026.05.06"
     },
-    "reportFile": "WTE_Dashboard_Report_20260701-125255.xlsx",
-    "reportPath": "data/reports/WTE_Dashboard_Report_20260701-125255.xlsx"
+    "reportFile": "WTE_Dashboard_Report_20260701-120746.xlsx",
+    "reportPath": "data/reports/WTE_Dashboard_Report_20260701-120746.xlsx"
   },
   "summary": {
     "overallStatus": "AT RISK",
@@ -43,14 +43,14 @@
       "marginPct": 11.27
     },
     "updatedBudgetTotal": 520024051.92,
-    "contractedTotal": 268330424.03,
+    "contractedTotal": 306820489.01,
     "legacyBudgetTotal": 520024051.92,
     "varianceAmount": 18566198.9,
     "variancePct": 3.7,
-    "contractCoveragePct": 51.6,
+    "contractCoveragePct": 59.0,
     "completionPct": 59.43,
     "weightedProgressPct": 66.4,
-    "valueToAward": 251693627.89,
+    "valueToAward": 213203562.91,
     "curveCurrentMonth": "lug-2026",
     "curveCurrentProc": 268330424.03,
     "curveCurrentBudget": 82527312.98,
@@ -12079,7 +12079,7 @@
   "notes": [
     "Total budget KPI comes from Budget column AB row 12.",
     "Updated budget comes from Procurement column S row 16.",
-    "Contracted total in the Overview comes from Analisi Budget Wloclawek_orders.xlsx / TABLE DASHBOARD / ORDINATO.",
+    "Contracted value comes from Procurement column T row 16.",
     "S-curve green line comes from budget row 'TKW Razem' distributed on monthly columns.",
     "New WBS child rows are accepted automatically as long as the item code follows the numeric hierarchy."
   ],

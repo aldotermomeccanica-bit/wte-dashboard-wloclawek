@@ -5,12 +5,13 @@ const state = {
   lastNonDetail: 'overview',
   currentView: { type: 'tab', tab: 'overview' },
   viewStack: [],
+  sCurveMode: 'B',
 };
 
 const $ = (id) => document.getElementById(id);
 
 async function fetchJSON(url, options) {
-  const res = await fetch(url, options);
+  const res = await fetch(url, { cache: 'no-store', ...(options || {}) });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Request failed');
   return data;
@@ -26,6 +27,7 @@ function fmtSignedCurrency(v) {
   return sign + new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 }).format(Math.abs(n)) + ' PLN';
 }
 function fmtPct(v) { return `${Number(v || 0).toLocaleString('it-IT', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`; }
+function fmtPct2(v) { return `${Number(v || 0).toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`; }
 function fmtCurrencyCompact(v) {
   const n = Number(v || 0);
   const abs = Math.abs(n);
@@ -48,17 +50,21 @@ function fmtDate(v) {
   return d.toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' });
 }
 function toneClass(tone) { return ['green', 'amber', 'red', 'blue', 'neutral'].includes(tone) ? tone : 'neutral'; }
+function normalizeStatus(status) { return String(status || '').trim().toLowerCase(); }
 function statusTone(status) {
-  if (['finalized', 'closed', 'PCT/approval'].includes(status)) return 'green';
-  if (['contract prep.', 'negotiation'].includes(status)) return 'amber';
-  if (['planned', 'enquiry'].includes(status)) return 'blue';
+  const s = normalizeStatus(status);
+  // Cromatica allineata al grafico a torta:
+  // Closed / ordinato = verde; Planned / da ordinare = rosso; tutte le altre fasi = giallo.
+  if (['finalized', 'closed', 'pct/approval'].includes(s)) return 'green';
+  if (s === 'planned') return 'red';
+  if (s) return 'amber';
   return 'neutral';
 }
 function rootPillTone(row) {
-  const status = String(row?.dominantStatus || '').toLowerCase();
-  if (status === 'planned' || status === 'enquiry') return 'red';
-  if (status === 'contract prep.' || status === 'negotiation') return 'amber';
-  if (status === 'finalized' || status === 'closed' || status === 'pct/approval') return 'green';
+  const status = normalizeStatus(row?.dominantStatus);
+  if (['finalized', 'closed', 'pct/approval'].includes(status)) return 'green';
+  if (status === 'planned') return 'red';
+  if (status) return 'amber';
   return toneClass(row?.health);
 }
 function pill(status) { return `<span class="pill ${toneClass(statusTone(status))}">${status || '—'}</span>`; }
@@ -145,13 +151,13 @@ function lineChartSvg(curve, { height = 360, showContracted = false } = {}) {
   const marker = curve.currentMarker;
   const markerSvg = marker ? `
     <circle cx="${x(marker.index)}" cy="${y(marker.procAbs)}" r="5.4" fill="#C61E1E" stroke="white" stroke-width="1.5">
-      <title>${marker.label}: ${fmtCurrency(marker.procAbs)} procurement cumulativo</title>
+      <title>${marker.label}: ${fmtCurrency(marker.procAbs)} ${esc(curve.markerMeaning || 'procurement cumulativo')}</title>
     </circle>` : '';
 
   return `
     <div class="chart-legend chart-legend-top">
-      <span class="legend-chip"><i style="background:#2f68c8"></i>Procurement schedule cumulativo</span>
-      <span class="legend-chip"><i style="background:#7EA73B"></i>Budget / programma cliente cumulativo</span>
+      <span class="legend-chip"><i style="background:#2f68c8"></i>${esc(curve.procLegend || 'Procurement schedule cumulativo')}</span>
+      <span class="legend-chip"><i style="background:#7EA73B"></i>Budget Baseline cumulativo</span>
       ${showContracted ? '<span class="legend-chip"><i style="background:#9AA5B5"></i>Contracted cumulativo</span>' : ''}
       ${marker ? '<span class="legend-chip"><i style="background:#C61E1E; width:10px; height:10px; border-radius:50%"></i>Stato attuale</span>' : ''}
     </div>
@@ -169,7 +175,7 @@ function lineChartSvg(curve, { height = 360, showContracted = false } = {}) {
   `;
 }
 
-function portfolioCurveSvg(curve, { height = 360, statusProgress = { headers: [], rows: [] } } = {}) {
+function portfolioCurveSvg(curve, { height = 360, statusProgress = { headers: [], rows: [] }, ecDecision = { headers: [], rows: [] }, erRegister = { sections: [] } } = {}) {
   const labels = curve.labels || [];
   const series = (curve.series || []).filter(s => (s.values || []).some(v => v !== null && v !== undefined));
   const width = 980;
@@ -274,10 +280,15 @@ function portfolioCurveSvg(curve, { height = 360, statusProgress = { headers: []
           </tbody>
         </table>
       </div>
-      <div class="delay-curve-focus-note">
-        <div class="detail-note-title">Focus on open exposure</div>
-        <p>Qui vengono richiamati i package che presentano il maggiore valore ancora da assegnare, calcolato come differenza tra Updated Budget e Contracted.</p>
-        <p>È quindi una vista rapida delle priorità economiche ancora aperte nel procurement.</p>
+      <div class="delay-curve-ec-block">
+        <div class="detail-note-title">EC decision</div>
+        <p class="delay-curve-ec-subtitle">Tabella letta dal file presente in data/current oppure aggiornato in locale.</p>
+        ${ecDecisionTableHtml(ecDecision, 'portfolio-ec-table-wrap')}
+      </div>
+      <div class="delay-curve-ec-block er-register-block">
+        <div class="detail-note-title">ECR</div>
+        <p class="delay-curve-ec-subtitle">Tabella ECR letta dal file <strong>ER_decision, recommendation register.xlsx</strong> in data/current. Se aggiorni quel file, la dashboard si aggiorna al refresh.</p>
+        ${erRegisterHtml(erRegister)}
       </div>
     </div>`;
   return `
@@ -328,83 +339,197 @@ function donutSvg(items) {
 
 function orderPieSvg(items) {
   if (!items.length) return '<div class="meta-text">Nessun dato ordini disponibile.</div>';
-  const width = 400, height = 255, cx = 128, cy = 126, r = 68;
+
+  // The slices and the labels must use the same dynamic value-based logic.
+  // This avoids the previous issue where "Da ordinare" had a custom fixed pointer
+  // and could visually drift away from its slice when percentages changed.
+  const width = 430, height = 285, cx = 215, cy = 132, r = 72;
   const toneMap = { green: '#2F9D58', amber: '#D59C1A', red: '#A61515', blue: '#2F68C8', neutral: '#B0B7C3' };
-  const total = items.reduce((sum, item) => sum + Number(item.count || 0), 0) || 1;
+  const total = items.reduce((sum, item) => sum + Number(item.value || 0), 0) || 1;
+
   let angle = -Math.PI / 2;
-  const segments = items.map((item) => {
-    const share = Number(item.count || 0) / total;
-    const next = angle + share * Math.PI * 2;
-    const large = next - angle > Math.PI ? 1 : 0;
-    const x1 = cx + r * Math.cos(angle), y1 = cy + r * Math.sin(angle);
-    const x2 = cx + r * Math.cos(next), y2 = cy + r * Math.sin(next);
+  const raw = items.map((item) => {
+    const share = Number(item.value || 0) / total;
+    const startAngle = angle;
+    const endAngle = angle + share * Math.PI * 2;
+    const mid = startAngle + (endAngle - startAngle) / 2;
+    angle = endAngle;
+    return { item, startAngle, endAngle, mid, share };
+  });
+
+  // Build slice paths first.
+  const segments = raw.map(({ item, startAngle, endAngle }) => {
+    const large = endAngle - startAngle > Math.PI ? 1 : 0;
+    const x1 = cx + r * Math.cos(startAngle), y1 = cy + r * Math.sin(startAngle);
+    const x2 = cx + r * Math.cos(endAngle), y2 = cy + r * Math.sin(endAngle);
     const path = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`;
-    const mid = angle + (next - angle) / 2;
-    let edgeX = cx + (r + 4) * Math.cos(mid);
-    let edgeY = cy + (r + 4) * Math.sin(mid);
     const color = toneMap[item.tone] || '#B0B7C3';
-
-    let side = Math.cos(mid) >= 0 ? 1 : -1;
-    let elbowX = cx + (r + 14) * Math.cos(mid);
-    let elbowY = cy + (r + 14) * Math.sin(mid);
-    let lineEndX = elbowX + side * 22;
-    let textX = lineEndX + side * 7;
-    let textY = elbowY - 5;
-    let anchor = side > 0 ? 'start' : 'end';
-
-    if (item.tone === 'red') {
-      side = 1;
-      edgeX = cx + (r * 0.10);
-      edgeY = cy + (r * 0.80);
-      elbowX = edgeX + 14;
-      elbowY = edgeY + 28;
-      lineEndX = elbowX + 26;
-      textX = lineEndX + 6;
-      textY = elbowY + 10;
-      anchor = 'start';
-    }
-
-    const segment = `<path d="${path}" fill="${color}" stroke="white" stroke-width="3"><title>${item.label}: ${item.sharePct}%</title></path>`;
-    const label = `
-      <g class="pie-label-group ${item.tone === 'red' ? 'red-label' : ''}">
-        <path d="M ${edgeX} ${edgeY} L ${elbowX} ${elbowY} L ${lineEndX} ${elbowY}" fill="none" stroke="${color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="${edgeX}" cy="${edgeY}" r="2.6" fill="${color}" />
-        <text x="${textX}" y="${textY}" text-anchor="${anchor}" fill="#18314F" font-size="13" font-weight="800">${item.label}</text>
-        <text x="${textX}" y="${textY + 16}" text-anchor="${anchor}" fill="#5A6F89" font-size="12" font-weight="700">${item.sharePct}%</text>
-      </g>`;
-    angle = next;
-    return segment + label;
+    return `<path d="${path}" fill="${color}" stroke="white" stroke-width="3"><title>${item.label}: ${fmtCurrency(item.value)} · ${item.sharePct}%</title></path>`;
   }).join('');
+
+  // Dynamic label layout by side. All categories follow the same rule:
+  // side depends on the slice midpoint, then label rows are clamped/spaced inside the SVG.
+  const labelData = raw.map(({ item, mid }) => {
+    const color = toneMap[item.tone] || '#B0B7C3';
+    const side = Math.cos(mid) >= 0 ? 1 : -1;
+    const edgeX = cx + (r + 4) * Math.cos(mid);
+    const edgeY = cy + (r + 4) * Math.sin(mid);
+    return {
+      item,
+      mid,
+      side,
+      color,
+      edgeX,
+      edgeY,
+      labelY: Math.max(42, Math.min(height - 42, edgeY)),
+    };
+  });
+
+  [-1, 1].forEach((side) => {
+    const rows = labelData.filter((d) => d.side === side).sort((a, b) => a.labelY - b.labelY);
+    const minGap = 47;
+    for (let i = 1; i < rows.length; i += 1) {
+      if (rows[i].labelY - rows[i - 1].labelY < minGap) {
+        rows[i].labelY = rows[i - 1].labelY + minGap;
+      }
+    }
+    const overflow = rows.length ? rows[rows.length - 1].labelY - (height - 42) : 0;
+    if (overflow > 0) rows.forEach((row) => { row.labelY -= overflow; });
+    for (let i = rows.length - 2; i >= 0; i -= 1) {
+      if (rows[i + 1].labelY - rows[i].labelY < minGap) {
+        rows[i].labelY = rows[i + 1].labelY - minGap;
+      }
+    }
+    const underflow = rows.length ? 42 - rows[0].labelY : 0;
+    if (underflow > 0) rows.forEach((row) => { row.labelY += underflow; });
+  });
+
+  const labels = labelData.map((d) => {
+    const anchor = d.side > 0 ? 'start' : 'end';
+    const textX = d.side > 0 ? width - 110 : 110;
+    const lineEndX = d.side > 0 ? textX - 10 : textX + 10;
+    const elbowX = cx + d.side * (r + 18);
+    const labelY = d.labelY;
+    return `
+      <g class="pie-label-group">
+        <path d="M ${d.edgeX} ${d.edgeY} L ${elbowX} ${labelY} L ${lineEndX} ${labelY}" fill="none" stroke="${d.color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="${d.edgeX}" cy="${d.edgeY}" r="2.8" fill="${d.color}" />
+        <text x="${textX}" y="${labelY - 4}" text-anchor="${anchor}" fill="#18314F" font-size="13" font-weight="800">${d.item.label}</text>
+        <text x="${textX}" y="${labelY + 13}" text-anchor="${anchor}" fill="#5A6F89" font-size="11.3" font-weight="700">Val. ${d.item.sharePct}%</text>
+      </g>`;
+  }).join('');
+
   return `
     <svg class="svg-chart order-pie-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="Mix ordini">
       ${segments}
-      <circle cx="${cx}" cy="${cy}" r="3.4" fill="#ffffff" stroke="#d8e2ef" stroke-width="1.6" />
+      ${labels}
+      <circle cx="${cx}" cy="${cy}" r="3.6" fill="#ffffff" stroke="#d8e2ef" stroke-width="1.6" />
     </svg>
   `;
 }
 
-function metricTile({ key, label, value, hint, progress, tone = 'neutral' }) {
+function metricTile({ key, label, value, hint, progress, tone = 'neutral', customHtml = '', extraClass = '', clickable = true }) {
   const isDeltaInline = key === 'delta-baseline';
   const isMoneyWide = ['baseline-budget', 'updated-budget', 'delta-baseline', 'contracted'].includes(key);
+  const customClass = customHtml ? 'has-custom-content' : '';
+  const clickableClass = clickable ? 'clickable' : 'not-clickable';
+  const dataAttr = clickable ? `data-kpi="${key}"` : '';
   return `
-    <article class="kpi-tile ${tone} clickable ${isDeltaInline ? 'delta-inline' : ''} ${isMoneyWide ? 'money-wide' : ''}" data-kpi="${key}">
-      <div class="label">${label}</div>
-      <div class="value">${value}${isDeltaInline && hint ? ` <span class="inline-hint">(${String(hint).replace(/[()]/g, '')})</span>` : ''}</div>
-      <div class="hint">${isDeltaInline ? '' : (hint || '')}</div>
-      <div class="kpi-track"><span style="width:${Math.max(4, Math.min(100, progress || 0))}%"></span></div>
+    <article class="kpi-tile ${tone} ${clickableClass} ${isDeltaInline ? 'delta-inline' : ''} ${isMoneyWide ? 'money-wide' : ''} ${customClass} ${extraClass}" ${dataAttr}>
+      ${customHtml || `
+        <div class="label">${label}</div>
+        <div class="value">${value}${isDeltaInline && hint ? ` <span class="inline-hint">(${String(hint).replace(/[()]/g, '')})</span>` : ''}</div>
+        <div class="hint">${isDeltaInline ? '' : (hint || '')}</div>
+        <div class="kpi-track"><span style="width:${Math.max(4, Math.min(100, progress || 0))}%"></span></div>
+      `}
     </article>
+  `;
+}
+
+const baselineBudgetOverviewHtml = `
+  <div class="baseline-budget-overview">
+    <div class="baseline-budget-overview-title">BASELINE BUDGET</div>
+    <div class="baseline-budget-overview-row"><span>Costi diretti:</span><strong>501.457.853,00 PLN</strong></div>
+    <div class="baseline-budget-overview-row"><span>Costi indiretti:</span><strong>40.355.205,00 PLN</strong></div>
+    <div class="baseline-budget-overview-row"><span>Costi garanzia, difetti, imprevisti:</span><strong>22.098.535 PLN</strong></div>
+    <div class="baseline-budget-overview-row baseline-total"><span>Totale costi:</span><strong>563.911.593,00 PLN</strong></div>
+    <div class="baseline-budget-overview-row"><span>Ricavi base:</span><strong>627.086.000,00 PLN</strong></div>
+    <div class="baseline-budget-overview-row"><span>Margine:</span><strong>63.174.407,00 PLN</strong></div>
+    <div class="baseline-budget-overview-row"><span>% sui costi:</span><strong>11,20%</strong></div>
+  </div>
+`;
+
+function fmtMoney2(value) {
+  const n = Number(value || 0);
+  return `${n.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} PLN`;
+}
+
+function updatedBudgetOverviewHtml(summary) {
+  const b = summary.updatedBudgetBreakdown || {};
+  const marginPct = Number(b.totalCosts || 0) ? (Number(b.margin || 0) / Number(b.totalCosts || 0) * 100) : Number(b.marginPct || 0);
+  return `
+    <div class="baseline-budget-overview updated-budget-overview">
+      <div class="baseline-budget-overview-title">UPDATED BUDGET</div>
+      <div class="baseline-budget-overview-row"><span>Costi diretti:</span><strong>${fmtMoney2(b.directCosts)}</strong></div>
+      <div class="baseline-budget-overview-row"><span>Costi indiretti:</span><strong>${fmtMoney2(b.indirectCosts)}</strong></div>
+      <div class="baseline-budget-overview-row"><span>Costi garanzia, difetti, imprevisti:</span><strong>${fmtMoney2(b.contingency)}</strong></div>
+      <div class="baseline-budget-overview-row baseline-total"><span>Totale costi:</span><strong>${fmtMoney2(b.totalCosts)}</strong></div>
+      <div class="baseline-budget-overview-row"><span>Ricavi base:</span><strong>${fmtMoney2(b.baseRevenue)}</strong></div>
+      <div class="baseline-budget-overview-row"><span>Margine:</span><strong>${fmtMoney2(b.margin)}</strong></div>
+      <div class="baseline-budget-overview-row"><span>% sui costi:</span><strong>${fmtPct2(marginPct)}</strong></div>
+    </div>
+  `;
+}
+
+function costDetailOverviewHtml(summary) {
+  const detail = summary.costDetail || state.dashboard?.overview?.costDetail || {};
+  const rows = detail.rows || [];
+  const orderedPct = Number(detail.orderedPct || 0);
+  const toOrderPct = Number(detail.toOrderPct || 0);
+  const money = (v) => fmtCurrency(Number(v || 0)).replace(' PLN', '');
+  if (!rows.length) {
+    return `
+      <div class="cost-detail-overview">
+        <div class="cost-detail-head"><span>Dettaglio Costi (PLN)</span><em>Dati non disponibili</em></div>
+      </div>
+    `;
+  }
+  return `
+    <div class="cost-detail-overview">
+      <div class="cost-detail-head">
+        <span>Dettaglio Costi (PLN)</span>
+        <em>TABLE DASHBOARD · root 1-7</em>
+      </div>
+      <div class="cost-detail-grid cost-detail-grid-head">
+        <span></span><strong>Ordinato</strong><strong>Da Ordinare*</strong>
+      </div>
+      <div class="cost-detail-rows">
+        ${rows.map(r => `
+          <div class="cost-detail-grid">
+            <span>${esc(r.label)}</span>
+            <strong>${money(r.ordered)}</strong>
+            <strong>${money(r.toOrder)}</strong>
+          </div>
+        `).join('')}
+      </div>
+      <div class="cost-detail-grid cost-detail-total">
+        <span>Totale</span>
+        <strong>${money(detail.ordered)} (${fmtPct(orderedPct)})</strong>
+        <strong>${money(detail.toOrder)} (${fmtPct(toOrderPct)})</strong>
+      </div>
+    </div>
   `;
 }
 
 function renderHero(summary) {
   const status = $('overall-status');
   if (status) status.style.display = 'none';
-  $('executive-message').textContent = 'Numeri chiave e curva S per capire subito ordini, budget aggiornato e stato reale.';
+  $('executive-message').innerHTML = 'Numeri chiave e curva S per capire subito ordini,<br>budget aggiornato e stato reale.';
   const deltaTone = Number(summary.varianceAmount || 0) >= 0 ? 'amber' : 'green';
   const items = [
-    { key: 'baseline-budget', label: 'Baseline Budget', value: fmtCurrency(summary.budgetAbTotal), hint: 'Budget di riferimento (AB)', progress: 100, tone: 'neutral' },
-    { key: 'updated-budget', label: 'Updated Budget', value: fmtCurrency(summary.updatedBudgetTotal), hint: 'Budget aggiornato dal procurement schedule', progress: 100, tone: 'neutral' },
-    { key: 'delta-baseline', label: 'Delta vs Baseline', value: fmtSignedCurrency(summary.varianceAmount), hint: '', progress: Math.min(100, Math.max(6, Math.abs(summary.variancePct || 0) * 12)), tone: deltaTone },
+    { key: 'baseline-budget', label: 'Baseline Budget', value: fmtCurrency(summary.budgetAbTotal), hint: 'Budget di riferimento (AB)', progress: 100, tone: 'neutral', customHtml: baselineBudgetOverviewHtml, extraClass: 'baseline-breakdown-tile', clickable: false },
+    { key: 'updated-budget-breakdown', label: 'Updated Budget', value: fmtCurrency(summary.updatedBudgetTotal), hint: '', progress: 100, tone: 'neutral', customHtml: updatedBudgetOverviewHtml(summary), extraClass: 'updated-breakdown-tile', clickable: false },
+    { key: 'cost-detail', label: 'Dettaglio Costi', value: '', hint: '', progress: 100, tone: 'neutral', customHtml: costDetailOverviewHtml(summary), extraClass: 'cost-detail-tile', clickable: false },
     { key: 'contracted', label: 'Contracted', value: fmtCurrency(summary.contractedTotal), hint: `${fmtPct(summary.contractCoveragePct)} copertura`, progress: summary.contractCoveragePct, tone: summary.contractCoveragePct >= 70 ? 'green' : 'amber' },
     { key: 'overdue', label: 'Overdue', value: `${summary.overdueCount}`, hint: summary.overdueCount > 0 ? 'Da seguire' : 'Sotto controllo', progress: Math.min(100, summary.overdueCount * 8 + 6), tone: summary.overdueCount > 0 ? 'red' : 'green' },
   ];
@@ -415,33 +540,60 @@ function renderHero(summary) {
 function renderOverviewNote(summary) {
   const target = $('overview-note');
   if (!target) return;
-  const month = summary.curveCurrentMonth || 'mese corrente';
-  target.innerHTML = `Trattandosi di un Programma Lavori sfidante, il confronto mostra l'anticipo ordini rispetto al programma cliente. Stato attuale: <strong>${esc(month)}</strong>.`;
+  // V132: the separate "Stato attuale" banner is intentionally removed.
+  // The "Stato reale ordinato" explanation now moves up with the chart block.
+  target.innerHTML = '';
+  target.style.display = 'none';
+}
+
+function activeSCurve(overview) {
+  const options = overview?.sCurveOptions || {};
+  return options.B || overview?.sCurve || {};
+}
+
+function bindSCurveModeToggle() {
+  // V131: Curva S in Overview uses only the real ordered view.
+  state.sCurveMode = 'B';
+  localStorage.setItem('wteSCurveMode', 'B');
+}
+
+function updateSCurveModeToggle() {
+  document.querySelectorAll('[data-scurve-mode]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.scurveMode === state.sCurveMode);
+  });
 }
 
 function renderCurve(curve) {
   const target = $('curve-chart');
-  if (target) target.innerHTML = lineChartSvg(curve, { showContracted: false });
+  if (!target) return;
+  const description = curve.description || 'Curva S cumulativa in PLN.';
+  const modeTitle = curve.title || 'Stato reale ordinato';
+  target.innerHTML = `<div class="scurve-mode-description"><strong>${esc(modeTitle)}</strong><span>${esc(description)}</span></div>${lineChartSvg(curve, { showContracted: false })}`;
+  updateSCurveModeToggle();
 }
 
-function renderCurveSummary(summary) {
+function renderCurveSummary(curve) {
   const target = $('curve-summary');
   if (!target) return;
-  const delta = Number(summary.curveCurrentProc || 0) - Number(summary.curveCurrentBudget || 0);
+  const marker = curve?.currentMarker || {};
+  const proc = Number(marker.procAbs || 0);
+  const budget = Number(marker.budgetAbs || 0);
+  const delta = proc - budget;
   const deltaTone = delta >= 0 ? 'green' : 'red';
+  const markerLabel = marker.label || '—';
   target.innerHTML = `
     <div class="curve-summary-grid">
       <div class="curve-stat clickable" data-detail="curve">
         <span class="label">Mese attuale</span>
-        <strong>${esc(summary.curveCurrentMonth || '—')}</strong>
+        <strong>${esc(markerLabel)}</strong>
       </div>
       <div class="curve-stat clickable" data-detail="curve">
         <span class="label">Proc. cumulativo</span>
-        <strong>${fmtCurrencyCompact(summary.curveCurrentProc)}</strong>
+        <strong>${fmtCurrencyCompact(proc)}</strong>
       </div>
       <div class="curve-stat clickable" data-detail="curve">
         <span class="label">Budget cumulativo</span>
-        <strong>${fmtCurrencyCompact(summary.curveCurrentBudget)}</strong>
+        <strong>${fmtCurrencyCompact(budget)}</strong>
       </div>
       <div class="curve-stat ${deltaTone} clickable" data-detail="curve">
         <span class="label">Scostamento</span>
@@ -455,7 +607,7 @@ function renderSnapshot(summary, criticalPackages) {
   const cards = [
     { key: 'closed-finalized-pct', label: 'Closed + PCT', metric: `${summary.closedCount + summary.pctApprovalCount}`, meta: fmtCurrency(summary.pctApprovalValue), tone: 'green' },
     { key: 'contract-preparation', label: 'Contract preparation', metric: `${summary.contractPrepCount}`, meta: fmtCurrency(summary.contractPrepValue), tone: 'amber' },
-    { key: 'specifiche-emesse', label: 'Pacchetti in definizione', metric: `${summary.specsIssuedCount || 0}`, meta: fmtCurrency(summary.specsIssuedValue || 0), tone: 'blue' },
+    { key: 'specifiche-emesse', label: 'Pacchetti in definizione', metric: `${summary.specsIssuedCount || 0}`, meta: fmtCurrency(summary.specsIssuedValue || 0), tone: 'amber' },
     { key: 'packages-overdue', label: 'Packages overdue', metric: `${summary.overdueCount}`, meta: summary.overdueCount > 0 ? 'Need escalation' : 'Under control', tone: summary.overdueCount > 0 ? 'red' : 'green' },
   ];
   const snap = $('snapshot-grid');
@@ -525,8 +677,9 @@ function renderOrdersStatus(ordersClosing, specsIssued, orderMix = []) {
   target.innerHTML = `
     <div class="minimal-orders-layout">
       <div class="order-pie-card clickable" data-detail="orders-status">
-        <div class="subhead-row compact-sub"><h3>Mix ordini</h3><span class="meta-text">etichette visibili</span></div>
+        <div class="subhead-row compact-sub"><h3>Mix ordini diretti</h3><span class="meta-text">solo ordini diretti · fetta = valore.</span></div>
         ${orderPieSvg(orderMix)}
+        <div class="pie-scope-note">Nota: il grafico considera solo gli ordini diretti (root group 1–7). Sono esclusi indiretti, servizi e rischi/opportunità.</div>
       </div>
       <div class="minimal-order-summary">
         <div class="order-card clickable compact-order-card compact-order-metric-card" data-detail="orders-status">
@@ -539,7 +692,7 @@ function renderOrdersStatus(ordersClosing, specsIssued, orderMix = []) {
         <div class="order-card clickable compact-order-card compact-order-metric-card" data-detail="orders-status">
           <header>
             <h3>Pacchetti in definizione</h3>
-            <span class="pill blue">${specsIssued.count}</span>
+            <span class="pill amber">${specsIssued.count}</span>
           </header>
           <div class="order-card-value">${fmtCurrency(specsIssued.value)}</div>
         </div>
@@ -752,25 +905,39 @@ function bindMonthCheck() {
   });
 }
 
+function renderVersionsInfo(meta) {
+  const versions = meta?.versions || {};
+  const budgetNode = $('budget-version');
+  const procurementNode = $('procurement-version');
+  const updatedNode = $('versions-updated');
+  if (budgetNode) budgetNode.textContent = versions.budgetVersion || '—';
+  if (procurementNode) procurementNode.textContent = versions.procurementVersion || '—';
+  if (updatedNode) updatedNode.textContent = '';
+}
+
 function renderDashboard(data) {
   state.dashboard = data;
   const { meta, summary, overview } = data;
   $('project-title').textContent = meta.projectTitle;
   $('generated-at').textContent = meta.generatedAt ? new Date(meta.generatedAt).toLocaleString('it-IT') : '—';
+  renderVersionsInfo(meta);
   const sourceFilesNode = $('source-files');
-  if (sourceFilesNode) sourceFilesNode.textContent = [meta.sourceFiles.budget, meta.sourceFiles.procurement, meta.sourceFiles.scurve, meta.sourceFiles.ecdecision, meta.sourceFiles.statusprogress].filter(Boolean).join(' · ') || '—';
+  if (sourceFilesNode) sourceFilesNode.textContent = [meta.sourceFiles.budget, meta.sourceFiles.procurement, meta.sourceFiles.ordersdashboard, meta.sourceFiles.scurve, meta.sourceFiles.ecdecision, meta.sourceFiles.statusprogress, meta.sourceFiles.erregister, meta.sourceFiles.milestones].filter(Boolean).join(' · ') || '—';
   const monthInput = $('month-check-input');
   if (monthInput && !monthInput.value) monthInput.value = currentMonthInputValue();
   renderHero(summary);
   renderOverviewNote(summary);
-  renderCurve(overview.sCurve || {});
-  renderCurveSummary(summary);
+  bindSCurveModeToggle();
+  const activeCurve = activeSCurve(overview);
+  renderCurve(activeCurve);
+  renderCurveSummary(activeCurve);
   renderSnapshot(summary, data.criticalPackages || []);
   renderOrdersStatus(overview.ordersClosing || { count:0, value:0, items:[] }, overview.specsIssued || { count:0, value:0, items:[] }, overview.orderMix || []);
   renderRoots(data.rootGroups || []);
   renderToAwardByRootChart(data.rootGroups || []);
+  renderProgramMilestones(data.programMilestones || { headers: [], rows: [] });
   renderDelayBars(data.delayedByRoot || []);
-  renderDelayCurve(data.portfolioCurve || {}, data.statusProgress || { headers: [], rows: [] });
+  renderDelayCurve(data.portfolioCurve || {}, data.statusProgress || { headers: [], rows: [] }, data.ecDecision || { headers: [], rows: [] }, data.erRegister || { sections: [] });
   renderOverruns(data.topOverruns || []);
   renderEcDecision(data.ecDecision || { headers: [], rows: [] });
 }
@@ -788,24 +955,76 @@ function fmtEcCell(value, header = "") {
   return esc(value);
 }
 
-function renderEcDecision(ec) {
-  const node = $("ec-decision-table");
-  if (!node) return;
+function ecDecisionTableHtml(ec, extraClass = "") {
   const headers = ec.headers || [];
   const rows = ec.rows || [];
   if (!headers.length || !rows.length) {
-    node.innerHTML = `<div class="meta-text">Nessun dato disponibile. Inserisci o aggiorna il file EC decision in data/current.</div>`;
-    return;
+    return `<div class="meta-text">Nessun dato disponibile. Inserisci o aggiorna il file EC decision in data/current.</div>`;
   }
   const thead = headers.map(h => `<th>${esc(h)}</th>`).join("");
   const tbody = rows.map(row => `<tr>${row.map((cell, idx) => `<td>${fmtEcCell(cell, headers[idx])}</td>`).join("")}</tr>`).join("");
-  node.innerHTML = `<div class="table-wrap admin-ec-table-wrap"><table class="admin-ec-table"><thead><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table></div>`;
+  return `<div class="table-wrap admin-ec-table-wrap ${extraClass}"><table class="admin-ec-table"><thead><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table></div>`;
 }
 
-function renderDelayCurve(curve, statusProgress) {
+function erRegisterHtml(register) {
+  const sections = register?.sections || [];
+  if (!sections.length) {
+    return `<div class="meta-text">Nessun dato disponibile. Inserisci il file ER_decision, recommendation register.xlsx in data/current.</div>`;
+  }
+  return sections.map(section => {
+    const title = section.title || section.sourceSheet || 'ER register';
+    const headers = section.headers || [];
+    const rows = section.rows || [];
+    if (!headers.length || !rows.length) {
+      return `<div class="er-register-section"><div class="er-register-title">${esc(title)}</div><div class="meta-text">Nessun dato disponibile per questo sheet.</div></div>`;
+    }
+    const table = ecDecisionTableHtml(section, 'portfolio-er-table-wrap');
+    return `<div class="er-register-section"><div class="er-register-title">${esc(title)}</div>${table}</div>`;
+  }).join('');
+}
+
+function programMilestonesHtml(milestones) {
+  const headers = milestones?.headers || [];
+  const rows = milestones?.rows || [];
+  if (!headers.length || !rows.length) {
+    return `<div class="meta-text">Nessun dato disponibile. Inserisci o aggiorna il file Programma Wloclawek_Milestones.xlsx in data/current.</div>`;
+  }
+  const thead = headers.map(h => `<th>${esc(h)}</th>`).join("");
+  const tbody = rows.map((rowObj) => {
+    const cells = Array.isArray(rowObj) ? rowObj : (rowObj.cells || []);
+    const isGroup = !Array.isArray(rowObj) && rowObj.isGroup;
+    if (isGroup) {
+      return `<tr class="program-milestones-group"><td colspan="${headers.length}">${esc(cells[1] || '')}</td></tr>`;
+    }
+    return `<tr>${headers.map((h, idx) => `<td>${fmtEcCell(cells[idx], h)}</td>`).join("")}</tr>`;
+  }).join("");
+  return `<div class="table-wrap program-milestones-table-wrap"><table class="program-milestones-table"><thead><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table></div>`;
+}
+
+function renderProgramMilestones(milestones) {
+  const node = $("programme-milestones");
+  if (!node) return;
+  node.innerHTML = `
+    <div class="programme-milestones-head">
+      <div>
+        <div class="detail-note-title">Programma Wloclawek - Milestones</div>
+        <p>Tabella letta dal file <strong>Programma Wloclawek_Milestones.xlsx</strong> in data/current. Se aggiorni quel file, la dashboard si aggiorna al refresh.</p>
+      </div>
+    </div>
+    ${programMilestonesHtml(milestones)}
+  `;
+}
+
+function renderEcDecision(ec) {
+  const node = $("ec-decision-table");
+  if (!node) return;
+  node.innerHTML = ecDecisionTableHtml(ec);
+}
+
+function renderDelayCurve(curve, statusProgress, ecDecision, erRegister) {
   const target = $('delay-curve');
   if (!target) return;
-  target.innerHTML = portfolioCurveSvg(curve || {}, { statusProgress: statusProgress || { headers: [], rows: [] } });
+  target.innerHTML = portfolioCurveSvg(curve || {}, { statusProgress: statusProgress || { headers: [], rows: [] }, ecDecision: ecDecision || { headers: [], rows: [] }, erRegister: erRegister || { sections: [] } });
 }
 
 function packageByCode(code) {
@@ -834,6 +1053,29 @@ function tableFromRows(rows, columns, options = {}) {
       return `<tr ${attrs}>${columns.map(c => `<td${c.className ? ` class="${c.className}"` : ''}>${c.render ? c.render(row) : esc(row[c.key])}</td>`).join('')}</tr>`;
     }).join('')}</tbody></table></div>
   `;
+}
+
+function procurementDetailColumns({ includeSupplier = false } = {}) {
+  const cols = [
+    { label: 'WBS', key: 'code', render: r => `<strong>${r.code}</strong>` },
+    { label: 'Package', key: 'name' },
+    { label: 'Status', key: 'status', render: r => pill(r.status) },
+  ];
+  if (includeSupplier) {
+    cols.push({
+      label: 'Subappaltatore / Fornitore',
+      key: 'company',
+      className: 'col-supplier',
+      render: r => esc(r.company || '—'),
+    });
+  }
+  cols.push(
+    { label: 'Updated Budget', key: 'updatedBudget', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.updatedBudget) },
+    { label: 'Contracted', key: 'contractedValue', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.contractedValue) },
+    { label: 'Delta', key: 'deltaToContract', className: 'nowrap-cell col-money', render: r => fmtSignedCurrency(contractDelta(r)) },
+    { label: 'Deadline', key: 'deadlineClosing', render: r => fmtDate(r.deadlineClosing) },
+  );
+  return cols;
 }
 
 function showPackageDetail(code) {
@@ -881,15 +1123,7 @@ function showRootDetail(code) {
     makeMetric('Completion', fmtPct(root.completionPct), root.dominantStatus || 'No status'),
     makeMetric('Coverage', fmtPct(root.contractCoveragePct), 'Contracted / Updated Budget'),
   ].join('');
-  const content = tableFromRows(rows, [
-    { label: 'WBS', key: 'code', render: r => `<strong>${r.code}</strong>` },
-    { label: 'Package', key: 'name' },
-    { label: 'Status', key: 'status', render: r => pill(r.status) },
-    { label: 'Updated Budget', key: 'updatedBudget', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.updatedBudget) },
-    { label: 'Contracted', key: 'contractedValue', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.contractedValue) },
-    { label: 'Delta', key: 'deltaToContract', className: 'nowrap-cell col-money', render: r => fmtSignedCurrency(contractDelta(r)) },
-    { label: 'Deadline', key: 'deadlineClosing', render: r => fmtDate(r.deadlineClosing) },
-  ]);
+  const content = tableFromRows(rows, procurementDetailColumns({ includeSupplier: true }), { tableClass: 'supplier-detail-table' });
   openDetail(`${root.code} · ${root.name}`, 'Dettaglio root group.', metrics, content);
 }
 
@@ -920,7 +1154,7 @@ function showDelayedRootDetail(code) {
 }
 
 function showCurveDetail() {
-  const curve = state.dashboard?.overview?.sCurve || {};
+  const curve = activeSCurve(state.dashboard?.overview || {});
   const rows = (curve.labels || []).map((label, i) => ({
     label,
     procPct: curve.procPct?.[i] || 0,
@@ -930,7 +1164,7 @@ function showCurveDetail() {
   }));
   const metrics = [
     makeMetric('Procurement cumulativo', fmtCurrency(curve.currentMarker?.procAbs || rows.at(-1)?.procAbs || 0), curve.currentMarker?.label || 'mese corrente'),
-    makeMetric('Budget cliente cumulativo', fmtCurrency(curve.currentMarker?.budgetAbs || rows.at(-1)?.budgetAbs || 0), curve.currentMarker?.label || 'mese corrente'),
+    makeMetric('Budget Baseline cumulativo', fmtCurrency(curve.currentMarker?.budgetAbs || rows.at(-1)?.budgetAbs || 0), curve.currentMarker?.label || 'mese corrente'),
     makeMetric('Scostamento', fmtSignedCurrency((curve.currentMarker?.procAbs || rows.at(-1)?.procAbs || 0) - (curve.currentMarker?.budgetAbs || rows.at(-1)?.budgetAbs || 0)), curve.currentMarker?.label || 'mese corrente'),
     makeMetric('Months', `${rows.length}`, 'dic-2025 → dic-2028'),
   ].join('');
@@ -939,13 +1173,13 @@ function showCurveDetail() {
     ${tableFromRows(rows, [
       { label: 'Month', key: 'label' },
       { label: 'Procurement cumulative', key: 'procAbs', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.procAbs) },
-      { label: 'Budget cliente cumulative', key: 'budgetAbs', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.budgetAbs) },
+      { label: 'Budget Baseline cumulative', key: 'budgetAbs', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.budgetAbs) },
       { label: 'Procurement %', key: 'procPct', render: r => fmtPct(r.procPct) },
-      { label: 'Budget cliente %', key: 'budgetPct', render: r => fmtPct(r.budgetPct) },
+      { label: 'Budget Baseline %', key: 'budgetPct', render: r => fmtPct(r.budgetPct) },
     ], { tableClass: 'equal-cols-table' })}
     ${curveExplanationHtml}
   `;
-  openDetail('Curva S cumulata', 'Linea blu = procurement schedule cumulativo, linea verde = budget / programma cliente, pallino rosso = stato attuale.', metrics, content);
+  openDetail('Curva S cumulata', `${curve.title || 'Curva S'} - ${curve.description || ''}`, metrics, content);
 }
 
 function showCostBreakdownDetail() {
@@ -1101,14 +1335,14 @@ const contractedExplanationHtml = `
   <div class="detail-note detail-note-bottom">
     <div class="detail-note-group">
       <div class="detail-note-title">Contracted</div>
-      <p><strong>Contracted = valore totale già contrattualizzato nel procurement process</strong></p>
-      <p>Mostra quindi il valore economico dei package che, allo stato attuale, risultano già coperti da contratto.</p>
+      <p><strong>Contracted = valore Ordinato dal file Analisi Budget Wloclawek_orders.xlsx / TABLE DASHBOARD</strong></p>
+      <p>Mostra quindi il valore economico Ordinato usato anche da Dettaglio Costi, Mix ordini diretti e Curva S.</p>
     </div>
     <hr />
     <div class="detail-note-group">
       <div class="detail-note-title">Coverage</div>
       <p><strong>Coverage = Contracted / Updated Budget Total</strong></p>
-      <p>Mostra quindi quale quota del budget aggiornato risulta già coperta da contratti assegnati.</p>
+      <p>Mostra quindi quale quota del budget aggiornato risulta coperta dal valore Ordinato.</p>
     </div>
     <hr />
     <div class="detail-note-group">
@@ -1148,8 +1382,8 @@ const deltaBaselineExplanationHtml = `
     <hr />
     <div class="detail-note-group">
       <div class="detail-note-title">Contracted</div>
-      <p><strong>Contracted = valore totale già contrattualizzato nel procurement process</strong></p>
-      <p>Mostra quindi il valore economico dei package che, allo stato attuale, risultano già coperti da contratto.</p>
+      <p><strong>Contracted = valore Ordinato dal file Analisi Budget Wloclawek_orders.xlsx / TABLE DASHBOARD</strong></p>
+      <p>Mostra quindi il valore economico Ordinato usato anche da Dettaglio Costi, Mix ordini diretti e Curva S.</p>
     </div>
   </div>
 `;
@@ -1177,8 +1411,8 @@ const updatedBudgetExplanationHtml = `
     <hr />
     <div class="detail-note-group">
       <div class="detail-note-title">Contracted</div>
-      <p><strong>Contracted = valore totale già contrattualizzato nel procurement process</strong></p>
-      <p>Mostra quindi il valore economico dei package che, allo stato attuale, risultano già coperti da contratto.</p>
+      <p><strong>Contracted = valore Ordinato dal file Analisi Budget Wloclawek_orders.xlsx / TABLE DASHBOARD</strong></p>
+      <p>Mostra quindi il valore economico Ordinato usato anche da Dettaglio Costi, Mix ordini diretti e Curva S.</p>
     </div>
   </div>
 `;
@@ -1263,8 +1497,8 @@ const baselineBudgetExplanationHtml = `
     <hr />
     <div class="detail-note-group">
       <div class="detail-note-title">Contracted</div>
-      <p><strong>Contracted = valore totale già contrattualizzato nel procurement process</strong></p>
-      <p>Mostra quindi il valore economico dei package che, allo stato attuale, risultano già coperti da contratto.</p>
+      <p><strong>Contracted = valore Ordinato dal file Analisi Budget Wloclawek_orders.xlsx / TABLE DASHBOARD</strong></p>
+      <p>Mostra quindi il valore economico Ordinato usato anche da Dettaglio Costi, Mix ordini diretti e Curva S.</p>
     </div>
   </div>
 `;
@@ -1281,7 +1515,7 @@ const curveExplanationHtml = `
     </div>
     <hr />
     <div class="detail-note-group">
-      <div class="detail-note-title">Budget / programma cliente cumulativo</div>
+      <div class="detail-note-title">Budget Baseline cumulativo</div>
       <p><strong>Linea verde = valore cumulato della curva budget / programma cliente in PLN</strong></p>
       <p>È costruita leggendo dal file Budget la curva di riferimento mensile e trasformandola in un cumulato nel tempo.</p>
       <p>Mostra quindi dove dovrebbe collocarsi il valore cumulato secondo il piano / programma cliente di riferimento.</p>
@@ -1332,7 +1566,7 @@ function showKpiDetail(key) {
       metrics: [makeMetric('Completion', fmtPct(summary.completionPct), ''), makeMetric('Closed count', `${summary.closedCount}`, ''), makeMetric('PCT Approval', `${summary.pctApprovalCount}`, ''), makeMetric('Value', fmtCurrency(summary.pctApprovalValue), '')].join(''),
       rows: packageRows.filter(r => ['finalized', 'closed', 'PCT/approval'].includes(r.status)),
     },
-    'baseline-budget': { title: 'Baseline Budget', subtitle: 'Budget di riferimento dal file Budget (colonna AB)', metrics: [makeMetric('Baseline Budget', fmtCurrency(summary.budgetAbTotal), ''), makeMetric('Updated Budget', fmtCurrency(summary.updatedBudgetTotal), ''), makeMetric('Delta vs Baseline', fmtSignedCurrency(summary.varianceAmount), ''), makeMetric('Contracted', fmtCurrency(summary.contractedTotal), '')].join(''), rows: packageRows.sort((a,b)=>b.budgetAb-a.budgetAb).slice(0,40), noteHtml: baselineBudgetExplanationHtml },
+    'baseline-budget': { title: 'Baseline Budget', subtitle: 'Budget baseline complessivo e dettaglio procurement packages.', metrics: [makeMetric('Baseline Budget', fmtCurrency(563911593), 'Totale costi'), makeMetric('Contracted', fmtCurrency(summary.contractedTotal), '')].join(''), rows: packageRows.sort((a,b)=>b.budgetAb-a.budgetAb).slice(0,40), noteHtml: baselineBudgetExplanationHtml },
     'updated-budget': { title: 'Updated Budget', subtitle: 'Budget aggiornato dal procurement schedule', metrics: [makeMetric('Updated Budget', fmtCurrency(summary.updatedBudgetTotal), ''), makeMetric('Baseline Budget', fmtCurrency(summary.budgetAbTotal), ''), makeMetric('Delta vs Baseline', fmtSignedCurrency(summary.varianceAmount), ''), makeMetric('Contracted', fmtCurrency(summary.contractedTotal), '')].join(''), rows: packageRows.sort((a,b)=>b.updatedBudget-a.updatedBudget).slice(0,40), noteHtml: updatedBudgetExplanationHtml },
     'contracted': { title: 'Contracted value', subtitle: 'Valore già contrattualizzato', metrics: [makeMetric('Contracted', fmtCurrency(summary.contractedTotal), ''), makeMetric('Coverage', fmtPct(summary.contractCoveragePct), ''), makeMetric('Open value', fmtCurrency(summary.valueToAward), ''), makeMetric('Packages', `${packageRows.filter(r => r.contractedValue > 0).length}`, '')].join(''), rows: packageRows.filter(r => r.contractedValue > 0).sort((a,b)=>b.contractedValue-a.contractedValue).slice(0,40), noteHtml: contractedExplanationHtml },
     'delta-baseline': { title: 'Delta vs Baseline', subtitle: 'Scostamento del budget aggiornato rispetto alla baseline AB', metrics: [makeMetric('Delta', fmtSignedCurrency(summary.varianceAmount), ''), makeMetric('Baseline Budget', fmtCurrency(summary.budgetAbTotal), ''), makeMetric('Updated Budget', fmtCurrency(summary.updatedBudgetTotal), ''), makeMetric('Contracted', fmtCurrency(summary.contractedTotal), '')].join(''), rows: (state.dashboard?.topOverruns || []).filter(r => String(r.code || '').includes('.')), noteHtml: deltaBaselineExplanationHtml },
@@ -1371,15 +1605,8 @@ function showKpiDetail(key) {
     openDetail('Budget Changes', 'Package con variazioni economiche rispetto alla baseline.', metrics, content);
     return;
   }
-  const content = tableFromRows(conf.rows || [], [
-    { label: 'WBS', key: 'code', render: r => `<strong>${r.code}</strong>` },
-    { label: 'Package', key: 'name' },
-    { label: 'Status', key: 'status', render: r => pill(r.status) },
-    { label: 'Updated Budget', key: 'updatedBudget', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.updatedBudget) },
-    { label: 'Contracted', key: 'contractedValue', className: 'nowrap-cell col-money', render: r => fmtCurrency(r.contractedValue) },
-    { label: 'Delta', key: 'deltaToContract', className: 'nowrap-cell col-money', render: r => fmtSignedCurrency(contractDelta(r)) },
-    { label: 'Deadline', key: 'deadlineClosing', render: r => fmtDate(r.deadlineClosing) },
-  ]) + (conf.noteHtml || '');
+  const includeSupplier = key === 'contracted';
+  const content = tableFromRows(conf.rows || [], procurementDetailColumns({ includeSupplier }), includeSupplier ? { tableClass: 'supplier-detail-table' } : {}) + (conf.noteHtml || '');
   openDetail(conf.title, conf.subtitle, conf.metrics, content);
 }
 
@@ -1511,6 +1738,59 @@ function bindForms() {
   });
 }
 
+
+function downloadViaHiddenFrame(url) {
+  const frame = document.createElement('iframe');
+  frame.style.display = 'none';
+  frame.src = url + (url.includes('?') ? '&' : '?') + 'ts=' + Date.now();
+  document.body.appendChild(frame);
+  setTimeout(() => frame.remove(), 30000);
+}
+
+function setReportButtonsBusy(isBusy, activeButton = null) {
+  const buttons = [$('generate-report-button'), $('generate-pdf-button')].filter(Boolean);
+  buttons.forEach(btn => {
+    btn.classList.toggle('is-busy', isBusy);
+    btn.setAttribute('aria-busy', isBusy ? 'true' : 'false');
+    if (isBusy) {
+      btn.dataset.originalText = btn.dataset.originalText || btn.textContent;
+      btn.textContent = btn === activeButton ? 'Aggiorno dati…' : (btn.dataset.originalText || btn.textContent);
+    } else if (btn.dataset.originalText) {
+      btn.textContent = btn.dataset.originalText;
+    }
+  });
+}
+
+async function refreshDashboardData() {
+  const data = await fetchJSON('/api/dashboard?refresh=1&ts=' + Date.now());
+  renderDashboard(data);
+  return data;
+}
+
+function bindReportButtons() {
+  const bindings = [
+    { id: 'generate-report-button', url: '/api/report/generate', label: 'Excel Report' },
+    { id: 'generate-pdf-button', url: '/api/report/generate-pdf', label: 'PDF Premium' },
+  ];
+  bindings.forEach(({ id, url }) => {
+    const btn = $(id);
+    if (!btn || btn.dataset.boundAutoRefresh === '1') return;
+    btn.dataset.boundAutoRefresh = '1';
+    btn.addEventListener('click', async (event) => {
+      event.preventDefault();
+      try {
+        setReportButtonsBusy(true, btn);
+            // PDF/Excel exports use the only visible S-curve logic: stato reale ordinato.
+        downloadViaHiddenFrame(url + (url.includes('?') ? '&' : '?') + 'scurveMode=B');
+      } catch (err) {
+        alert(err.message || 'Errore durante il refresh dati/report.');
+      } finally {
+        setTimeout(() => setReportButtonsBusy(false), 1200);
+      }
+    });
+  });
+}
+
 async function loadDashboard() {
   const data = await fetchJSON('/api/dashboard');
   renderDashboard(data);
@@ -1519,7 +1799,7 @@ async function loadDashboard() {
 (async function init() {
   bindTabs();
   bindGlobalClicks();
-  bindForms();
   bindMonthCheck();
-  await Promise.all([loadDashboard(), loadConfig(), loadHistory(), loadReports()]);
+  bindReportButtons();
+  await loadDashboard();
 })();

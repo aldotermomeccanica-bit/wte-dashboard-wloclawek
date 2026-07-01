@@ -22,7 +22,7 @@
         <nav class="tabs">
           <button class="tab active" data-tab="overview">Overview</button>
           <button class="tab" data-tab="portfolio">Portfolio</button>
-          <button class="tab" data-tab="admin">Admin</button>
+          
         </nav>
       </header>
 
@@ -32,12 +32,23 @@
             <section class="hero-board card minimal-hero">
               <div class="hero-strip top-strip-grid">
                 <div class="top-strip-card strip-overview">
-                  <div class="eyebrow dark">Overview</div>
-                  <div class="hero-title-row">
-                    <h2 class="minimal-title">Overview</h2>
-                    <div id="overall-status" class="status-chip neutral" style="display:none">NO DATA</div>
+                  <div class="strip-overview-content">
+                    <div class="strip-overview-text">
+                      <div class="eyebrow dark">Overview</div>
+                      <div class="hero-title-row">
+                        <h2 class="minimal-title">Overview</h2>
+                        <div id="overall-status" class="status-chip neutral" style="display:none">NO DATA</div>
+                      </div>
+                      <p id="executive-message" class="hero-copy">Numeri chiave e curva S per capire subito ordini,<br>budget aggiornato e stato reale.</p>
+                    </div>
+                    <div class="overview-versions-mini" id="versions-card" aria-label="Versioni file Budget e Procurement">
+                      <div class="eyebrow dark">File versions</div>
+                      <div class="overview-versions-lines">
+                        <div class="overview-version-line"><span>Budget</span><strong id="budget-version">—</strong></div>
+                        <div class="overview-version-line"><span>Procurement</span><strong id="procurement-version">—</strong></div>
+                      </div>
+                    </div>
                   </div>
-                  <p id="executive-message" class="hero-copy">Numeri chiave e curva S per capire subito ordini, budget aggiornato e stato reale.</p>
                 </div>
                 <div class="mini-stat top-strip-card compact-check-card">
                   <span>Procurement check</span>
@@ -51,9 +62,13 @@
                   </div>
                   <div id="month-check-hint" class="meta-text month-check-hint compact-check-hint">Filtro pronto.</div>
                 </div>
-                <div class="mini-stat top-strip-card meta-card">
+                <div class="mini-stat top-strip-card meta-card report-meta-card">
                   <span>Last refresh</span>
                   <strong id="generated-at">—</strong>
+                  <div class="report-actions">
+                    <a id="generate-report-button" class="report-generate-button" href="/api/report/generate" title="Genera e scarica il report Excel aggiornato dai file in data/current">Excel Report</a>
+                    <a id="generate-pdf-button" class="report-generate-button pdf-report-button" href="/api/report/generate-pdf" title="Genera e scarica il PDF premium aggiornato dai file in data/current">PDF Premium</a>
+                  </div>
                 </div>
               </div>
               <div id="hero-kpis" class="hero-kpis minimal-kpis"></div>
@@ -65,9 +80,11 @@
                   <div>
                     <div class="eyebrow dark">Andamento degli ordini</div>
                     <h2>Curva S cumulata</h2>
-                    <p>Blu = procurement schedule cumulativo in PLN · verde = budget / programma cliente in PLN · rosso = stato attuale.</p>
+                    <p>Blu = procurement schedule cumulativo in PLN · verde = Budget Baseline in PLN · rosso = stato attuale.</p>
                   </div>
-                  <button class="ghost-link" data-detail="curve">Open detail</button>
+                  <div class="scurve-head-actions">
+                    <button class="ghost-link" data-detail="curve">Open detail</button>
+                  </div>
                 </div>
                 <div id="overview-note" class="note-banner"></div>
                 <div id="curve-chart" class="chart-shell minimal-chart"></div>
@@ -158,6 +175,7 @@
               </div>
               <div id="root-grid" class="root-grid"></div>
               <div id="to-award-root-chart" class="to-award-root-chart"></div>
+              <div id="programme-milestones" class="programme-milestones-block"></div>
             </article>
 
             <article class="card panel">
@@ -226,98 +244,6 @@
               </div>
             </article>
           </section>
-        </section>
-
-        <section id="admin-tab" class="tab-panel">
-          <section class="content-grid">
-            <article class="card panel">
-              <div class="panel-head compact">
-                <div>
-                  <div class="eyebrow dark">Admin</div>
-                  <h2>Upload Excel</h2>
-                  <p>Carica Budget e Procurement, genera il nuovo snapshot e aggiorna la home.</p>
-                </div>
-              </div>
-              <form id="upload-form" class="admin-form">
-                <label>
-                  <span>Budget file (.xlsm / .xlsx)</span>
-                  <input type="file" name="budget" accept=".xlsm,.xlsx" />
-                </label>
-                <label>
-                  <span>Procurement file (.xlsx / .xlsm)</span>
-                  <input type="file" name="procurement" accept=".xlsx,.xlsm" />
-                </label>
-                <label>
-                  <span>S-Curve file (.xlsx)</span>
-                  <input type="file" name="scurve" accept=".xlsx,.xlsm" />
-                </label>
-                <label>
-                  <span>EC decision file (.xlsx)</span>
-                  <input type="file" name="ecdecision" accept=".xlsx,.xlsm" />
-                </label>
-                <button type="submit" class="btn-primary">Upload e aggiorna dashboard</button>
-                <p id="upload-feedback" class="feedback"></p>
-              </form>
-            </article>
-
-            <article class="card panel">
-              <div class="panel-head compact">
-                <div>
-                  <div class="eyebrow dark">Admin</div>
-                  <h2>Admin settings</h2>
-                  <p>Mapping colonne e soglie. Admin e portfolio restano invariati.</p>
-                </div>
-              </div>
-              <form id="config-form" class="admin-form two-columns">
-                <label>
-                  <span>Titolo progetto</span>
-                  <input type="text" name="project_title" />
-                </label>
-                <label>
-                  <span>Executive note</span>
-                  <input type="text" name="executive_note" />
-                </label>
-                <label>
-                  <span>Budget total column</span>
-                  <input type="text" name="budget_total_column" />
-                </label>
-                <label>
-                  <span>Updated budget column</span>
-                  <input type="text" name="updated_budget_column" />
-                </label>
-                <label>
-                  <span>Contracted column</span>
-                  <input type="text" name="contracted_column" />
-                </label>
-                <label>
-                  <span>Completed statuses</span>
-                  <input type="text" name="completed_statuses" />
-                </label>
-                <label>
-                  <span>Variance amber %</span>
-                  <input type="number" step="0.1" name="variance_amber_pct" />
-                </label>
-                <label>
-                  <span>Variance red %</span>
-                  <input type="number" step="0.1" name="variance_red_pct" />
-                </label>
-                <button type="submit" class="btn-primary">Salva parametri</button>
-                <p id="config-feedback" class="feedback"></p>
-              </form>
-            </article>
-
-            <article class="card panel admin-ec-card">
-              <div class="panel-head compact">
-                <div>
-                  <div class="eyebrow dark">Admin</div>
-                  <h2>EC decision</h2>
-                  <p>Tabella letta dal file presente in data/current oppure caricato in Admin.</p>
-                </div>
-              </div>
-              <div id="ec-decision-table" class="admin-ec-wrap"></div>
-            </article>
-          </section>
-
         </section>
 
         <section id="detail-tab" class="tab-panel">

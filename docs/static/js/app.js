@@ -5,7 +5,7 @@ const state = {
   lastNonDetail: 'overview',
   currentView: { type: 'tab', tab: 'overview' },
   viewStack: [],
-  sCurveMode: localStorage.getItem('wteSCurveMode') || 'A',
+  sCurveMode: 'B',
 };
 
 const $ = (id) => document.getElementById(id);
@@ -415,7 +415,7 @@ function orderPieSvg(items) {
         <path d="M ${d.edgeX} ${d.edgeY} L ${elbowX} ${labelY} L ${lineEndX} ${labelY}" fill="none" stroke="${d.color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
         <circle cx="${d.edgeX}" cy="${d.edgeY}" r="2.8" fill="${d.color}" />
         <text x="${textX}" y="${labelY - 4}" text-anchor="${anchor}" fill="#18314F" font-size="13" font-weight="800">${d.item.label}</text>
-        <text x="${textX}" y="${labelY + 13}" text-anchor="${anchor}" fill="#5A6F89" font-size="11.3" font-weight="700">Val. ${d.item.sharePct}% · N. ${d.item.countPct ?? '—'}%</text>
+        <text x="${textX}" y="${labelY + 13}" text-anchor="${anchor}" fill="#5A6F89" font-size="11.3" font-weight="700">Val. ${d.item.sharePct}%</text>
       </g>`;
   }).join('');
 
@@ -498,7 +498,7 @@ function costDetailOverviewHtml(summary) {
     <div class="cost-detail-overview">
       <div class="cost-detail-head">
         <span>Dettaglio Costi (PLN)</span>
-        <em>ordini diretti · root 1-7</em>
+        <em>TABLE DASHBOARD · root 1-7</em>
       </div>
       <div class="cost-detail-grid cost-detail-grid-head">
         <span></span><strong>Ordinato</strong><strong>Da Ordinare*</strong>
@@ -540,38 +540,21 @@ function renderHero(summary) {
 function renderOverviewNote(summary) {
   const target = $('overview-note');
   if (!target) return;
-  const overview = state.dashboard?.overview || {};
-  const curve = activeSCurve(overview);
-  const marker = curve?.currentMarker || {};
-  const modeTitle = curve?.shortLabel || (curve?.mode === 'B' ? 'Opzione B' : 'Opzione A');
-  const month = marker.label || summary.curveCurrentMonth || 'mese corrente';
-  const meaning = curve?.markerMeaning || 'Stato attuale = valore cumulativo della curva blu al mese corrente.';
-  target.innerHTML = `<strong>${esc(modeTitle)}</strong> · ${esc(meaning)} <span class="note-soft">Mese: <strong>${esc(month)}</strong>.</span>`;
+  // V132: the separate "Stato attuale" banner is intentionally removed.
+  // The "Stato reale ordinato" explanation now moves up with the chart block.
+  target.innerHTML = '';
+  target.style.display = 'none';
 }
 
 function activeSCurve(overview) {
   const options = overview?.sCurveOptions || {};
-  return options[state.sCurveMode] || overview?.sCurve || {};
+  return options.B || overview?.sCurve || {};
 }
 
 function bindSCurveModeToggle() {
-  const wrap = $('scurve-mode-toggle');
-  if (!wrap || wrap.dataset.bound === '1') return;
-  wrap.dataset.bound = '1';
-  wrap.addEventListener('click', (event) => {
-    const btn = event.target.closest('[data-scurve-mode]');
-    if (!btn) return;
-    event.preventDefault();
-    event.stopPropagation();
-    state.sCurveMode = btn.dataset.scurveMode || 'A';
-    localStorage.setItem('wteSCurveMode', state.sCurveMode);
-    const overview = state.dashboard?.overview || {};
-    const curve = activeSCurve(overview);
-    renderCurve(curve);
-    renderCurveSummary(curve);
-    renderOverviewNote(state.dashboard?.summary || {});
-    updateSCurveModeToggle();
-  });
+  // V131: Curva S in Overview uses only the real ordered view.
+  state.sCurveMode = 'B';
+  localStorage.setItem('wteSCurveMode', 'B');
 }
 
 function updateSCurveModeToggle() {
@@ -584,7 +567,7 @@ function renderCurve(curve) {
   const target = $('curve-chart');
   if (!target) return;
   const description = curve.description || 'Curva S cumulativa in PLN.';
-  const modeTitle = curve.title || 'Curva S cumulata';
+  const modeTitle = curve.title || 'Stato reale ordinato';
   target.innerHTML = `<div class="scurve-mode-description"><strong>${esc(modeTitle)}</strong><span>${esc(description)}</span></div>${lineChartSvg(curve, { showContracted: false })}`;
   updateSCurveModeToggle();
 }
@@ -694,7 +677,7 @@ function renderOrdersStatus(ordersClosing, specsIssued, orderMix = []) {
   target.innerHTML = `
     <div class="minimal-orders-layout">
       <div class="order-pie-card clickable" data-detail="orders-status">
-        <div class="subhead-row compact-sub"><h3>Mix ordini diretti</h3><span class="meta-text">solo ordini diretti · fetta = valore · N. = pacchetti</span></div>
+        <div class="subhead-row compact-sub"><h3>Mix ordini diretti</h3><span class="meta-text">solo ordini diretti · fetta = valore.</span></div>
         ${orderPieSvg(orderMix)}
         <div class="pie-scope-note">Nota: il grafico considera solo gli ordini diretti (root group 1–7). Sono esclusi indiretti, servizi e rischi/opportunità.</div>
       </div>
@@ -922,32 +905,6 @@ function bindMonthCheck() {
   });
 }
 
-
-function renderSubcontractorsQr() {
-  const fileName = 'LIST OF SUBCONTRACTORS_TERMS.xlsx';
-  const encodedName = fileName.split('/').map(encodeURIComponent).join('/');
-
-  // Use a page-relative path and convert it to an absolute URL for the QR code.
-  // This keeps the same logic valid both locally and on GitHub Pages:
-  // - local root: http://host:port/data/current/...
-  // - GitHub Pages: https://user.github.io/repository/data/current/...
-  const href = `./data/current/${encodedName}`;
-  const absoluteUrl = new URL(href, window.location.href).href;
-
-  const link = $('subcontractors-download-link');
-  const img = $('subcontractors-qr-img');
-  if (link) {
-    link.href = href;
-    link.setAttribute('download', fileName);
-    link.title = `Scarica ${fileName}`;
-  }
-  if (img) {
-    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=78x78&margin=1&data=${encodeURIComponent(absoluteUrl)}`;
-    img.dataset.targetUrl = absoluteUrl;
-    img.alt = `QR download ${fileName}`;
-  }
-}
-
 function renderVersionsInfo(meta) {
   const versions = meta?.versions || {};
   const budgetNode = $('budget-version');
@@ -965,8 +922,7 @@ function renderDashboard(data) {
   $('generated-at').textContent = meta.generatedAt ? new Date(meta.generatedAt).toLocaleString('it-IT') : '—';
   renderVersionsInfo(meta);
   const sourceFilesNode = $('source-files');
-  if (sourceFilesNode) sourceFilesNode.textContent = [meta.sourceFiles.budget, meta.sourceFiles.procurement, meta.sourceFiles.scurve, meta.sourceFiles.ecdecision, meta.sourceFiles.statusprogress, meta.sourceFiles.erregister, meta.sourceFiles.milestones].filter(Boolean).join(' · ') || '—';
-  renderSubcontractorsQr();
+  if (sourceFilesNode) sourceFilesNode.textContent = [meta.sourceFiles.budget, meta.sourceFiles.procurement, meta.sourceFiles.ordersdashboard, meta.sourceFiles.scurve, meta.sourceFiles.ecdecision, meta.sourceFiles.statusprogress, meta.sourceFiles.erregister, meta.sourceFiles.milestones].filter(Boolean).join(' · ') || '—';
   const monthInput = $('month-check-input');
   if (monthInput && !monthInput.value) monthInput.value = currentMonthInputValue();
   renderHero(summary);
@@ -1379,14 +1335,14 @@ const contractedExplanationHtml = `
   <div class="detail-note detail-note-bottom">
     <div class="detail-note-group">
       <div class="detail-note-title">Contracted</div>
-      <p><strong>Contracted = valore totale già contrattualizzato nel procurement process</strong></p>
-      <p>Mostra quindi il valore economico dei package che, allo stato attuale, risultano già coperti da contratto.</p>
+      <p><strong>Contracted = valore Ordinato dal file Analisi Budget Wloclawek_orders.xlsx / TABLE DASHBOARD</strong></p>
+      <p>Mostra quindi il valore economico Ordinato usato anche da Dettaglio Costi, Mix ordini diretti e Curva S.</p>
     </div>
     <hr />
     <div class="detail-note-group">
       <div class="detail-note-title">Coverage</div>
       <p><strong>Coverage = Contracted / Updated Budget Total</strong></p>
-      <p>Mostra quindi quale quota del budget aggiornato risulta già coperta da contratti assegnati.</p>
+      <p>Mostra quindi quale quota del budget aggiornato risulta coperta dal valore Ordinato.</p>
     </div>
     <hr />
     <div class="detail-note-group">
@@ -1426,8 +1382,8 @@ const deltaBaselineExplanationHtml = `
     <hr />
     <div class="detail-note-group">
       <div class="detail-note-title">Contracted</div>
-      <p><strong>Contracted = valore totale già contrattualizzato nel procurement process</strong></p>
-      <p>Mostra quindi il valore economico dei package che, allo stato attuale, risultano già coperti da contratto.</p>
+      <p><strong>Contracted = valore Ordinato dal file Analisi Budget Wloclawek_orders.xlsx / TABLE DASHBOARD</strong></p>
+      <p>Mostra quindi il valore economico Ordinato usato anche da Dettaglio Costi, Mix ordini diretti e Curva S.</p>
     </div>
   </div>
 `;
@@ -1455,8 +1411,8 @@ const updatedBudgetExplanationHtml = `
     <hr />
     <div class="detail-note-group">
       <div class="detail-note-title">Contracted</div>
-      <p><strong>Contracted = valore totale già contrattualizzato nel procurement process</strong></p>
-      <p>Mostra quindi il valore economico dei package che, allo stato attuale, risultano già coperti da contratto.</p>
+      <p><strong>Contracted = valore Ordinato dal file Analisi Budget Wloclawek_orders.xlsx / TABLE DASHBOARD</strong></p>
+      <p>Mostra quindi il valore economico Ordinato usato anche da Dettaglio Costi, Mix ordini diretti e Curva S.</p>
     </div>
   </div>
 `;
@@ -1541,8 +1497,8 @@ const baselineBudgetExplanationHtml = `
     <hr />
     <div class="detail-note-group">
       <div class="detail-note-title">Contracted</div>
-      <p><strong>Contracted = valore totale già contrattualizzato nel procurement process</strong></p>
-      <p>Mostra quindi il valore economico dei package che, allo stato attuale, risultano già coperti da contratto.</p>
+      <p><strong>Contracted = valore Ordinato dal file Analisi Budget Wloclawek_orders.xlsx / TABLE DASHBOARD</strong></p>
+      <p>Mostra quindi il valore economico Ordinato usato anche da Dettaglio Costi, Mix ordini diretti e Curva S.</p>
     </div>
   </div>
 `;
@@ -1806,7 +1762,7 @@ function setReportButtonsBusy(isBusy, activeButton = null) {
 }
 
 async function refreshDashboardData() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260615170201&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260701125347&ts=' + Date.now());
   renderDashboard(data);
   return data;
 }
@@ -1814,8 +1770,7 @@ async function refreshDashboardData() {
 function bindReportButtons() {
   const reportLinks = [
     { id: 'generate-report-button', href: './reports/WTE_Dashboard_Report.xlsx' },
-    { id: 'generate-pdf-button', href: './reports/WTE_CEO_Premium_Report_Option_A.pdf' },
-    { id: 'generate-pdf-b-button', href: './reports/WTE_CEO_Premium_Report_Option_B.pdf' },
+    { id: 'generate-pdf-button', href: './reports/WTE_CEO_Premium_Report.pdf' },
   ];
   reportLinks.forEach(({ id, href }) => {
     const btn = $(id);
@@ -1827,7 +1782,7 @@ function bindReportButtons() {
 }
 
 async function loadDashboard() {
-  const data = await fetchJSON('./data/dashboard-data.json?v=20260615170201&ts=' + Date.now());
+  const data = await fetchJSON('./data/dashboard-data.json?v=20260701125347&ts=' + Date.now());
   renderDashboard(data);
 }
 
